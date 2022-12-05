@@ -1,26 +1,3 @@
-/* =============================================================
-	INTRODUCTION TO GAME PROGRAMMING SE102
-	
-	SAMPLE 05 - SCENE MANAGER
-
-	This sample illustrates how to:
-
-		1/ Read scene (textures, sprites, animations and objects) from files 
-		2/ Handle multiple scenes in game
-
-	Key classes/functions:
-		CScene
-		CPlayScene		
-
-
-HOW TO INSTALL Microsoft.DXSDK.D3DX
-===================================
-1) Tools > NuGet package manager > Package Manager Console
-2) execute command :  Install-Package Microsoft.DXSDK.D3DX
-
-
-================================================================ */
-
 #include <windows.h>
 #include <d3d10.h>
 #include <d3dx10.h>
@@ -47,10 +24,12 @@ HOW TO INSTALL Microsoft.DXSDK.D3DX
 #define MAIN_WINDOW_TITLE L"04 - Collision"
 #define WINDOW_ICON_PATH L"mario.ico"
 
-#define BACKGROUND_COLOR D3DXCOLOR(200.0f/255, 200.0f/255, 255.0f/255, 0.0f)
+//#define BACKGROUND_COLOR D3DXCOLOR(200.0f/255, 200.0f/255, 255.0f/255, 0.0f)
 
-#define SCREEN_WIDTH 320
-#define SCREEN_HEIGHT 240
+#define BACKGROUND_COLOR D3DXCOLOR(156.0f/255, 255.0f/255, 255.0f/255, 0.0f)
+
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 750
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -204,7 +183,7 @@ int WINAPI WinMain(
 	//IMPORTANT: this is the only place where a hardcoded file name is allowed ! 
 	game->Load(L"mario-sample.txt");  
 
-	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH*2, SCREEN_HEIGHT*2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
 	Run();
 

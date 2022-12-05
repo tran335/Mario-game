@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="Animations.cpp" />
+    <ClCompile Include="Brick.cpp" />
+    <ClCompile Include="Coin.cpp" />
+    <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="debug.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Goomba.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Mario.cpp" />
+    <ClCompile Include="Platform.cpp" />
+    <ClCompile Include="PlayScene.cpp" />
+    <ClCompile Include="Portal.cpp" />
+    <ClCompile Include="SampleKeyEventHandler.cpp" />
+    <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="Sprites.cpp" />
+    <ClCompile Include="Textures.cpp" />
+    <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="TileMap.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="TileSet.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectMap.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Layer.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyXML\tinystr.cpp" />
+    <ClCompile Include="tinyXML\tinyxml.cpp" />
+    <ClCompile Include="tinyXML\tinyxmlerror.cpp" />
+    <ClCompile Include="tinyXML\tinyxmlparser.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Animation.h" />
+    <ClInclude Include="AnimationFrame.h" />
+    <ClInclude Include="Animations.h" />
+    <ClInclude Include="AssetIDs.h" />
+    <ClInclude Include="Brick.h" />
+    <ClInclude Include="Coin.h" />
+    <ClInclude Include="Collision.h" />
+    <ClInclude Include="debug.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Goomba.h" />
+    <ClInclude Include="KeyEventHandler.h" />
+    <ClInclude Include="Mario.h" />
+    <ClInclude Include="Platform.h" />
+    <ClInclude Include="PlayScene.h" />
+    <ClInclude Include="Portal.h" />
+    <ClInclude Include="SampleKeyEventHandler.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="Sprite.h" />
+    <ClInclude Include="Sprites.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="Textures.h" />
+    <ClInclude Include="Utils.h" />
+    <ClInclude Include="TileMap.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="TileSet.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectMap.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Layer.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="tinyXML\tinystr.h" />
+    <ClInclude Include="tinyXML\tinyxml.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Map">
+      <UniqueIdentifier>{9c4683a6-4b5d-41d3-ae5a-b91ff9a68879}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
