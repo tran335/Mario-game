@@ -367,11 +367,11 @@
 </data>
  </layer>
  <objectgroup id="13" name="Solid">
-  <object id="1" x="2" y="1250" width="1869.82" height="44"/>
+ <object id="1" x="2" y="1250" width="1869.82" height="44"/>
   <object id="2" x="1057.42" y="1101.33" width="95.9091" height="144.394"/>
   <object id="3" x="1872" y="1203.33" width="1392" height="90.6667"/>
   <object id="4" x="3458" y="1252" width="1004" height="42"/>
-  <object id="5" x="4562" y="1244" width="236" height="52"/>
+  <object id="5" x="4562" y="1252" width="236" height="48"/>
   <object id="6" x="4752" y="1104.25" width="47.5" height="143.75"/>
   <object id="7" x="4655.75" y="1200.25" width="51.25" height="45.75"/>
   <object id="8" x="4704" y="1152" width="50.25" height="53.25"/>

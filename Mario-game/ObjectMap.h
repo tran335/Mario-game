@@ -5,6 +5,11 @@
 #include "GameObject.h"
 #include "Coin.h"
 #include "Platform.h"
+#include "BigBox.h"
+#include "Goomba.h"
+#include "ParaGoomba.h"
+#include "CameraBound.h"
+#include "QuestionBrick.h"
 
 class CObjectMap
 {

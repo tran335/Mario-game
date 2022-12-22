@@ -5,8 +5,10 @@
 #include "Game.h"
 
 #include "Goomba.h"
+#include "ParaGoomba.h"
 #include "Coin.h"
 #include "Portal.h"
+#include "BigBox.h"
 
 #include "Collision.h"
 
@@ -37,6 +39,7 @@ void CMario::OnNoCollision(DWORD dt)
 
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
+
 	if (e->ny != 0 && e->obj->IsBlocking())
 	{
 		vy = 0;
@@ -50,10 +53,14 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 
 	if (dynamic_cast<CGoomba*>(e->obj))
 		OnCollisionWithGoomba(e);
+	else if (dynamic_cast<CParaGoomba*>(e->obj))
+		OnCollisionWithParaGoomba(e);
 	else if (dynamic_cast<CCoin*>(e->obj))
 		OnCollisionWithCoin(e);
 	else if (dynamic_cast<CPortal*>(e->obj))
 		OnCollisionWithPortal(e);
+	else if (dynamic_cast<CBigBox*>(e->obj))
+		OnCollisionWithBigBox(e);
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -90,6 +97,54 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 	}
 }
 
+void CMario::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
+{
+	CParaGoomba* paragoomba = dynamic_cast<CParaGoomba*>(e->obj);
+
+	// jump on top >> kill Goomba and deflect a bit 
+	if (e->ny < 0)
+	{
+		if (paragoomba->GetState() != PARAGOOMBA_STATE_DIE)
+		{
+			paragoomba->SetState(PARAGOOMBA_STATE_DIE);
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		}
+	}
+	else // hit by Goomba
+	{
+		if (untouchable == 0)
+		{
+			if (paragoomba->GetState() != PARAGOOMBA_STATE_DIE)
+			{
+				if (level > MARIO_LEVEL_SMALL)
+				{
+					level = MARIO_LEVEL_SMALL;
+					StartUntouchable();
+				}
+				else
+				{
+					DebugOut(L">>> Mario DIE >>> \n");
+					SetState(MARIO_STATE_DIE);
+				}
+			}
+		}
+	}
+}
+void CMario::OnCollisionWithBigBox(LPCOLLISIONEVENT e)
+{
+	CBigBox* bigbox = dynamic_cast<CBigBox*>(e->obj);
+
+	// jump on top >> kill Goomba and deflect a bit 
+	if (e->ny < 0) {
+		StartUntouchable();
+	}
+	else 
+	{
+		e->ny = -MARIO_JUMP_RUN_SPEED_Y;
+	}
+	
+
+}
 void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 {
 	e->obj->Delete();
@@ -279,10 +334,12 @@ void CMario::SetState(int state)
 		if (isSitting) break;
 		if (isOnPlatform)
 		{
-			if (abs(this->vx) == MARIO_RUNNING_SPEED)
+			if (abs(this->vx) == MARIO_RUNNING_SPEED) 
 				vy = -MARIO_JUMP_RUN_SPEED_Y;
-			else
+
+			else  
 				vy = -MARIO_JUMP_SPEED_Y;
+				
 		}
 		break;
 

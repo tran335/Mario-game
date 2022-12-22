@@ -1,6 +1,7 @@
 #include "ObjectMap.h"
 #include "Brick.h"
 
+
 CObjectMap::CObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT>& coObjects)
 {
 	this->objectGroupElement = objectGroupElement;
@@ -53,6 +54,74 @@ void CObjectMap::ImportData(vector<LPGAMEOBJECT>& coObjects)
 			obj = new CBrick(x, y);
 			obj->SetPosition(x, y);
 			coObjects.push_back(obj);
+			element = element->NextSiblingElement();
+		}
+
+	}
+	if (name.compare("Ghost") == 0) {
+		while (element)
+		{
+			GetInfoElement(element, objectId, x, y, width, height);
+			obj = new CBigBox(width, height);
+			obj->SetPosition(x, y);
+			coObjects.push_back(obj);
+			element = element->NextSiblingElement();
+		}
+
+	}
+	if (name.compare("CameraBound") == 0) {
+		while (element)
+		{
+			GetInfoElement(element, objectId, x, y, width, height);
+			obj = new CCameraBound(width, height);
+			obj->SetPosition(x, y);
+			coObjects.push_back(obj);
+			element = element->NextSiblingElement();
+		}
+
+	}
+	if (name.compare("Portal") == 0) {
+		while (element)
+		{
+			GetInfoElement(element, objectId, x, y, width, height);
+			obj = new CBigBox(width, height);
+			obj->SetPosition(x, y);
+			coObjects.push_back(obj);
+			element = element->NextSiblingElement();
+		}
+
+	}
+	//if (name.compare("QuestionBlocks") == 0) {
+	//	while (element)
+	//	{
+	//		GetInfoElement(element, objectId, x, y, width, height);
+	//		obj = new CQuestionBrick(width, height);
+	//		obj->SetPosition(x, y);
+	//		coObjects.push_back(obj);
+	//		element = element->NextSiblingElement();
+	//	}
+
+	//}
+	if (name.compare("Enemy") == 0) {
+		while (element)
+		{
+			string enemyName = element->Attribute("name");
+			GetInfoElement(element, objectId, x, y, width, height);
+			if (enemyName.compare("goomba") == 0) {
+				string typeGoomba = element->Attribute("type");
+					if (typeGoomba.compare("tan") == 0) {
+						obj = new CGoomba(x, y);
+						obj->SetPosition(x, y);
+						coObjects.push_back(obj);
+					}
+					else if (typeGoomba.compare("para") == 0) {
+						obj = new CParaGoomba(x, y);
+						obj->SetPosition(x, y);
+						coObjects.push_back(obj);
+					}
+			}
+		
+		
 			element = element->NextSiblingElement();
 		}
 

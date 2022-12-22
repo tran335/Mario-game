@@ -1,25 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Animation.cpp" />
-    <ClCompile Include="Animations.cpp" />
-    <ClCompile Include="Brick.cpp" />
-    <ClCompile Include="Coin.cpp" />
-    <ClCompile Include="Collision.cpp" />
-    <ClCompile Include="debug.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="Goomba.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Mario.cpp" />
-    <ClCompile Include="Platform.cpp" />
-    <ClCompile Include="PlayScene.cpp" />
-    <ClCompile Include="Portal.cpp" />
-    <ClCompile Include="SampleKeyEventHandler.cpp" />
-    <ClCompile Include="Sprite.cpp" />
-    <ClCompile Include="Sprites.cpp" />
-    <ClCompile Include="Textures.cpp" />
-    <ClCompile Include="Utils.cpp" />
     <ClCompile Include="TileMap.cpp">
       <Filter>Map</Filter>
     </ClCompile>
@@ -32,35 +13,89 @@
     <ClCompile Include="Layer.cpp">
       <Filter>Map</Filter>
     </ClCompile>
-    <ClCompile Include="tinyXML\tinystr.cpp" />
-    <ClCompile Include="tinyXML\tinyxml.cpp" />
-    <ClCompile Include="tinyXML\tinyxmlerror.cpp" />
-    <ClCompile Include="tinyXML\tinyxmlparser.cpp" />
+    <ClCompile Include="tinyXML\tinystr.cpp">
+      <Filter>tinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyXML\tinyxml.cpp">
+      <Filter>tinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyXML\tinyxmlerror.cpp">
+      <Filter>tinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyXML\tinyxmlparser.cpp">
+      <Filter>tinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="Goomba.cpp">
+      <Filter>Goomba</Filter>
+    </ClCompile>
+    <ClCompile Include="ParaGoomba.cpp">
+      <Filter>Goomba</Filter>
+    </ClCompile>
+    <ClCompile Include="BigBox.cpp">
+      <Filter>Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Brick.cpp">
+      <Filter>Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Coin.cpp">
+      <Filter>Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Mario.cpp">
+      <Filter>Mario</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Portal.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform.cpp">
+      <Filter>Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="QuestionBrick.cpp">
+      <Filter>Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Animations.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraBound.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="debug.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleKeyEventHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprites.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Textures.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Animation.h" />
-    <ClInclude Include="AnimationFrame.h" />
-    <ClInclude Include="Animations.h" />
-    <ClInclude Include="AssetIDs.h" />
-    <ClInclude Include="Brick.h" />
-    <ClInclude Include="Coin.h" />
-    <ClInclude Include="Collision.h" />
-    <ClInclude Include="debug.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="Goomba.h" />
-    <ClInclude Include="KeyEventHandler.h" />
-    <ClInclude Include="Mario.h" />
-    <ClInclude Include="Platform.h" />
-    <ClInclude Include="PlayScene.h" />
-    <ClInclude Include="Portal.h" />
-    <ClInclude Include="SampleKeyEventHandler.h" />
-    <ClInclude Include="Scene.h" />
-    <ClInclude Include="Sprite.h" />
-    <ClInclude Include="Sprites.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="Textures.h" />
-    <ClInclude Include="Utils.h" />
     <ClInclude Include="TileMap.h">
       <Filter>Map</Filter>
     </ClInclude>
@@ -73,12 +108,118 @@
     <ClInclude Include="Layer.h">
       <Filter>Map</Filter>
     </ClInclude>
-    <ClInclude Include="tinyXML\tinystr.h" />
-    <ClInclude Include="tinyXML\tinyxml.h" />
+    <ClInclude Include="tinyXML\tinystr.h">
+      <Filter>tinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="tinyXML\tinyxml.h">
+      <Filter>tinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="Goomba.h">
+      <Filter>Goomba</Filter>
+    </ClInclude>
+    <ClInclude Include="ParaGoomba.h">
+      <Filter>Goomba</Filter>
+    </ClInclude>
+    <ClInclude Include="BigBox.h">
+      <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Brick.h">
+      <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Coin.h">
+      <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Mario.h">
+      <Filter>Mario</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Portal.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform.h">
+      <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="QuestionBrick.h">
+      <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationFrame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Animations.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraBound.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="debug.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyEventHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SampleKeyEventHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetIDs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprites.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Textures.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Map">
       <UniqueIdentifier>{9c4683a6-4b5d-41d3-ae5a-b91ff9a68879}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tinyXML">
+      <UniqueIdentifier>{9acb02f9-1c65-4f4f-a479-77a50bbd5af8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Goomba">
+      <UniqueIdentifier>{8992f042-2981-4f2d-931f-cd6e3050ce36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Misc">
+      <UniqueIdentifier>{4e7ee446-8aa9-4ff1-86f1-da5cdebc3b88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mario">
+      <UniqueIdentifier>{553035f8-e409-4263-8d9d-456ce96cab52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{b95b1496-ad77-4b6b-9fd6-c8c875824a11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{40004166-4f8b-4605-a320-1b31b385c130}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{b7095a42-12ce-45c7-8949-cdf2178717ec}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

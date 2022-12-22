@@ -6,14 +6,20 @@
 
 #include "debug.h"
 
-#define MARIO_WALKING_SPEED		0.1f
-#define MARIO_RUNNING_SPEED		0.2f
+#define MARIO_WALKING_SPEED		0.3f
+#define MARIO_RUNNING_SPEED		0.6f
 
 #define MARIO_ACCEL_WALK_X	0.0005f
 #define MARIO_ACCEL_RUN_X	0.0007f
 
+
+
 #define MARIO_JUMP_SPEED_Y		1.0f
 #define MARIO_JUMP_RUN_SPEED_Y	0.6f
+
+#define MARIO_JUMP_RUN_SPEED_X 1.0f
+#define MARIO_JUMP_SPEED_X		1.4f
+
 
 #define MARIO_GRAVITY			0.002f
 
@@ -95,8 +101,8 @@
 
 #define MARIO_SIT_HEIGHT_ADJUST ((MARIO_BIG_BBOX_HEIGHT-MARIO_BIG_SITTING_BBOX_HEIGHT)/2)
 
-#define MARIO_SMALL_BBOX_WIDTH  82
-#define MARIO_SMALL_BBOX_HEIGHT 82
+#define MARIO_SMALL_BBOX_WIDTH  48
+#define MARIO_SMALL_BBOX_HEIGHT 48
 
 
 #define MARIO_UNTOUCHABLE_TIME 2500
@@ -115,8 +121,11 @@ class CMario : public CGameObject
 	int coin; 
 
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
+	void OnCollisionWithParaGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
+	void OnCollisionWithBigBox(LPCOLLISIONEVENT e);
+
 
 	int GetAniIdBig();
 	int GetAniIdSmall();
@@ -129,7 +138,7 @@ public:
 		ax = 0.0f;
 		ay = MARIO_GRAVITY; 
 
-		level = MARIO_LEVEL_SMALL;
+		level = MARIO_LEVEL_BIG;
 		untouchable = 0;
 		untouchable_start = -1;
 		isOnPlatform = false;

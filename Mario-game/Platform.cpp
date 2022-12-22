@@ -20,7 +20,14 @@ void CPlatform::RenderBoundingBox()
 	rect.right = (int)r - (int)l;
 	rect.bottom = (int)b - (int)t;
 
-	CGame::GetInstance()->Draw(x, y, bbox, nullptr, BBOX_ALPHA, rect.right - 1, rect.bottom - 1);
+	float cx, cy;
+	CGame::GetInstance()->GetCamPos(cx, cy);
+
+	float xx = x - 24 + rect.right / 2;
+	float yy = y - 24 + rect.bottom / 2;
+
+
+	CGame::GetInstance()->Draw(xx, yy, bbox, nullptr, BBOX_ALPHA, rect.right-1, rect.bottom-1);
 }
 
 CPlatform::CPlatform(float width, float height)
@@ -31,14 +38,13 @@ CPlatform::CPlatform(float width, float height)
 
 void CPlatform::Render()
 {
-
 	RenderBoundingBox();
 }
 
 void CPlatform::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
-	l = x;
-	t = y;
+	l = x - 24;
+	t = y - 24;
 	r = l + width;
 	b = t + height; 
 }
