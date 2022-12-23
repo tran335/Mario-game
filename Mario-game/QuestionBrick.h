@@ -4,7 +4,7 @@
 #include "Animation.h"
 #include "Animations.h"
 
-#define ID_ANI_QUESTIONBRICK 701
+#define ID_ANI_QUESTIONBRICK 7000
 #define QUESTIONBRICK_WIDTH 48
 #define QUESTIONBRICK_BBOX_WIDTH 48
 #define QUESTIONBRICK_BBOX_HEIGHT 48

@@ -91,17 +91,17 @@ void CObjectMap::ImportData(vector<LPGAMEOBJECT>& coObjects)
 		}
 
 	}
-	//if (name.compare("QuestionBlocks") == 0) {
-	//	while (element)
-	//	{
-	//		GetInfoElement(element, objectId, x, y, width, height);
-	//		obj = new CQuestionBrick(width, height);
-	//		obj->SetPosition(x, y);
-	//		coObjects.push_back(obj);
-	//		element = element->NextSiblingElement();
-	//	}
+	if (name.compare("QuestionBlocks") == 0) {
+		while (element)
+		{
+			GetInfoElement(element, objectId, x, y, width, height);
+			obj = new CQuestionBrick(x, y);
+			obj->SetPosition(x, y);
+			coObjects.push_back(obj);
+			element = element->NextSiblingElement();
+		}
 
-	//}
+	}
 	if (name.compare("Enemy") == 0) {
 		while (element)
 		{

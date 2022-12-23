@@ -4,7 +4,7 @@ void CQuestionBrick::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
 	animations->Get(ID_ANI_QUESTIONBRICK)->Render(x, y);
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 void CQuestionBrick::GetBoundingBox(float& l, float& t, float& r, float& b)
