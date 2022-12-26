@@ -9,6 +9,9 @@
 #include "Coin.h"
 #include "Portal.h"
 #include "BigBox.h"
+#include "CameraBound.h"
+#include "QuestionBrick.h"
+#include "Items.h"
 
 #include "Collision.h"
 
@@ -25,7 +28,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		untouchable_start = 0;
 		untouchable = 0;
 	}
-
 	isOnPlatform = false;
 
 	CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -61,6 +63,10 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPortal(e);
 	else if (dynamic_cast<CBigBox*>(e->obj))
 		OnCollisionWithBigBox(e);
+	else if (dynamic_cast<CCameraBound*>(e->obj))
+		OnCollisionWithCameraBound(e);
+	else if (dynamic_cast<CQuestionBrick*>(e->obj))
+		OnCollisionWithQuestionBrick(e);
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -97,6 +103,36 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 	}
 }
 
+void CMario::OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e)
+{
+	CQuestionBrick* questionbrick = dynamic_cast<CQuestionBrick*>(e->obj);
+	
+
+	// jump on top >> kill Goomba and deflect a bit 
+	if (e->ny > 0)
+	{
+		if (questionbrick->GetState() != QUESTIONBRICK_STATE_DISABLE)
+		{
+			questionbrick->SetState(QUESTIONBRICK_STATE_DISABLE);
+
+		}
+
+	}
+	
+}
+
+
+
+void CMario::OnCollisionWithCameraBound(LPCOLLISIONEVENT e)
+{
+	CCameraBound * camerabound  = dynamic_cast<CCameraBound*>(e->obj);
+
+	if (e->ny < 0)
+	{
+		SetState(MARIO_STATE_DIE);
+	}
+}
+
 void CMario::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
 {
 	CParaGoomba* paragoomba = dynamic_cast<CParaGoomba*>(e->obj);
@@ -106,8 +142,15 @@ void CMario::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
 	{
 		if (paragoomba->GetState() != PARAGOOMBA_STATE_DIE)
 		{
-			paragoomba->SetState(PARAGOOMBA_STATE_DIE);
-			vy = -MARIO_JUMP_DEFLECT_SPEED;
+			if (paragoomba->Getlevel() !=PARAGOOMBA_LEVEL_NO_WING)
+			{
+				paragoomba->Setlevel(PARAGOOMBA_LEVEL_NO_WING);
+				StartUntouchable();
+			}
+			else {
+				paragoomba->SetState(PARAGOOMBA_STATE_DIE);
+				vy = -MARIO_JUMP_DEFLECT_SPEED;
+			}
 		}
 	}
 	else // hit by Goomba
@@ -132,18 +175,9 @@ void CMario::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
 }
 void CMario::OnCollisionWithBigBox(LPCOLLISIONEVENT e)
 {
-	CBigBox* bigbox = dynamic_cast<CBigBox*>(e->obj);
-
-	// jump on top >> kill Goomba and deflect a bit 
-	if (e->ny < 0) {
-		StartUntouchable();
-	}
-	else 
-	{
-		e->ny = -MARIO_JUMP_RUN_SPEED_Y;
-	}
 	
-
+	CBigBox* bigbox = dynamic_cast<CBigBox*>(e->obj);
+		
 }
 void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 {
@@ -372,9 +406,10 @@ void CMario::SetState(int state)
 		break;
 
 	case MARIO_STATE_DIE:
-		vy = -MARIO_JUMP_DEFLECT_SPEED;
-		vx = 0;
-		ax = 0;
+		   // vy = -MARIO_JUMP_DEFLECT_SPEED;
+			ax = 0.0f;
+			vx = 0.0f;
+
 		break;
 	}
 

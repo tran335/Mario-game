@@ -24,6 +24,9 @@ protected:
 	float vx;
 	float vy;
 
+	float dx;
+	float dy;
+
 	int nx;	 
 
 	int state;

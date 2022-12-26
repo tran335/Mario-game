@@ -10,6 +10,7 @@
 #include "ParaGoomba.h"
 #include "CameraBound.h"
 #include "QuestionBrick.h"
+#include "Items.h"
 
 class CObjectMap
 {

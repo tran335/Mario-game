@@ -94,9 +94,26 @@ void CObjectMap::ImportData(vector<LPGAMEOBJECT>& coObjects)
 	if (name.compare("QuestionBlocks") == 0) {
 		while (element)
 		{
+			string typeName;
+			int type;
 			GetInfoElement(element, objectId, x, y, width, height);
+			typeName = element->Attribute("name");
+			element->QueryIntAttribute("type", &type);
 			obj = new CQuestionBrick(x, y);
 			obj->SetPosition(x, y);
+			CItems* item = NULL;
+			if (typeName.compare("coin") == 0)
+			{
+				item = new CItems(x,y);
+			}
+			else if (typeName.compare("powerup") == 0)
+			{
+				item = new CItems(x, y);
+			}
+			else if (typeName.compare("1upMushroom") == 0)
+			{
+				item = new CItems(x, y);
+			}
 			coObjects.push_back(obj);
 			element = element->NextSiblingElement();
 		}
