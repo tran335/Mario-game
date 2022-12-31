@@ -11,7 +11,9 @@
 #include "BigBox.h"
 #include "CameraBound.h"
 #include "QuestionBrick.h"
-#include "Items.h"
+#include "CoinBrick.h"
+#include "KoopaBound.h"
+
 
 #include "Collision.h"
 
@@ -35,8 +37,11 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 void CMario::OnNoCollision(DWORD dt)
 {
+	
 	x += vx * dt;
 	y += vy * dt;
+
+
 }
 
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
@@ -67,6 +72,10 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithCameraBound(e);
 	else if (dynamic_cast<CQuestionBrick*>(e->obj))
 		OnCollisionWithQuestionBrick(e);
+	else if (dynamic_cast<CKoopaBound*>(e->obj))
+		OnCollisionWithKoopaBound(e);
+	//else if (dynamic_cast<CCoinBrick*>(e->obj))
+	//	OnCollisionWithCoinBrick(e);
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -121,7 +130,23 @@ void CMario::OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e)
 	
 }
 
-
+//void CMario::OnCollisionWithCoinBrick(LPCOLLISIONEVENT e)
+//{
+//	CCoinBrick* coinbrick = dynamic_cast<CCoinBrick*>(e->obj);
+//
+//
+//	// jump on top >> kill Goomba and deflect a bit 
+//	if (e->ny > 0)
+//	{
+//		if (coinbrick->GetState() != COINBRICK_STATE_THROW_UP)
+//		{
+//			coinbrick->SetState(COINBRICK_STATE_THROW_UP);
+//
+//		}
+//
+//	}
+//
+//}
 
 void CMario::OnCollisionWithCameraBound(LPCOLLISIONEVENT e)
 {
@@ -179,6 +204,17 @@ void CMario::OnCollisionWithBigBox(LPCOLLISIONEVENT e)
 	CBigBox* bigbox = dynamic_cast<CBigBox*>(e->obj);
 		
 }
+
+void CMario::OnCollisionWithKoopaBound(LPCOLLISIONEVENT e)
+{
+
+	if (e->nx)
+		x += dx;
+	if (e->ny)
+		y += dy;
+
+}
+
 void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 {
 	e->obj->Delete();

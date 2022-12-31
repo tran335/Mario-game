@@ -19,3 +19,4 @@ height	240
 20	textures\misc.png
 30	textures\world-1-1.png
 40	textures\misc_new.png
+50	textures\enemy - 2.png

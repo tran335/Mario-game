@@ -1,5 +1,8 @@
 #pragma once
 
+#define PLATFORM_BBOX_WIDTH 48
+#define PLATFORM_BBOX_HEIGHT 48
+
 #include "GameObject.h"
 
 // 

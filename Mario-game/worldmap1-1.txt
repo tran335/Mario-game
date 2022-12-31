@@ -7,6 +7,8 @@ brick.txt
 goomba.txt
 paragoomba.txt
 questionbrick.txt
+coinbrick.txt
+koopa.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type

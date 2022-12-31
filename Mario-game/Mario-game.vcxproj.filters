@@ -94,7 +94,10 @@
     <ClCompile Include="Utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Items.cpp" />
+    <ClCompile Include="CoinBrick.cpp" />
+    <ClCompile Include="Koopa.cpp" />
+    <ClCompile Include="KoopaBound.cpp" />
+    <ClCompile Include="VenusFireTrap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TileMap.h">
@@ -196,7 +199,10 @@
     <ClInclude Include="Utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Items.h" />
+    <ClInclude Include="CoinBrick.h" />
+    <ClInclude Include="Koopa.h" />
+    <ClInclude Include="KoopaBound.h" />
+    <ClInclude Include="VenusFireTrap.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Map">

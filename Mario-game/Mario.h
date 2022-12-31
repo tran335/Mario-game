@@ -128,6 +128,8 @@ class CMario : public CGameObject
 	void OnCollisionWithBigBox(LPCOLLISIONEVENT e);
 	void OnCollisionWithCameraBound(LPCOLLISIONEVENT e);
 	void OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e);
+	void OnCollisionWithKoopaBound(LPCOLLISIONEVENT e);
+//	void OnCollisionWithCoinBrick(LPCOLLISIONEVENT e);
 
 
 	int GetAniIdBig();

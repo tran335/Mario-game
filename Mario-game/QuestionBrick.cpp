@@ -7,6 +7,7 @@ CQuestionBrick::CQuestionBrick(float x, float y)
 	this->x = x;
 	this->y = y;
 	start_y = y;
+	jumpTime = 0;
 }
 
 void CQuestionBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -18,7 +19,7 @@ void CQuestionBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (jumpTime == 0) {
 			BrickStartToThrow();
 		}
-		else if (GetTickCount64() - jumpTime > JUMP_TIME) {
+		 if (GetTickCount64() - jumpTime > JUMP_TIME && jumpTime>0) {
 			if (y < start_y) // take brick to start_y after deflect cause disable
 			{
 				y = y + BRICK_RETURN_START_POS_VY;
@@ -60,7 +61,7 @@ void CQuestionBrick::SetState(int state)
 	case QUESTIONBRICK_STATE_DISABLE:
 		vx = 0;
 		vy = 0;
-		y = y - QUESTIONBRICK_JUMP_SPEED_Y;
+		y = y - QUESTIONBRICK_JUMP_Y;
 		break;
 	}
 }

@@ -83,24 +83,6 @@ void CParaGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CParaGoomba::Render()
 {
-
-	//int aniId= ID_ANI_PARAGOOMBA_WING;
-	////if (state == PARAGOOMBA_STATE_WING)
-	////{
-	////	aniId = ID_ANI_PARAGOOMBA_WING;
-	////}
-	//if (state == PARAGOOMBA_STATE_NORMAL)
-	//{
-	//	aniId = ID_ANI_PARAGOOMBA_NORMAL;
-	//}
-	//if (state == PARAGOOMBA_STATE_DIE)
-	//{
-	//	aniId = ID_ANI_PARAGOOMBA_DIE;
-	//}
-	//if (state == PARAGOOMBA_STATE_FLY)
-	//{
-	//	aniId = ID_ANI_PARAGOOMBA_FLY;
-	//}
 	CAnimations* animations = CAnimations::GetInstance();
 	int aniId = -1;
 
@@ -134,10 +116,6 @@ void CParaGoomba::SetState(int state)
 		vy = 0;
 		ay = 0;
 		break;
-	//case PARAGOOMBA_STATE_WING:
-	//	isOnPlatform = true;
-	//	vx = -PARAGOOMBA_WALKING_SPEED;
-	//	break;
 	case PARAGOOMBA_STATE_NORMAL:
 		vx = -PARAGOOMBA_WALKING_SPEED;
 		break;

@@ -1,0 +1,20 @@
+# id	left	top	right	bottom	texture_id
+[SPRITES]
+#down					
+61001	660	199	708	295	10
+61002	708	199	756	295	10
+#up					
+61003	756	199	804	295	10
+61004	804	199	852	295	10
+
+
+# ani_id	sprite1_id	time1	sprite2_id	time2	...
+[ANIMATIONS]
+#down
+601	61001	100	61002	100
+#up
+602	61003	100	61004	100
+#shoot up
+603	61001	100
+#shoot down
+604	61003	100

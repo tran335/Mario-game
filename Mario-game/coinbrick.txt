@@ -1,0 +1,10 @@
+# id	left	top	right	bottom	texture_id
+[SPRITES]
+80001	870	298	918	348	40
+80002	910	298	958	348	40
+80003	945	298	993	348	40
+
+
+# ani_id	sprite1_id	time1	sprite2_id	time2	...
+[ANIMATIONS]
+8000	80001	100	80002	100	80003	100

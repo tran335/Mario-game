@@ -99,21 +99,21 @@ void CObjectMap::ImportData(vector<LPGAMEOBJECT>& coObjects)
 			GetInfoElement(element, objectId, x, y, width, height);
 			typeName = element->Attribute("name");
 			element->QueryIntAttribute("type", &type);
-			obj = new CQuestionBrick(x, y);
-			obj->SetPosition(x, y);
-			CItems* item = NULL;
-			if (typeName.compare("coin") == 0)
+			
+	/*		if (typeName.compare("coin") == 0)
 			{
-				item = new CItems(x,y);
+				obj = new CCoinBrick();
 			}
 			else if (typeName.compare("powerup") == 0)
 			{
-				item = new CItems(x, y);
+				obj = new CCoinBrick();
 			}
 			else if (typeName.compare("1upMushroom") == 0)
 			{
-				item = new CItems(x, y);
-			}
+				obj = new CCoinBrick();
+			}*/
+			obj = new CQuestionBrick(x,y);
+			obj->SetPosition(x, y);
 			coObjects.push_back(obj);
 			element = element->NextSiblingElement();
 		}
@@ -137,8 +137,26 @@ void CObjectMap::ImportData(vector<LPGAMEOBJECT>& coObjects)
 						coObjects.push_back(obj);
 					}
 			}
+			if (enemyName.compare("koopa") == 0) {
+				string typeKoopa = element->Attribute("type");
+				if (typeKoopa.compare("red") == 0) {
+					obj = new CKoopa(x, y);
+					obj->SetPosition(x, y);
+					coObjects.push_back(obj);
+				}
+			}
 		
-		
+			element = element->NextSiblingElement();
+		}
+
+	}
+	if (name.compare("KoopaBound") == 0) {
+		while (element)
+		{
+			GetInfoElement(element, objectId, x, y, width, height);
+			obj = new CKoopaBound(width, height);
+			obj->SetPosition(x, y);
+			coObjects.push_back(obj);
 			element = element->NextSiblingElement();
 		}
 

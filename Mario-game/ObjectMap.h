@@ -10,7 +10,10 @@
 #include "ParaGoomba.h"
 #include "CameraBound.h"
 #include "QuestionBrick.h"
-#include "Items.h"
+#include "CoinBrick.h"
+#include "Koopa.h"
+#include "KoopaBound.h"
+#include "Portal.h"
 
 class CObjectMap
 {

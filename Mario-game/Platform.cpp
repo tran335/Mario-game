@@ -43,8 +43,8 @@ void CPlatform::Render()
 
 void CPlatform::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
-	l = x - 24;
-	t = y - 24;
+	l = x - PLATFORM_BBOX_WIDTH/2;
+	t = y - PLATFORM_BBOX_HEIGHT/2;
 	r = l + width;
 	b = t + height; 
 }
