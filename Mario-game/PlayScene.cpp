@@ -261,9 +261,10 @@ void CPlayScene::Update(DWORD dt)
 void CPlayScene::Render()
 {
 	CTileMap::GetInstance()->RenderBackground();
-	CTileMap::GetInstance()->RenderForeground();
+	
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();
+	CTileMap::GetInstance()->RenderForeground();
 }
 
 /*

@@ -145,7 +145,14 @@ void CObjectMap::ImportData(vector<LPGAMEOBJECT>& coObjects)
 					coObjects.push_back(obj);
 				}
 			}
-		
+			if (enemyName.compare("venus") == 0) {
+				string typeVenus = element->Attribute("type");
+				if (typeVenus.compare("red") == 0) {
+					obj = new CVenusFireTrap(x, y);
+					obj->SetPosition(x, y);
+					coObjects.push_back(obj);
+				}
+			}
 			element = element->NextSiblingElement();
 		}
 

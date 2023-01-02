@@ -1,9 +1,11 @@
 #include "VenusFireTrap.h"
 
-CVenusFireTrap::CVenusFireTrap(float width, float height)
+CVenusFireTrap::CVenusFireTrap(float x, float y)
 {
-	this->width = width;
-	this->height = height;
+	this->x = x;
+	this->y = y;
+	start_y = y;
+	vy = -VENUS_SPEED;
 }
 
 void CVenusFireTrap::Render()
@@ -24,9 +26,25 @@ void CVenusFireTrap::Render()
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 }
 
-void CVenusFireTrap::Update(DWORD dt)
+void CVenusFireTrap::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	CGameObject::Update(dt);
+	y += vy;
+	if (isShooting == false) {
+		if (y < start_y - VENUS_HEIGHT) // have not overlap with pipe
+		{
+			vy = 0.0f;
+			StartShootTime();
+		}
+	}
+	else if (GetTickCount64() - shootingStartTime > VENUS_SHOOTING_TIME) {
+		shootingStartTime = 0;
+		isShooting = false;
+		vy = VENUS_SPEED;
+	}
+	if (y > start_y + VENUS_HEIGHT) {
+		vy = -VENUS_SPEED;
+	}
+	CGameObject::Update(dt, coObjects);
 }
 
 void CVenusFireTrap::GetBoundingBox(float& l, float& t, float& r, float& b)
@@ -35,4 +53,10 @@ void CVenusFireTrap::GetBoundingBox(float& l, float& t, float& r, float& b)
 	t = y - VENUS_BBOX_HEIGHT / 2;
 	r = l + VENUS_BBOX_WIDTH;
 	b = t + VENUS_BBOX_HEIGHT;
+}
+
+void CVenusFireTrap::StartShootTime()
+{
+	isShooting = true;
+	shootingStartTime = GetTickCount64();
 }
