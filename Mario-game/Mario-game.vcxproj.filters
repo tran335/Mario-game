@@ -26,10 +26,10 @@
       <Filter>tinyXML</Filter>
     </ClCompile>
     <ClCompile Include="Goomba.cpp">
-      <Filter>Goomba</Filter>
+      <Filter>Enemy\Goomba</Filter>
     </ClCompile>
     <ClCompile Include="ParaGoomba.cpp">
-      <Filter>Goomba</Filter>
+      <Filter>Enemy\Goomba</Filter>
     </ClCompile>
     <ClCompile Include="BigBox.cpp">
       <Filter>Misc</Filter>
@@ -94,10 +94,21 @@
     <ClCompile Include="Utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="CoinBrick.cpp" />
-    <ClCompile Include="Koopa.cpp" />
-    <ClCompile Include="KoopaBound.cpp" />
-    <ClCompile Include="VenusFireTrap.cpp" />
+    <ClCompile Include="Koopa.cpp">
+      <Filter>Enemy\Koopa</Filter>
+    </ClCompile>
+    <ClCompile Include="KoopaBound.cpp">
+      <Filter>Enemy\Koopa</Filter>
+    </ClCompile>
+    <ClCompile Include="SuperMushroom.cpp">
+      <Filter>Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="CoinBrick.cpp">
+      <Filter>Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="VenusFireTrap.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TileMap.h">
@@ -119,10 +130,10 @@
       <Filter>tinyXML</Filter>
     </ClInclude>
     <ClInclude Include="Goomba.h">
-      <Filter>Goomba</Filter>
+      <Filter>Enemy\Goomba</Filter>
     </ClInclude>
     <ClInclude Include="ParaGoomba.h">
-      <Filter>Goomba</Filter>
+      <Filter>Enemy\Goomba</Filter>
     </ClInclude>
     <ClInclude Include="BigBox.h">
       <Filter>Misc</Filter>
@@ -199,10 +210,21 @@
     <ClInclude Include="Utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CoinBrick.h" />
-    <ClInclude Include="Koopa.h" />
-    <ClInclude Include="KoopaBound.h" />
-    <ClInclude Include="VenusFireTrap.h" />
+    <ClInclude Include="Koopa.h">
+      <Filter>Enemy\Koopa</Filter>
+    </ClInclude>
+    <ClInclude Include="KoopaBound.h">
+      <Filter>Enemy\Koopa</Filter>
+    </ClInclude>
+    <ClInclude Include="SuperMushroom.h">
+      <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="CoinBrick.h">
+      <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="VenusFireTrap.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Map">
@@ -210,9 +232,6 @@
     </Filter>
     <Filter Include="tinyXML">
       <UniqueIdentifier>{9acb02f9-1c65-4f4f-a479-77a50bbd5af8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Goomba">
-      <UniqueIdentifier>{8992f042-2981-4f2d-931f-cd6e3050ce36}</UniqueIdentifier>
     </Filter>
     <Filter Include="Misc">
       <UniqueIdentifier>{4e7ee446-8aa9-4ff1-86f1-da5cdebc3b88}</UniqueIdentifier>
@@ -228,6 +247,15 @@
     </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{b7095a42-12ce-45c7-8949-cdf2178717ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy">
+      <UniqueIdentifier>{b8111a5b-6ce2-4dde-bffe-fb044e23ec31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy\Koopa">
+      <UniqueIdentifier>{e0ad84c5-d982-48c0-870c-7bf56d085762}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy\Goomba">
+      <UniqueIdentifier>{8992f042-2981-4f2d-931f-cd6e3050ce36}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -29,6 +29,7 @@ void CVenusFireTrap::Render()
 void CVenusFireTrap::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	y += vy;
+
 	if (isShooting == false) {
 		if (y < start_y - VENUS_HEIGHT) // have not overlap with pipe
 		{

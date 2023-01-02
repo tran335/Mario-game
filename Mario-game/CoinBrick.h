@@ -6,8 +6,8 @@
 
 
 #define ID_ANI_COINBRICK 8000
-#define COINBRICK_JUMP_SPEED_Y		20.0f
-#define BRICK_RETURN_START_POS_VY 2.0f
+#define COINBRICK_JUMP_SPEED_Y		200.0f
+//#define BRICK_RETURN_START_POS_VY 20.0f
 
 #define JUMP_TIME 300
 
@@ -20,11 +20,14 @@
 class CCoinBrick : public CGameObject {
 	float start_y;
 	float jumpTime = 0;
+	virtual int IsBlocking() { return 0; }
+
+	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 public:
 	CCoinBrick();
 	void Render();
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	void BrickStartToThrow() { jumpTime = GetTickCount64(); };
-	//virtual void SetState(int state);
+	virtual void SetState(int state);
 };

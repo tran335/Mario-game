@@ -99,22 +99,23 @@ void CObjectMap::ImportData(vector<LPGAMEOBJECT>& coObjects)
 			GetInfoElement(element, objectId, x, y, width, height);
 			typeName = element->Attribute("name");
 			element->QueryIntAttribute("type", &type);
-			
-	/*		if (typeName.compare("coin") == 0)
+			CQuestionBrick* questionbrick = new CQuestionBrick(x, y);
+			if (typeName.compare("coin") == 0)
 			{
 				obj = new CCoinBrick();
 			}
 			else if (typeName.compare("powerup") == 0)
 			{
-				obj = new CCoinBrick();
+				obj = new CSuperMushroom(x,y);
 			}
 			else if (typeName.compare("1upMushroom") == 0)
 			{
 				obj = new CCoinBrick();
-			}*/
-			obj = new CQuestionBrick(x,y);
+			}
+			
 			obj->SetPosition(x, y);
 			coObjects.push_back(obj);
+			coObjects.push_back(questionbrick);
 			element = element->NextSiblingElement();
 		}
 

@@ -155,6 +155,7 @@
     <ClCompile Include="ObjectMap.cpp" />
     <ClCompile Include="ParaGoomba.cpp" />
     <ClCompile Include="QuestionBrick.cpp" />
+    <ClCompile Include="SuperMushroom.cpp" />
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="TileSet.cpp" />
     <ClCompile Include="debug.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="ObjectMap.h" />
     <ClInclude Include="ParaGoomba.h" />
     <ClInclude Include="QuestionBrick.h" />
+    <ClInclude Include="SuperMushroom.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="TileSet.h" />
     <ClInclude Include="debug.h" />

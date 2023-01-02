@@ -13,6 +13,7 @@
 #include "QuestionBrick.h"
 #include "CoinBrick.h"
 #include "KoopaBound.h"
+#include "SuperMushroom.h"
 
 
 #include "Collision.h"
@@ -74,8 +75,10 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithQuestionBrick(e);
 	else if (dynamic_cast<CKoopaBound*>(e->obj))
 		OnCollisionWithKoopaBound(e);
-	//else if (dynamic_cast<CCoinBrick*>(e->obj))
-	//	OnCollisionWithCoinBrick(e);
+	else if (dynamic_cast<CCoinBrick*>(e->obj))
+		OnCollisionWithCoinBrick(e);
+	else if (dynamic_cast<CSuperMushroom*>(e->obj))
+		OnCollisionWithSuperMushroom(e);
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -123,6 +126,7 @@ void CMario::OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e)
 		if (questionbrick->GetState() != QUESTIONBRICK_STATE_DISABLE)
 		{
 			questionbrick->SetState(QUESTIONBRICK_STATE_DISABLE);
+		
 
 		}
 
@@ -130,23 +134,51 @@ void CMario::OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e)
 	
 }
 
-//void CMario::OnCollisionWithCoinBrick(LPCOLLISIONEVENT e)
-//{
-//	CCoinBrick* coinbrick = dynamic_cast<CCoinBrick*>(e->obj);
-//
-//
-//	// jump on top >> kill Goomba and deflect a bit 
-//	if (e->ny > 0)
-//	{
-//		if (coinbrick->GetState() != COINBRICK_STATE_THROW_UP)
-//		{
-//			coinbrick->SetState(COINBRICK_STATE_THROW_UP);
-//
-//		}
-//
-//	}
-//
-//}
+void CMario::OnCollisionWithCoinBrick(LPCOLLISIONEVENT e)
+{
+	CCoinBrick* coinbrick = dynamic_cast<CCoinBrick*>(e->obj);
+
+
+	// jump on top >> kill Goomba and deflect a bit 
+	if (e->ny > 0)
+	{
+		if (coinbrick->GetState() != COINBRICK_STATE_THROW_UP)
+		{
+			coinbrick->SetState(COINBRICK_STATE_THROW_UP);
+
+		}
+
+	}
+	
+}
+
+void CMario::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
+{
+	CSuperMushroom* supermushroom = dynamic_cast<CSuperMushroom*>(e->obj);
+	// jump on top >> kill Goomba and deflect a bit 
+	if (e->ny > 0)
+	{
+		if (supermushroom->GetState() != SUPERMUSHROOM_STATE_WALKING)
+		{
+			supermushroom->SetState(SUPERMUSHROOM_STATE_WALKING);
+
+		}
+
+	}
+	else
+	{
+		if (untouchable == 0)
+		{
+			if (supermushroom->GetState() == SUPERMUSHROOM_STATE_WALKING) {
+				if (level < MARIO_LEVEL_BIG) {
+					level = MARIO_LEVEL_BIG;
+					e->obj->Delete();
+					StartUntouchable();
+				}
+			}
+		}
+	}
+}
 
 void CMario::OnCollisionWithCameraBound(LPCOLLISIONEVENT e)
 {

@@ -15,6 +15,7 @@
 #include "KoopaBound.h"
 #include "Portal.h"
 #include "VenusFireTrap.h"
+#include "SuperMushroom.h"
 
 class CObjectMap
 {
