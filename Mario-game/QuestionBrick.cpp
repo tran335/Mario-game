@@ -12,10 +12,11 @@ CQuestionBrick::CQuestionBrick(float x, float y)
 
 void CQuestionBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	CGameObject::Update(dt);
+	CGameObject::Update(dt, coObjects);
 
 	if (GetState() == QUESTIONBRICK_STATE_DISABLE)
 	{
+	
 		if (jumpTime == 0) {
 			BrickStartToThrow();
 		}

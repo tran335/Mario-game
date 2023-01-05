@@ -89,10 +89,10 @@ void CParaGoomba::Render()
 	if (state == PARAGOOMBA_STATE_DIE)
 		aniId = ID_ANI_PARAGOOMBA_DIE;
 	else if (level == PARAGOOMBA_LEVEL_WING) {
-		if (isOnPlatform==true) {
+		if (isOnPlatform == true) {
 			aniId = ID_ANI_PARAGOOMBA_WING;
 		}
-		else 
+		else
 			aniId = ID_ANI_PARAGOOMBA_FLY;
 	}
 	else if (level == PARAGOOMBA_LEVEL_NO_WING)
@@ -111,7 +111,7 @@ void CParaGoomba::SetState(int state)
 	{
 	case PARAGOOMBA_STATE_DIE:
 		die_start = GetTickCount64();
-		y += (PARAGOOMBA_BBOX_HEIGHT - PARAGOOMBA_BBOX_HEIGHT_DIE) / 2;
+		//y += (PARAGOOMBA_BBOX_HEIGHT - PARAGOOMBA_BBOX_HEIGHT_DIE) / 2;
 		vx = 0;
 		vy = 0;
 		ay = 0;

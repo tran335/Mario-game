@@ -13,6 +13,7 @@
 #include "QuestionBrick.h"
 #include "CoinBrick.h"
 #include "KoopaBound.h"
+#include "Koopa.h"
 #include "SuperMushroom.h"
 
 
@@ -38,11 +39,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 void CMario::OnNoCollision(DWORD dt)
 {
-	
 	x += vx * dt;
 	y += vy * dt;
-
-
 }
 
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
@@ -50,7 +48,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 
 	if (e->ny != 0 && e->obj->IsBlocking())
 	{
-		vy = 0;
+        vy = 0;
+		
 		if (e->ny < 0) isOnPlatform = true;
 	}
 	else 
@@ -75,6 +74,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithQuestionBrick(e);
 	else if (dynamic_cast<CKoopaBound*>(e->obj))
 		OnCollisionWithKoopaBound(e);
+	else if (dynamic_cast<CKoopa*>(e->obj))
+		OnCollisionWithKoopa(e);
 	else if (dynamic_cast<CCoinBrick*>(e->obj))
 		OnCollisionWithCoinBrick(e);
 	else if (dynamic_cast<CSuperMushroom*>(e->obj))
@@ -119,37 +120,26 @@ void CMario::OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e)
 {
 	CQuestionBrick* questionbrick = dynamic_cast<CQuestionBrick*>(e->obj);
 	
-
-	// jump on top >> kill Goomba and deflect a bit 
 	if (e->ny > 0)
 	{
 		if (questionbrick->GetState() != QUESTIONBRICK_STATE_DISABLE)
 		{
 			questionbrick->SetState(QUESTIONBRICK_STATE_DISABLE);
-		
-
 		}
-
 	}
-	
 }
 
 void CMario::OnCollisionWithCoinBrick(LPCOLLISIONEVENT e)
 {
 	CCoinBrick* coinbrick = dynamic_cast<CCoinBrick*>(e->obj);
 
-
-	// jump on top >> kill Goomba and deflect a bit 
-	if (e->ny > 0)
-	{
-		if (coinbrick->GetState() != COINBRICK_STATE_THROW_UP)
+		if (e->ny > 0)
 		{
-			coinbrick->SetState(COINBRICK_STATE_THROW_UP);
-
+				if (coinbrick->GetState() != COINBRICK_STATE_THROW_UP)
+				{
+					coinbrick->SetState(COINBRICK_STATE_THROW_UP);
+				}
 		}
-
-	}
-	
 }
 
 void CMario::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
@@ -161,9 +151,7 @@ void CMario::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
 		if (supermushroom->GetState() != SUPERMUSHROOM_STATE_WALKING)
 		{
 			supermushroom->SetState(SUPERMUSHROOM_STATE_WALKING);
-
 		}
-
 	}
 	else
 	{
@@ -171,10 +159,11 @@ void CMario::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
 		{
 			if (supermushroom->GetState() == SUPERMUSHROOM_STATE_WALKING) {
 				if (level < MARIO_LEVEL_BIG) {
-					level = MARIO_LEVEL_BIG;
+					SetLevel(MARIO_LEVEL_BIG);
 					e->obj->Delete();
 					StartUntouchable();
 				}
+				
 			}
 		}
 	}
@@ -202,7 +191,6 @@ void CMario::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
 			if (paragoomba->Getlevel() !=PARAGOOMBA_LEVEL_NO_WING)
 			{
 				paragoomba->Setlevel(PARAGOOMBA_LEVEL_NO_WING);
-				StartUntouchable();
 			}
 			else {
 				paragoomba->SetState(PARAGOOMBA_STATE_DIE);
@@ -241,9 +229,47 @@ void CMario::OnCollisionWithKoopaBound(LPCOLLISIONEVENT e)
 {
 
 	if (e->nx)
-		x += dx;
+		x += vx;
 	if (e->ny)
-		y += dy;
+		y += vy;
+
+}
+
+void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
+{
+	CKoopa* koopa = dynamic_cast<CKoopa*>(e->obj);
+
+	if (e->ny < 0)
+	{
+		if (koopa->GetState() != KOOPA_STATE_DIE)
+		{
+			koopa->SetState(KOOPA_STATE_DIE);
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		}
+	}
+	else // hit by Goomba
+	{
+		if (untouchable == 0)
+		{
+			if (koopa->GetState() != KOOPA_STATE_DIE)
+			{
+				if (level > MARIO_LEVEL_SMALL)
+				{
+					level = MARIO_LEVEL_SMALL;
+					StartUntouchable();
+				}
+				else
+				{
+					DebugOut(L">>> Mario DIE >>> \n");
+					SetState(MARIO_STATE_DIE);
+				}
+			}
+			else
+				koopa->SetState(KOOPA_STATE_SLIDE);
+		}
+	}
+
+
 
 }
 
@@ -518,7 +544,12 @@ void CMario::SetLevel(int l)
 	if (this->level == MARIO_LEVEL_SMALL)
 	{
 		y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT) / 2;
+		level = l;
 	}
-	level = l;
+	else
+	{
+		y += (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT) / 2;
+		level = 2;
+	}
 }
 

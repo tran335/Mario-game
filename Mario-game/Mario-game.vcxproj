@@ -149,6 +149,7 @@
     <ClCompile Include="CoinBrick.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="BigBox.cpp" />
+    <ClCompile Include="Fireball.cpp" />
     <ClCompile Include="Koopa.cpp" />
     <ClCompile Include="KoopaBound.cpp" />
     <ClCompile Include="Layer.cpp" />
@@ -189,6 +190,7 @@
     <ClInclude Include="CoinBrick.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="BigBox.h" />
+    <ClInclude Include="Fireball.h" />
     <ClInclude Include="Koopa.h" />
     <ClInclude Include="KoopaBound.h" />
     <ClInclude Include="Layer.h" />

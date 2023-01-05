@@ -8,7 +8,7 @@ class CTileMap
 	static CTileMap* __instance;
 	vector<LPLAYER> layers;
 	CTileSet* tileSet;
-	CObjectMap* objectMap;
+	CObjectMap *objectMap;
 	Layer* foregroundLayer;
 
 public:
@@ -16,7 +16,7 @@ public:
 	void ReadXmlFile(const char* pathTmx, int id, vector<LPGAMEOBJECT>& objects, string prefixPath);
 	void RenderBackground();
 	void RenderForeground();
-	CObjectMap* GetObjectMap() { return objectMap; }
+	CObjectMap *GetObjectMap() { return objectMap; }
 	void Clear();
 };
 

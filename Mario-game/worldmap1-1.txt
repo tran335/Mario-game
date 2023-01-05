@@ -11,7 +11,7 @@ coinbrick.txt
 koopa.txt
 venusfiretrap.txt
 mushroom.txt
-
+fireball.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type

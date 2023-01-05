@@ -21,6 +21,8 @@
 class CQuestionBrick : public CGameObject {
 	float start_y;
 	float jumpTime;
+    
+	
 public:
 	CQuestionBrick(float x, float y);
 	void Render();
@@ -28,4 +30,5 @@ public:
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	void BrickStartToThrow() { jumpTime = GetTickCount64(); };
 	virtual void SetState(int state);
+	
 };

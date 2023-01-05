@@ -109,6 +109,7 @@
     <ClCompile Include="VenusFireTrap.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Fireball.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TileMap.h">
@@ -225,6 +226,7 @@
     <ClInclude Include="VenusFireTrap.h">
       <Filter>Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="Fireball.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Map">

@@ -18,7 +18,6 @@ void CCoinBrick::OnCollisionWith(LPCOLLISIONEVENT e)
 }
 void CCoinBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	
 
 	if (GetState() == COINBRICK_STATE_THROW_UP)
 	{

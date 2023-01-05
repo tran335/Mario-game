@@ -21,7 +21,7 @@ class CObjectMap
 {
 	vector<LPGAMEOBJECT> objects;
 	TiXmlElement* objectGroupElement;
-	int objectGroupId;
+	int objectGroupId = 0;
 	string name;
 public:
 	CObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT>& coObjects);

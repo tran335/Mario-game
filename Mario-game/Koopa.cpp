@@ -1,16 +1,18 @@
 #include "Koopa.h"
-
+#include "PlayScene.h"
 CKoopa::CKoopa(float x, float y) :CGameObject(x, y)
 {
 	this->ax = 0;
 	this->ay = KOOPA_GRAVITY;
 	die_start = -1;
+	waking_start = -1;
 	SetState(KOOPA_STATE_WALKING);
+	 mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 }
 
 void CKoopa::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	if (state == KOOPA_STATE_DIE)
+	if (state == KOOPA_STATE_DIE || state == KOOPA_STATE_SLIDE)
 	{
 		left = x - KOOPA_BBOX_WIDTH / 2;
 		top = y - KOOPA_BBOX_HEIGHT_DIE / 2;
@@ -37,25 +39,49 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (!e->obj->IsBlocking()) return;
 	if (dynamic_cast<CKoopa*>(e->obj)) return;
 
-	if (e->ny != 0)
-	{
-		vy = 0;
-	}
-	else if (e->nx != 0)
-	{
-		vx = -vx;
-	}
+
+
+
+		if (e->ny != 0)
+		{
+			vy = 0;
+		}
+		else if (e->nx != 0)
+		{
+			vx = -vx;
+		}
+	
+	
 }
 
 void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
+	float x_mario, y_mario;
+	mario->GetPosition(x_mario, y_mario);
 
 	if ((state == KOOPA_STATE_DIE) && (GetTickCount64() - die_start > KOOPA_DIE_TIMEOUT))
 	{
-		isDeleted = true;
-		return;
+		SetState(KOOPA_STATE_WAKING);
+		startWakingTime();
+	}
+	else if (state == KOOPA_STATE_WAKING && (GetTickCount64() - waking_start > KOOPA_WAKING_TIMEOUT)) {
+		SetState(KOOPA_STATE_WALKING);
+		waking_start = 0;
+	}
+	else if (state == KOOPA_STATE_SLIDE) {
+		if (x_mario > x) {
+			vx = KOOPA_SLIDE_SPEED;
+		}
+		else if (x_mario < x) {
+			//vx = -KOOPA_SLIDE_SPEED;
+		}
+		if (vx == 0 && (GetTickCount64() - die_start > KOOPA_DIE_TIMEOUT)) {
+			SetState(KOOPA_STATE_WAKING);
+			startWakingTime();
+		}
+	
 	}
 
 	CGameObject::Update(dt, coObjects);
@@ -78,7 +104,12 @@ void CKoopa::Render()
 	{
 		aniId = ID_ANI_KOOPA_DIE;
 	}
-
+	if (state == KOOPA_STATE_WAKING) {
+		aniId = ID_ANI_KOOPA_WAKING;
+	}
+	if (state == KOOPA_STATE_SLIDE) {
+		aniId = ID_ANI_KOOPA_SLIDE;
+	}
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	//RenderBoundingBox();
 }
@@ -96,6 +127,9 @@ void CKoopa::SetState(int state)
 		ay = 0;
 		break;
 	case KOOPA_STATE_WALKING:
+		if (waking_start > 0) {
+			y -= (KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_DIE) / 2;
+		}
 		vx = -KOOPA_WALKING_SPEED;
 		break;
 	}
