@@ -22,19 +22,21 @@ void CVenusFireTrap::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			isUp = false;
 		else if (y_mario < y)
 			isUp = true;
-		if (x_mario < y) {
+		if (x_mario < x) {
 			isRight = false;
 		}
-		else if(x_mario > y) {
+		else if(x_mario > x) {
 			isRight = true;
 		}
 		if (y < start_y - VENUS_HEIGHT) // have not overlap with pipe
 		{
 			vy = 0.0f;
 			StartShootTime();
+			fireball = new CFireball(x, y);
 		}
 	}
 	else if (GetTickCount64() - shootingStartTime > VENUS_SHOOTING_TIME) {
+
 		shootingStartTime = 0;
 		isShooting = false;
 		createFireball = false;
@@ -42,6 +44,9 @@ void CVenusFireTrap::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	if (y > start_y + VENUS_HEIGHT) {
 		vy = -VENUS_SPEED;
+	}
+	if (isShooting == true) {
+		fireball->Update(dt, coObjects);
 	}
 
 	CGameObject::Update(dt, coObjects);
@@ -81,8 +86,7 @@ void CVenusFireTrap::Render()
 				aniId = IC_ANI_VENUS_DOWN_LEFT;
 	}
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
-	if (createFireball == true) {
-		fireball = new CFireball(x, y);
+	if (isShooting == true) {
 		fireball->Render();
 	}
 	//RenderBoundingBox();

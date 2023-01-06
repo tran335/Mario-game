@@ -19,7 +19,7 @@
 #define ID_ANI_VENUS_SHOOT_UP_RIGHT 608
 
 #define VENUS_SPEED 2.0f
-#define VENUS_SHOOTING_TIME 2000
+#define VENUS_SHOOTING_TIME 4000
 
 
 class CVenusFireTrap : public CGameObject

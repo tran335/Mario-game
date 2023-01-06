@@ -1,9 +1,11 @@
 #include "Fireball.h"
+#include "PlayScene.h"
 
 CFireball::CFireball(float x, float y)
 {
 	this->x = x;
 	this->y = y;
+	mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 }
 
 void CFireball::Render()
@@ -16,8 +18,31 @@ void CFireball::Render()
 
 void CFireball::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	//x = vx * dt;
+	//y = vy * dt;
+	float x_mario, y_mario;
+	mario->GetPosition(x_mario, y_mario);
+	if (x_mario < x) {
+		x -= FIRE_BALL_SPEED;
+		if (y_mario > y) {
+			y += FIRE_BALL_SPEED;
+		}
+		else if (y_mario < y) {
+			y -=FIRE_BALL_SPEED;
+		}
+	}
+
+	if (x_mario > x) {
+		x += FIRE_BALL_SPEED;
+		if (y_mario > y) {
+			y += FIRE_BALL_SPEED;
+		}
+		else if (y_mario < y) {
+			y -= FIRE_BALL_SPEED;
+		}
+	}
+	
 	CGameObject::Update(dt, coObjects);
-	y = y - FIRE_BALL_SPEED;
 }
 
 void CFireball::GetBoundingBox(float& l, float& t, float& r, float& b)

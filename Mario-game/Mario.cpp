@@ -15,6 +15,7 @@
 #include "KoopaBound.h"
 #include "Koopa.h"
 #include "SuperMushroom.h"
+#include "VenusFireTrap.h"
 
 
 #include "Collision.h"
@@ -46,10 +47,11 @@ void CMario::OnNoCollision(DWORD dt)
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 
+
 	if (e->ny != 0 && e->obj->IsBlocking())
 	{
         vy = 0;
-		
+
 		if (e->ny < 0) isOnPlatform = true;
 	}
 	else 
@@ -80,13 +82,15 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithCoinBrick(e);
 	else if (dynamic_cast<CSuperMushroom*>(e->obj))
 		OnCollisionWithSuperMushroom(e);
+	else if (dynamic_cast<CVenusFireTrap*>(e->obj))
+		OnCollisionWithVenusFireTrap(e);
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 {
 	CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
 
-	// jump on top >> kill Goomba and deflect a bit 
+ 
 	if (e->ny < 0)
 	{
 		if (goomba->GetState() != GOOMBA_STATE_DIE)
@@ -120,6 +124,10 @@ void CMario::OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e)
 {
 	CQuestionBrick* questionbrick = dynamic_cast<CQuestionBrick*>(e->obj);
 	
+		if (e->nx > 0)
+		{
+			vx = 0;
+		}
 	if (e->ny > 0)
 	{
 		if (questionbrick->GetState() != QUESTIONBRICK_STATE_DISABLE)
@@ -222,16 +230,24 @@ void CMario::OnCollisionWithBigBox(LPCOLLISIONEVENT e)
 {
 	
 	CBigBox* bigbox = dynamic_cast<CBigBox*>(e->obj);
-		
+
+	if (e->nx != 0) {
+		vx = ax * dt;
+	}
+	else if (e->ny > 0) {
+		vy = ay * dt;
+	}
+
 }
 
 void CMario::OnCollisionWithKoopaBound(LPCOLLISIONEVENT e)
 {
-
-	if (e->nx)
-		x += vx;
-	if (e->ny)
-		y += vy;
+	if (e->nx != 0) {
+		vx = ax * dt;
+	}
+	else if (e->ny != 0) {
+		vy = ay * dt;
+	}
 
 }
 
@@ -268,9 +284,30 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 				koopa->SetState(KOOPA_STATE_SLIDE);
 		}
 	}
+}
+
+void CMario::OnCollisionWithVenusFireTrap(LPCOLLISIONEVENT e)
+{
+	CVenusFireTrap* venus = dynamic_cast<CVenusFireTrap*>(e->obj);
 
 
-
+		if (untouchable == 0)
+		{
+			
+				if (level > MARIO_LEVEL_SMALL)
+				{
+					level = MARIO_LEVEL_SMALL;
+					StartUntouchable();
+				}
+				else
+				{
+					DebugOut(L">>> Mario DIE >>> \n");
+					SetState(MARIO_STATE_DIE);
+				}
+			
+			
+		}
+	
 }
 
 void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
@@ -500,7 +537,7 @@ void CMario::SetState(int state)
 		break;
 
 	case MARIO_STATE_DIE:
-		   // vy = -MARIO_JUMP_DEFLECT_SPEED;
+		    vy = -MARIO_JUMP_DIE_SPEED;
 			ax = 0.0f;
 			vx = 0.0f;
 

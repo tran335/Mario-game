@@ -20,6 +20,7 @@
 #define MARIO_JUMP_RUN_SPEED_X 1.0f
 #define MARIO_JUMP_SPEED_X		1.4f
 
+#define MARIO_JUMP_DIE_SPEED 1.0f
 
 #define MARIO_GRAVITY			0.002f
 
@@ -159,6 +160,7 @@ class CMario : public CGameObject
 	void OnCollisionWithKoopa(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoinBrick(LPCOLLISIONEVENT e);
 	void OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e);
+	void OnCollisionWithVenusFireTrap(LPCOLLISIONEVENT e);
 
 	int GetAniIdBig();
 	int GetAniIdSmall();
