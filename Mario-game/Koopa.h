@@ -4,9 +4,10 @@
 #include "Game.h"
 
 
-#define KOOPA_GRAVITY 0.002f
+
+#define KOOPA_GRAVITY 0.0025f
 #define KOOPA_WALKING_SPEED 0.05f
-#define KOOPA_SLIDE_SPEED 1.0f
+#define KOOPA_SLIDE_SPEED 1.5f
 
 #define KOOPA_BBOX_WIDTH 51
 #define KOOPA_BBOX_HEIGHT 79
@@ -31,10 +32,13 @@ class CKoopa : public CGameObject
 protected:
 	float ax;
 	float ay;
-
+	float start_x;
+	float start_y;
 	CMario* mario;
 	ULONGLONG die_start;
 	ULONGLONG waking_start;
+	bool isRight=true;
+	int untouchable = 0;
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
@@ -46,8 +50,11 @@ protected:
 
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 
+	void OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e);
+
 public:
 	CKoopa(float x, float y);
 	virtual void SetState(int state);
+	void FindSlideDirection();
 	void startWakingTime(){waking_start = GetTickCount64();}
 };

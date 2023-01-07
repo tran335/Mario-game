@@ -31,6 +31,7 @@ class CVenusFireTrap : public CGameObject
 	float width;
 	float height;
 	float start_y;
+
 	ULONGLONG shootingStartTime = 0;
 	CFireball* fireball;
 	bool createFireball = false;

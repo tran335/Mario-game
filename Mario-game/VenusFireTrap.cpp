@@ -33,6 +33,7 @@ void CVenusFireTrap::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			vy = 0.0f;
 			StartShootTime();
 			fireball = new CFireball(x, y);
+	
 		}
 	}
 	else if (GetTickCount64() - shootingStartTime > VENUS_SHOOTING_TIME) {
