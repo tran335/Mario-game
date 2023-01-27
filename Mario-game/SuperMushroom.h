@@ -16,6 +16,7 @@
 //#define SUPERMUSHROOM_STATE_DIE 200
 
 #define ID_ANI_SUPERMUSHROOM_WALKING 510
+#define ID_ANI_LEAF 520
 //#define ID_ANI_SUPERMUSHROOM_DIE 5001
 
 class CSuperMushroom : public CGameObject
@@ -24,7 +25,7 @@ protected:
 	float ax;
 	float ay;
 	float start_y;
-
+	CMario* mario;
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

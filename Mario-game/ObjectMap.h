@@ -16,6 +16,7 @@
 #include "Portal.h"
 #include "VenusFireTrap.h"
 #include "SuperMushroom.h"
+#include "Leaf.h"
 
 class CObjectMap
 {

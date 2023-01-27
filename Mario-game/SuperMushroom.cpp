@@ -1,4 +1,5 @@
 #include "SuperMushroom.h"
+#include "PlayScene.h"
 
 CSuperMushroom::CSuperMushroom(float x, float y) :CGameObject(x, y)
 {
@@ -8,6 +9,7 @@ CSuperMushroom::CSuperMushroom(float x, float y) :CGameObject(x, y)
 	this->ay = SUPERMUSHROOM_GRAVITY;
 	start_y = y;
 	//SetState(SUPERMUSHROOM_STATE_WALKING);
+	mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 }
 
 void CSuperMushroom::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -66,8 +68,15 @@ void CSuperMushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CSuperMushroom::Render()
 {
-	int aniId = ID_ANI_SUPERMUSHROOM_WALKING;
-
+	int aniId = -1;
+	if (mario->GetLevel() < MARIO_LEVEL_BIG) 
+	{
+		 aniId = ID_ANI_SUPERMUSHROOM_WALKING;
+	}
+	else 
+	{
+		aniId = ID_ANI_LEAF;
+	}
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	//RenderBoundingBox();
 }

@@ -153,6 +153,7 @@
     <ClCompile Include="Koopa.cpp" />
     <ClCompile Include="KoopaBound.cpp" />
     <ClCompile Include="Layer.cpp" />
+    <ClCompile Include="Leaf.cpp" />
     <ClCompile Include="ObjectMap.cpp" />
     <ClCompile Include="ParaGoomba.cpp" />
     <ClCompile Include="QuestionBrick.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="Koopa.h" />
     <ClInclude Include="KoopaBound.h" />
     <ClInclude Include="Layer.h" />
+    <ClInclude Include="Leaf.h" />
     <ClInclude Include="ObjectMap.h" />
     <ClInclude Include="ParaGoomba.h" />
     <ClInclude Include="QuestionBrick.h" />

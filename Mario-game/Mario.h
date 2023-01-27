@@ -17,6 +17,8 @@
 #define MARIO_JUMP_SPEED_Y		1.0f
 #define MARIO_JUMP_RUN_SPEED_Y	0.6f
 
+#define MARIO_FLY_SPEED_Y	3.0f
+
 #define MARIO_JUMP_RUN_SPEED_X 1.0f
 #define MARIO_JUMP_SPEED_X		1.4f
 
@@ -130,6 +132,8 @@
 #define ID_ANI_MARIO_RACCOON_SPIN_RIGHT 1169
 #define ID_ANI_MARIO_RACCOON_SPIN_LEFT 169
 
+
+
 #pragma endregion
 
 #define GROUND_Y 160.0f
@@ -156,6 +160,8 @@
 
 #define MARIO_UNTOUCHABLE_TIME 2500
 #define MARIO_SPIN_TIME 1000
+#define MARIO_RUNNING_TIME 1000
+#define MARIO_PRE_FLY_TIME 1000
 
 class CMario : public CGameObject
 {
@@ -163,6 +169,9 @@ class CMario : public CGameObject
 	BOOLEAN isKicking;
 	BOOLEAN isSpin;
 	BOOLEAN isSpining;
+	BOOLEAN isRunning;
+	BOOLEAN isPrefly;
+	BOOLEAN isFly;
 	float maxVx;
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
@@ -171,6 +180,8 @@ class CMario : public CGameObject
 	int untouchable; 
 	ULONGLONG untouchable_start;
 	ULONGLONG spin_time;
+	ULONGLONG pre_fly_time;
+	ULONGLONG running_time;
 	BOOLEAN isOnPlatform;
 	DWORD dt;
 	int coin; 
@@ -200,13 +211,19 @@ public:
 		isKicking = false;
 		isSpin = false;
 		isSpining = false;
+		isRunning = false;
+		isPrefly = false;
+		isFly = false;
+
 		maxVx = 0.0f;
 		ax = 0.0f;
 		ay = MARIO_GRAVITY; 
 
-		level = MARIO_LEVEL_RACCOON;
+		level = MARIO_LEVEL_SMALL;
 		untouchable = 0;
 		untouchable_start = -1;
+		pre_fly_time = -1;
+		running_time = -1;
 		isOnPlatform = false;
 		coin = 0;
 
@@ -231,6 +248,8 @@ public:
 	int GetLevel() { return level; }
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 	void startIsSpin() { spin_time = GetTickCount64(); }
+	void startRunning() { running_time = GetTickCount64(); }
+	void startPreFly() { pre_fly_time = GetTickCount64(); }
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };

@@ -44,7 +44,20 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	{
 		startIsSpin();
 	}
-
+	else if(state==MARIO_STATE_RUNNING_LEFT || state ==MARIO_STATE_RUNNING_RIGHT)
+	{
+		startRunning();
+	}
+	//if (GetTickCount64() - running_time > MARIO_RUNNING_TIME && running_time > 0)
+	//{
+	//	SetState(MARIO_STATE_PRE_FLY);
+	//	running_time = 0;
+	//	startPreFly();
+	//}
+	//if (GetTickCount64() - pre_fly_time > MARIO_PRE_FLY_TIME && pre_fly_time > 0) {
+	//	pre_fly_time = 0;
+	//	SetState(MARIO_STATE_FLY);
+	//}
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
@@ -195,12 +208,16 @@ void CMario::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
 		if (untouchable == 0)
 		{
 			if (supermushroom->GetState() == SUPERMUSHROOM_STATE_WALKING) {
-				if (level < MARIO_LEVEL_BIG) {
+				if (level == MARIO_LEVEL_SMALL) {
 					SetLevel(MARIO_LEVEL_BIG);
-					e->obj->Delete();
-					StartUntouchable();
 				}
-				
+				else if (level == MARIO_LEVEL_BIG) 
+				{
+					SetLevel(MARIO_LEVEL_RACCOON);
+					level = MARIO_LEVEL_RACCOON;
+				}
+				e->obj->Delete();
+				StartUntouchable();
 			}
 		}
 	}
@@ -229,11 +246,13 @@ void CMario::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
 			{
 				paragoomba->Setlevel(PARAGOOMBA_LEVEL_NO_WING);
 			}
-			else {
+			else if (paragoomba->Getlevel() == PARAGOOMBA_LEVEL_NO_WING)
+			{
 				paragoomba->SetState(PARAGOOMBA_STATE_DIE);
 				vy = -MARIO_JUMP_DEFLECT_SPEED;
 			}
 		}
+	
 	}
 	else // hit by Goomba
 	{
@@ -258,14 +277,6 @@ void CMario::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithBigBox(LPCOLLISIONEVENT e)
 {
 	
-	CBigBox* bigbox = dynamic_cast<CBigBox*>(e->obj);
-
-	if (e->nx != 0) {
-		vx = ax * dt;
-	}
-	else if (e->ny > 0) {
-		vy = ay * dt;
-	}
 
 }
 
@@ -503,10 +514,47 @@ int CMario::GetAniIdRaccoon()
 		}
 		else if(isSpin) 
 		{
-		if (nx >= 0)
-			aniId = ID_ANI_MARIO_RACCOON_SPIN_RIGHT;
-		else
-			aniId = ID_ANI_MARIO_RACCOON_SPIN_LEFT;
+			if (isRunning)
+			{
+				 if (isPrefly)
+				{
+					 if (isFly)
+					 {
+						 if (nx >= 0)
+						 {
+							 aniId = ID_ANI_MARIO_RACCOON_FLY_RIGHT;
+						 }
+						 else
+							 aniId = ID_ANI_MARIO_RACCOON_FLY_LEFT;
+					 }
+					 else
+					 {
+						 if (nx >= 0)
+						 {
+							 aniId = ID_ANI_MARIO_RACCOON_PRE_FLY_RIGHT;
+						 }
+						 else
+							 aniId = ID_ANI_MARIO_RACCOON_PRE_FLY_LEFT;
+					 }
+				}
+				else 
+				 {
+					 if (nx >= 0)
+					 {
+						 aniId = ID_ANI_MARIO_RACCOON_RUNNING_RIGHT;
+					 }
+					 else
+						 aniId = ID_ANI_MARIO_RACCOON_RUNNING_LEFT;
+				 }
+			}
+			
+			else 
+			{
+				if (nx >= 0)
+					aniId = ID_ANI_MARIO_RACCOON_SPIN_RIGHT;
+				else
+					aniId = ID_ANI_MARIO_RACCOON_SPIN_LEFT;
+			}
 		}
 		else
 			if (vx == 0)
@@ -637,12 +685,14 @@ void CMario::SetState(int state)
 	{
 	case MARIO_STATE_RUNNING_RIGHT:
 		if (isSitting) break;
+		isRunning = true;
 		maxVx = MARIO_RUNNING_SPEED;
 		ax = MARIO_ACCEL_RUN_X;
 		nx = 1;
 		break;
 	case MARIO_STATE_RUNNING_LEFT:
 		if (isSitting) break;
+		isRunning = true;
 		maxVx = -MARIO_RUNNING_SPEED;
 		ax = -MARIO_ACCEL_RUN_X;
 		nx = -1;
@@ -717,7 +767,15 @@ void CMario::SetState(int state)
 	case MARIO_STATE_SPIN_RELEASE:
 		isSpin = false;
 		break;
+	case MARIO_STATE_PRE_FLY:
+		isPrefly = true;
+		break;
+	case MARIO_STATE_FLY:
+		isFly = true;
+		vy = -MARIO_JUMP_RUN_SPEED_Y;
+		break;
 	}
+
 
 	CGameObject::SetState(state);
 }
@@ -772,17 +830,17 @@ void CMario::SetLevel(int l)
 	// Adjust position to avoid falling off platform
 	if (this->level == MARIO_LEVEL_SMALL)
 	{
-		y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT) / 2;
+		y = (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT) / 2;
 		level = l;
 	}
 	else if (this->level == MARIO_LEVEL_BIG)
 	{
-		y += (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT) / 2;
+		y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT);
 		level = 2;
 	}
-	else
+	else if (this->level == MARIO_LEVEL_RACCOON)
 	{
-		y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_RACCOON_BBOX_HEIGHT)/2;
+		y -= (MARIO_RACCOON_BBOX_HEIGHT - MARIO_BIG_BBOX_HEIGHT)/2;
 		level = 3;
 	}
 }

@@ -1,17 +1,18 @@
 # list of object assets to load in this scene
 [ASSETS]
 mario.txt
-coin.txt
-cloud.txt
-brick.txt
-goomba.txt
-paragoomba.txt
-questionbrick.txt
-coinbrick.txt
-koopa.txt
-venusfiretrap.txt
-mushroom.txt
-fireball.txt
+map\worldmap1-1\objectmap1-1\coin.txt
+map\worldmap1-1\objectmap1-1\cloud.txt
+map\worldmap1-1\objectmap1-1\brick.txt
+map\worldmap1-1\objectmap1-1\goomba.txt
+map\worldmap1-1\objectmap1-1\paragoomba.txt
+map\worldmap1-1\objectmap1-1\questionbrick.txt
+map\worldmap1-1\objectmap1-1\coinbrick.txt
+map\worldmap1-1\objectmap1-1\koopa.txt
+map\worldmap1-1\objectmap1-1\venusfiretrap.txt
+map\worldmap1-1\objectmap1-1\mushroom.txt
+map\worldmap1-1\objectmap1-1\fireball.txt
+map\worldmap1-1\objectmap1-1\leaf.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type

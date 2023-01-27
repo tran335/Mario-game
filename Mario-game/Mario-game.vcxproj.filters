@@ -110,6 +110,9 @@
       <Filter>Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Fireball.cpp" />
+    <ClCompile Include="Leaf.cpp">
+      <Filter>Misc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TileMap.h">
@@ -227,6 +230,9 @@
       <Filter>Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Fireball.h" />
+    <ClInclude Include="Leaf.h">
+      <Filter>Misc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Map">

@@ -91,6 +91,7 @@ void CPlayScene::_ParseSection_ANIMATIONS(string line)
 /*
 	Parse a line in section [OBJECTS] 
 */
+
 void CPlayScene::_ParseSection_OBJECTS(string line)
 {
 	vector<string> tokens = split(line);
@@ -248,8 +249,9 @@ void CPlayScene::Update(DWORD dt)
 	player->GetPosition(cx, cy);
 
 	CGame *game = CGame::GetInstance();
-	cx -= game->GetBackBufferWidth()/2;
-	cy = game->GetBackBufferHeight();
+	cx -= game->GetBackBufferWidth();
+	cy -= game->GetBackBufferHeight();
+	//cy -= game->GetBackBufferHeight()/1.5f;
 
 	if (cx < 0) cx = 0;
 	if (cy < 0) cy = 0;
@@ -261,7 +263,7 @@ void CPlayScene::Update(DWORD dt)
 
 void CPlayScene::Render()
 {
-	CTileMap::GetInstance()->RenderBackground();
+   CTileMap::GetInstance()->RenderBackground();
 	
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();

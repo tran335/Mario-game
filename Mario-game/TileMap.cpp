@@ -24,6 +24,8 @@ void CTileMap::ReadXmlFile(const char* pathTmx, int id, vector<LPGAMEOBJECT>& ob
 		if (elementName.compare("tileset") == 0)
 		{
 			tileSet = new CTileSet(element, id, prefixPath);
+
+			
 		}
 		else if (elementName.compare("layer") == 0)
 		{
