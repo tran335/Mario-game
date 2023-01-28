@@ -1,0 +1,19 @@
+# list of object assets to load in this scene
+[ASSETS]
+mario.txt
+#
+[OBJECTS]
+# type	x	y	extra_settings per object type
+# type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas
+# See OBJECT_TYPE constants in AssetIDs.h
+
+# MARIO
+0	120	250
+
+#Portal 
+50	170	400	216	440	2
+
+[MAP]
+#id	.tmx	prefix
+80001	map/intro/intro-map.tmx	map/intro/
+

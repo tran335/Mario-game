@@ -443,8 +443,9 @@ void CGame::_ParseSection_SETTINGS(string line)
 	vector<string> tokens = split(line);
 
 	if (tokens.size() < 2) return;
-	if (tokens[0] == "start")
+	if (tokens[0] == "start") {
 		next_scene = atoi(tokens[1].c_str());
+	}
 	else
 		DebugOut(L"[ERROR] Unknown game setting: %s\n", ToWSTR(tokens[0]).c_str());
 }
@@ -518,6 +519,7 @@ void CGame::SwitchScene()
 
 	CSprites::GetInstance()->Clear();
 	CAnimations::GetInstance()->Clear();
+	CTileMap::GetInstance()->Clear();
 
 	current_scene = next_scene;
 	LPSCENE s = scenes[next_scene];

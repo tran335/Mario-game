@@ -6,8 +6,8 @@ height	240
 #id	type	file
 # type: 0: intro, 1: play scene 
 [SCENES]
-0	intro.txt
-1	scene02.txt
+0	scene02.txt
+1	intro.txt
 2	worldmap1-1.txt
 
 # id	file 
