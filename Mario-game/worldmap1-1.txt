@@ -22,9 +22,6 @@ map\worldmap1-1\objectmap1-1\leaf.txt
 # MARIO
 0	120	550
 
-#Portal 
-50	200	160	216	180	1
-
 [MAP]
 #id	.tmx	prefix
 80000	map/worldmap1-1/world-1-1-map.tmx	map/worldmap1-1/
