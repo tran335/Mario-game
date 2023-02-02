@@ -17,6 +17,7 @@
 #include "VenusFireTrap.h"
 #include "SuperMushroom.h"
 #include "Leaf.h"
+#include "OverworldBound.h"
 
 class CObjectMap
 {

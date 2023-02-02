@@ -15,7 +15,6 @@ void CVenusFireTrap::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	y += vy;
 	float x_mario, y_mario;
 	mario->GetPosition(x_mario, y_mario);
-	
 
 	if (isShooting == false) {
 		if (y_mario > y)
@@ -46,7 +45,7 @@ void CVenusFireTrap::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (y > start_y + VENUS_HEIGHT) {
 		vy = -VENUS_SPEED;
 	}
-	if (isShooting == true) {
+	if (createFireball == true) {
 		fireball->Update(dt, coObjects);
 	}
 
@@ -87,7 +86,7 @@ void CVenusFireTrap::Render()
 				aniId = IC_ANI_VENUS_DOWN_LEFT;
 	}
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
-	if (isShooting == true) {
+	if (createFireball == true) {
 		fireball->Render();
 	}
 	//RenderBoundingBox();

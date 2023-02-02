@@ -11,6 +11,7 @@ Layer::Layer(TiXmlElement* layerElement)
 	layerElement->QueryIntAttribute("width", &width);
 	layerElement->QueryIntAttribute("height", &height);
 	if (layerElement->Attribute("visible") == NULL)
+		
 		isVisible = 1;
 	else
 		layerElement->QueryIntAttribute("visible", &isVisible);
@@ -39,7 +40,6 @@ void Layer::ImportData()
 void Layer::Render()
 
 {
-
 	if (isVisible) {
 		for (int i = 0; i < height; i++)
 		{
@@ -48,9 +48,11 @@ void Layer::Render()
 				if (tile[i][j] != 0)
 				{
 					CSprites::GetInstance()->Get(tile[i][j])->Draw((float)j  * TILE_SIZE, (float)i * TILE_SIZE);
+				
 				}
 			}
 		}
+	
 	}
 
 }

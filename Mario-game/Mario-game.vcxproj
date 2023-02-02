@@ -155,6 +155,7 @@
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="Leaf.cpp" />
     <ClCompile Include="ObjectMap.cpp" />
+    <ClCompile Include="OverworldBound.cpp" />
     <ClCompile Include="ParaGoomba.cpp" />
     <ClCompile Include="QuestionBrick.cpp" />
     <ClCompile Include="SuperMushroom.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="Layer.h" />
     <ClInclude Include="Leaf.h" />
     <ClInclude Include="ObjectMap.h" />
+    <ClInclude Include="OverworldBound.h" />
     <ClInclude Include="ParaGoomba.h" />
     <ClInclude Include="QuestionBrick.h" />
     <ClInclude Include="SuperMushroom.h" />

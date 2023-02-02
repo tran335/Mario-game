@@ -242,12 +242,12 @@ void CMario::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
 	{
 		if (paragoomba->GetState() != PARAGOOMBA_STATE_DIE)
 		{
-			if (paragoomba->Getlevel() !=PARAGOOMBA_LEVEL_NO_WING)
+			if (paragoomba->Getlevel() != PARAGOOMBA_LEVEL_NO_WING)
 			{
 				paragoomba->Setlevel(PARAGOOMBA_LEVEL_NO_WING);
+				StartUntouchable();
 			}
-			else if (paragoomba->Getlevel() == PARAGOOMBA_LEVEL_NO_WING)
-			{
+			else {
 				paragoomba->SetState(PARAGOOMBA_STATE_DIE);
 				vy = -MARIO_JUMP_DEFLECT_SPEED;
 			}
@@ -835,13 +835,12 @@ void CMario::SetLevel(int l)
 	}
 	else if (this->level == MARIO_LEVEL_BIG)
 	{
-		y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT);
+		y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT)/2;
 		level = 2;
 	}
-	else if (this->level == MARIO_LEVEL_RACCOON)
+	else 
 	{
 		y -= (MARIO_RACCOON_BBOX_HEIGHT - MARIO_BIG_BBOX_HEIGHT)/2;
-		level = 3;
 	}
 }
 

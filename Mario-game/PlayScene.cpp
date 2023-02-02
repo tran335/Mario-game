@@ -250,14 +250,14 @@ void CPlayScene::Update(DWORD dt)
 
 	CGame *game = CGame::GetInstance();
 	
-	if (id == 2) {
+	if (id == 3) {
 		cx -= game->GetBackBufferWidth() / 2;
 		cy = game->GetBackBufferHeight();
 	}
 	else
 	{
-		cx -= game->GetBackBufferWidth() / 2;
-		cy -= game->GetBackBufferHeight();
+		cx  = -game->GetBackBufferWidth();
+		cy -= game->GetBackBufferHeight()/0.5;
 	}
 
 	if (cx < 0) cx = 0;

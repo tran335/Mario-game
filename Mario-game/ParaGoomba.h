@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "debug.h"
 
 #define PARAGOOMBA_GRAVITY 0.002f
 #define PARAGOOMBA_WALKING_SPEED 0.05f

@@ -27,7 +27,8 @@ protected:
 	float dx;
 	float dy;
 
-	int nx;	 
+	float nx;	 
+	float ny;
 
 	int state;
 

@@ -113,6 +113,7 @@
     <ClCompile Include="Leaf.cpp">
       <Filter>Misc</Filter>
     </ClCompile>
+    <ClCompile Include="OverworldBound.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TileMap.h">
@@ -233,6 +234,7 @@
     <ClInclude Include="Leaf.h">
       <Filter>Misc</Filter>
     </ClInclude>
+    <ClInclude Include="OverworldBound.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Map">

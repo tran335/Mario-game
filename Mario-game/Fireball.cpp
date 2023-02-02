@@ -7,7 +7,7 @@ CFireball::CFireball(float x, float y)
 	this->y = y;
 	ax = 0;
 	unfindslidedirecttion_time = -1;
-	unfindslidedirecttion = 0;
+	unfindslidedirecttion = 1;
 	ay = FIREBALL_GRAVITY;
 	mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 }
@@ -20,35 +20,26 @@ void CFireball::Render()
 	//RenderBoundingBox();
 }
 
+
+
 void CFireball::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	float x_mario, y_mario;
-	mario->GetPosition(x_mario, y_mario);
-	if (unfindslidedirecttion==0) {
-		if (x_mario < x) {
-			x -= FIRE_BALL_SPEED;
-			if (y_mario > y) {
-				y += FIRE_BALL_SPEED;
-			}
-			else if (y_mario < y) {
-				y -= FIRE_BALL_SPEED;
-			}
-		}
-
-		if (x_mario > x) {
-			x += FIRE_BALL_SPEED;
-			if (y_mario > y) {
-				y += FIRE_BALL_SPEED;
-			}
-			else if (y_mario < y) {
-				y -= FIRE_BALL_SPEED;
-			}
-		}
-		startUnfindslidedirecttion();
+	if (unfindslidedirecttion) {
+		startfindslidedirecttion(dt);
 	}
-	if (GetTickCount64() - unfindslidedirecttion_time > UNFINDDIRECTION_TIME and unfindslidedirecttion_time > 0) {
-		unfindslidedirecttion_time = 0;
-		unfindslidedirecttion = 1;
+	if (nx < 0) {
+		x -= FIRE_BALL_SPEED;
+		if(ny<0)
+			y += FIRE_BALL_SPEED;
+		else
+			y -= FIRE_BALL_SPEED;
+	}
+	if (nx > 0) {
+		x += FIRE_BALL_SPEED;
+		if (ny < 0)
+			y -= FIRE_BALL_SPEED;
+		else
+			y += FIRE_BALL_SPEED;
 	}
 
 	CGameObject::Update(dt, coObjects);
@@ -60,4 +51,31 @@ void CFireball::GetBoundingBox(float& l, float& t, float& r, float& b)
 	t = y - FIREBALL_BBOX_HEIGHT / 2;
 	r = l + FIREBALL_BBOX_WIDTH;
 	b = t + FIREBALL_BBOX_HEIGHT;
+}
+
+void CFireball::startfindslidedirecttion(DWORD dt)
+{
+	float x_mario, y_mario;
+	mario->GetPosition(x_mario, y_mario);
+
+	if (x_mario < x) {
+		nx = -1;
+		if (y_mario > y) {
+			ny= -1;
+		}
+		else if (y_mario < y) {
+			ny = 1;
+		}
+	}
+
+	else if (x_mario > x) {
+		nx = 1;
+		if (y_mario > y) {
+			ny=1;
+		}
+		else if (y_mario < y) {
+			ny=-1;
+		}
+	}
+	unfindslidedirecttion = 0;	
 }
