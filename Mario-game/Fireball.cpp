@@ -24,22 +24,23 @@ void CFireball::Render()
 
 void CFireball::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	vy += ay * dt;
 	if (unfindslidedirecttion) {
 		startfindslidedirecttion(dt);
 	}
 	if (nx < 0) {
 		x -= FIRE_BALL_SPEED;
 		if(ny<0)
-			y += FIRE_BALL_SPEED;
+			y += vy*dt;
 		else
-			y -= FIRE_BALL_SPEED;
+			y -= vy * dt;
 	}
 	if (nx > 0) {
 		x += FIRE_BALL_SPEED;
 		if (ny < 0)
-			y -= FIRE_BALL_SPEED;
+			y -= vy * dt;
 		else
-			y += FIRE_BALL_SPEED;
+			y += vy * dt;
 	}
 
 	CGameObject::Update(dt, coObjects);

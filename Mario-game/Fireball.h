@@ -11,7 +11,7 @@
 
 #define UNFINDDIRECTION_TIME 500
 
-#define FIREBALL_GRAVITY 0.0001f
+#define FIREBALL_GRAVITY 0.00005f
 
 class CFireball : public CGameObject
 {
