@@ -1,0 +1,33 @@
+# id	left	top	right	bottom	texture_id
+[SPRITES]
+#down_left					
+61010	660	103	708	199	10
+61011	708	103	756	199	10
+#up_left					
+61012	756	103	804	199	10
+61013	804	103	852	199	10
+#down_right					
+61014	263	103	312	199	50
+61015	216	103	264	199	50
+#up_right					
+61016	168	103	215	199	50
+61017	119	103	168	199	50
+
+# ani_id	sprite1_id	time1	sprite2_id	time2	...
+[ANIMATIONS]
+#down_left
+610	61010	100	61011	100
+#up_left
+611	61012	100	61013	100
+#shoot down_left
+612	61010	100
+#shoot up_left
+613	61012	100
+#down_right
+614	61014	100	61015	100
+#up_right
+615	61016	100	61017	100
+#shoot down_right
+616	61005	100
+#shoot up_right
+617	61016	100

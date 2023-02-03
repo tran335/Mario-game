@@ -160,7 +160,12 @@ void CObjectMap::ImportData(vector<LPGAMEOBJECT>& coObjects)
 			if (enemyName.compare("venus") == 0) {
 				string typeVenus = element->Attribute("type");
 				if (typeVenus.compare("red") == 0) {
-					obj = new CVenusFireTrap(x, y);
+					obj = new CVenusFireTrap(x, y, RED_VENUS);
+					obj->SetPosition(x, y);
+					coObjects.push_back(obj);
+				}
+				else if (typeVenus.compare("green") == 0) {
+					obj = new CVenusFireTrap(x, y, GREEN_VENUS);
 					obj->SetPosition(x, y);
 					coObjects.push_back(obj);
 				}

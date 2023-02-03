@@ -257,7 +257,7 @@ void CPlayScene::Update(DWORD dt)
 	else
 	{
 		cx  = -game->GetBackBufferWidth();
-		cy -= game->GetBackBufferHeight()/0.5;
+		cy -= game->GetBackBufferHeight()/0.5f;
 	}
 
 	if (cx < 0) cx = 0;

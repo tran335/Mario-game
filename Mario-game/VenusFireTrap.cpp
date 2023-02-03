@@ -1,11 +1,12 @@
 #include "VenusFireTrap.h"
 #include "PlayScene.h"
 
-CVenusFireTrap::CVenusFireTrap(float x, float y)
+CVenusFireTrap::CVenusFireTrap(float x, float y, int type)
 {
 	this->x = x;
 	this->y = y;
 	start_y = y;
+	this->type = type;
 	vy = -VENUS_SPEED;
 	 mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 }
@@ -56,34 +57,67 @@ void CVenusFireTrap::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void CVenusFireTrap::Render()
 {
 	int aniId = 0;
-	if (isRight == true) {
-		if (isShooting == true) {
-			if (isUp == true)
-				aniId = ID_ANI_VENUS_SHOOT_UP_RIGHT;
-			else
-				aniId = ID_ANI_VENUS_SHOOT_DOWN_RIGHT;
-		}
-		else
-			if (isUp == true) {
-				aniId = ID_ANI_VENUS_UP_RIGHT;
+	if (type == RED_VENUS) {
+		if (isRight == true) {
+			if (isShooting == true) {
+				if (isUp == true)
+					aniId = ID_ANI_VENUS_SHOOT_UP_RIGHT;
+				else
+					aniId = ID_ANI_VENUS_SHOOT_DOWN_RIGHT;
 			}
 			else
-				aniId = IC_ANI_VENUS_DOWN_RIGHT;
+				if (isUp == true) {
+					aniId = ID_ANI_VENUS_UP_RIGHT;
+				}
+				else
+					aniId = IC_ANI_VENUS_DOWN_RIGHT;
+		}
+		else
+		{
+			if (isShooting == true) {
+				if (isUp == true)
+					aniId = ID_ANI_VENUS_SHOOT_UP_LEFT;
+				else
+					aniId = ID_ANI_VENUS_SHOOT_DOWN_LEFT;
+			}
+			else
+				if (isUp == true) {
+					aniId = ID_ANI_VENUS_UP_LEFT;
+				}
+				else
+					aniId = IC_ANI_VENUS_DOWN_LEFT;
+		}
 	}
-	else 
-	{
-		if (isShooting == true) {
-			if (isUp == true)
-				aniId = ID_ANI_VENUS_SHOOT_UP_LEFT;
-			else
-				aniId = ID_ANI_VENUS_SHOOT_DOWN_LEFT;
-		}
-		else
-			if (isUp == true) {
-				aniId = ID_ANI_VENUS_UP_LEFT;
+	else {
+		if (isRight == true) {
+			if (isShooting == true) {
+				if (isUp == true)
+					aniId = ID_ANI_GREEN_VENUS_SHOOT_UP_RIGHT;
+				else
+					aniId = ID_ANI_GREEN_VENUS_SHOOT_DOWN_RIGHT;
 			}
 			else
-				aniId = IC_ANI_VENUS_DOWN_LEFT;
+				if (isUp == true) {
+					aniId = ID_ANI_GREEN_VENUS_UP_RIGHT;
+				}
+				else
+					aniId = IC_ANI_GREEN_VENUS_DOWN_RIGHT;
+		}
+		else
+		{
+			if (isShooting == true) {
+				if (isUp == true)
+					aniId = ID_ANI_GREEN_VENUS_SHOOT_UP_LEFT;
+				else
+					aniId = ID_ANI_GREEN_VENUS_SHOOT_DOWN_LEFT;
+			}
+			else
+				if (isUp == true) {
+					aniId = ID_ANI_GREEN_VENUS_UP_LEFT;
+				}
+				else
+					aniId = IC_ANI_GREEN_VENUS_DOWN_LEFT;
+		}
 	}
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	if (createFireball == true) {

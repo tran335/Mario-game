@@ -64,7 +64,7 @@ void CKoopa::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
 		{
 			supermushroom->SetState(SUPERMUSHROOM_STATE_WALKING);
 		}
-	}
+	} 
 }
 
 void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

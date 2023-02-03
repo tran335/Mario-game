@@ -39,7 +39,7 @@ protected:
 	float ax;
 	float ay;
 
-	ULONGLONG die_start;
+	float die_start;
 	BOOLEAN isOnPlatform;
 	int jumpTime;
 	float walkingTime;
