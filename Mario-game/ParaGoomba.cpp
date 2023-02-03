@@ -67,9 +67,6 @@ void CParaGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			jumpTime = PARAGOOMBA_FLY_TIMES;
 		}
 	}
-	if (level == PARAGOOMBA_LEVEL_NO_WING) {
-		SetState(PARAGOOMBA_STATE_NORMAL);
-	}
 	if ((state == PARAGOOMBA_STATE_DIE) && (GetTickCount64() - die_start > PARAGOOMBA_DIE_TIMEOUT))
 	{
 		isDeleted = true;
@@ -86,17 +83,33 @@ void CParaGoomba::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
 	int aniId = -1;
-	if (state == PARAGOOMBA_STATE_DIE)
-		aniId = ID_ANI_PARAGOOMBA_DIE;
-	else if (level == PARAGOOMBA_LEVEL_WING) {
+	//if (state == PARAGOOMBA_STATE_DIE)
+	//	aniId = ID_ANI_PARAGOOMBA_DIE;
+	//else if (level == PARAGOOMBA_LEVEL_WING) {
+	//	if (isOnPlatform == true) {
+	//		aniId = ID_ANI_PARAGOOMBA_WING;
+	//	}
+	//	else
+	//		aniId = ID_ANI_PARAGOOMBA_FLY;
+	//}
+	//else if (level == PARAGOOMBA_LEVEL_NO_WING)
+	//	aniId = ID_ANI_PARAGOOMBA_NORMAL;
+
+	
+ if (level == PARAGOOMBA_LEVEL_WING) {
 		if (isOnPlatform == true) {
 			aniId = ID_ANI_PARAGOOMBA_WING;
 		}
 		else
 			aniId = ID_ANI_PARAGOOMBA_FLY;
 	}
-	else if (level == PARAGOOMBA_LEVEL_NO_WING)
-		aniId = ID_ANI_PARAGOOMBA_NORMAL;
+ else if (level == PARAGOOMBA_LEVEL_NO_WING) {
+	 if (state == PARAGOOMBA_STATE_DIE)
+		 aniId = ID_ANI_PARAGOOMBA_DIE;
+	 else
+		 aniId = ID_ANI_PARAGOOMBA_NORMAL;
+ }
+		
 
 	animations->Get(aniId)->Render(x, y);
 

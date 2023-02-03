@@ -90,7 +90,7 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 		else
 			isRight = true;
-		//FindSlideDirection();
+		FindSlideDirection();
 		if (vx == 0 && (GetTickCount64() - die_start > KOOPA_DIE_TIMEOUT)) {
 		
 			SetState(KOOPA_STATE_WAKING);
@@ -147,7 +147,7 @@ void CKoopa::SetState(int state)
 		vx = -KOOPA_WALKING_SPEED;
 		break;
 	case KOOPA_STATE_SLIDE:
-			y += (KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_DIE);
+			y += (KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_DIE)/2;
 			ay = KOOPA_GRAVITY;
 			vx = KOOPA_SLIDE_SPEED;
 		break;
