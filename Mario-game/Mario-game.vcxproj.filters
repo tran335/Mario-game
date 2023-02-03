@@ -114,6 +114,9 @@
       <Filter>Misc</Filter>
     </ClCompile>
     <ClCompile Include="OverworldBound.cpp" />
+    <ClCompile Include="Piranha.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TileMap.h">
@@ -235,6 +238,9 @@
       <Filter>Misc</Filter>
     </ClInclude>
     <ClInclude Include="OverworldBound.h" />
+    <ClInclude Include="Piranha.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Map">

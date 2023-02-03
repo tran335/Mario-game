@@ -18,6 +18,7 @@
 #include "SuperMushroom.h"
 #include "Leaf.h"
 #include "OverworldBound.h"
+#include "Piranha.h"
 
 class CObjectMap
 {
