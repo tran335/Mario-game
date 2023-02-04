@@ -550,7 +550,7 @@
     <property name="ani_id" value="3"/>
    </properties>
   </object>
-  <object id="319" name="koopa" type="red" x="4327.5" y="1161.5" width="13" height="13">
+  <object id="319" name="koopa" type="green" x="4327.5" y="1161.5" width="13" height="13">
    <properties>
     <property name="ani_id" value="71"/>
    </properties>

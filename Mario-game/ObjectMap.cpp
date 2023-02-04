@@ -152,7 +152,12 @@ void CObjectMap::ImportData(vector<LPGAMEOBJECT>& coObjects)
 			if (enemyName.compare("koopa") == 0) {
 				string typeKoopa = element->Attribute("type");
 				if (typeKoopa.compare("red") == 0) {
-					obj = new CKoopa(x, y);
+					obj = new CKoopa(x, y, RED_KOOPA);
+					obj->SetPosition(x, y);
+					coObjects.push_back(obj);
+				}
+				else if (typeKoopa.compare("green") == 0) {
+					obj = new CKoopa(x, y, GREEN_KOOPA);
 					obj->SetPosition(x, y);
 					coObjects.push_back(obj);
 				}

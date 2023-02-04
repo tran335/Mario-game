@@ -1,10 +1,11 @@
 #include "Koopa.h"
 #include "PlayScene.h"
 #include "SuperMushroom.h"
-CKoopa::CKoopa(float x, float y) :CGameObject(x, y)
+CKoopa::CKoopa(float x, float y, int type) :CGameObject(x, y)
 {
 	this->ax = 0;
 	this->ay = KOOPA_GRAVITY;
+	this->type = type;
 	start_y = y;
 	start_x = x;
 	die_start = -1;
@@ -107,22 +108,43 @@ void CKoopa::Render()
 {
 
 	int aniId = -1;
-	if (state == KOOPA_STATE_WALKING) {
-		if (vx > 0) {
-			aniId = ID_ANI_KOOPA_WALKING_RIGHT;
+	if (type == RED_KOOPA) {
+		if (state == KOOPA_STATE_WALKING) {
+			if (vx > 0) {
+				aniId = ID_ANI_KOOPA_WALKING_RIGHT;
+			}
+			else
+				aniId = ID_ANI_KOOPA_WALKING_LEFT;
 		}
-		else
-			aniId = ID_ANI_KOOPA_WALKING_LEFT;
+		if (state == KOOPA_STATE_DIE)
+		{
+			aniId = ID_ANI_KOOPA_DIE;
+		}
+		if (state == KOOPA_STATE_WAKING) {
+			aniId = ID_ANI_KOOPA_WAKING;
+		}
+		if (state == KOOPA_STATE_SLIDE) {
+			aniId = ID_ANI_KOOPA_SLIDE;
+		}
 	}
-	if (state == KOOPA_STATE_DIE)
-	{
-		aniId = ID_ANI_KOOPA_DIE;
-	}
-	if (state == KOOPA_STATE_WAKING) {
-		aniId = ID_ANI_KOOPA_WAKING;
-	}
-	if (state == KOOPA_STATE_SLIDE) {
-		aniId = ID_ANI_KOOPA_SLIDE;
+	else if (type == GREEN_KOOPA) {
+		if (state == KOOPA_STATE_WALKING) {
+			if (vx > 0) {
+				aniId = ID_ANI_GREEN_KOOPA_WALKING_RIGHT;
+			}
+			else
+				aniId = ID_ANI_GREEN_KOOPA_WALKING_LEFT;
+		}
+		if (state == KOOPA_STATE_DIE)
+		{
+			aniId = ID_ANI_GREEN_KOOPA_DIE;
+		}
+		if (state == KOOPA_STATE_WAKING) {
+			aniId = ID_ANI_GREEN_KOOPA_WAKING;
+		}
+		if (state == KOOPA_STATE_SLIDE) {
+			aniId = ID_ANI_GREEN_KOOPA_SLIDE;
+		}
 	}
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	//RenderBoundingBox();

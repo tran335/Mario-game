@@ -27,11 +27,21 @@
 #define ID_ANI_KOOPA_WAKING 804
 #define ID_ANI_KOOPA_SLIDE 803
 
+#define ID_ANI_GREEN_KOOPA_WALKING_LEFT 806
+#define ID_ANI_GREEN_KOOPA_WALKING_RIGHT 807
+#define ID_ANI_GREEN_KOOPA_DIE 808
+#define ID_ANI_GREEN_KOOPA_WAKING 809
+#define ID_ANI_GREEN_KOOPA_SLIDE 810
+
+#define RED_KOOPA 1
+#define GREEN_KOOPA 2
+
 class CKoopa : public CGameObject
 {
 protected:
 	float ax;
 	float ay;
+	int type;
 	float start_x;
 	float start_y;
 	CMario* mario;
@@ -53,7 +63,7 @@ protected:
 	void OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e);
 
 public:
-	CKoopa(float x, float y);
+	CKoopa(float x, float y, int type);
 	virtual void SetState(int state);
 	void FindSlideDirection();
 	void startWakingTime(){waking_start = GetTickCount64();}
