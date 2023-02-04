@@ -199,6 +199,7 @@ class CMario : public CGameObject
 	void OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e);
 	void OnCollisionWithVenusFireTrap(LPCOLLISIONEVENT e);
 	void OnCollisionWithFireBall(LPCOLLISIONEVENT e);
+	void OnCollisionWithPiranha(LPCOLLISIONEVENT e);
 
 	int GetAniIdBig();
 	int GetAniIdSmall();

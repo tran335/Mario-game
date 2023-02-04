@@ -17,6 +17,7 @@
 #include "SuperMushroom.h"
 #include "VenusFireTrap.h"
 #include "Fireball.h"
+#include "Piranha.h"
 
 
 #include "Collision.h"
@@ -107,6 +108,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithSuperMushroom(e);
 	else if (dynamic_cast<CVenusFireTrap*>(e->obj))
 		OnCollisionWithVenusFireTrap(e);
+	else if (dynamic_cast<CPiranha*>(e->obj))
+		OnCollisionWithPiranha(e);
 	else if (dynamic_cast<CFireball*>(e->obj))
 		OnCollisionWithFireBall(e);
 }
@@ -209,6 +212,7 @@ void CMario::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
 		{
 			if (supermushroom->GetState() == SUPERMUSHROOM_STATE_WALKING) {
 				if (level == MARIO_LEVEL_SMALL) {
+					level = MARIO_LEVEL_BIG;
 					SetLevel(MARIO_LEVEL_BIG);
 				}
 				else if (level == MARIO_LEVEL_BIG) 
@@ -365,6 +369,31 @@ void CMario::OnCollisionWithVenusFireTrap(LPCOLLISIONEVENT e)
 				SetState(MARIO_STATE_DIE);
 			}
 		}
+}
+
+void CMario::OnCollisionWithPiranha(LPCOLLISIONEVENT e)
+{
+	CPiranha* venus = dynamic_cast<CPiranha*>(e->obj);
+
+	if (untouchable == 0)
+	{
+
+		if (level > MARIO_LEVEL_BIG)
+		{
+			level = MARIO_LEVEL_BIG;
+			StartUntouchable();
+		}
+		else if (level > MARIO_LEVEL_SMALL)
+		{
+			level = MARIO_LEVEL_SMALL;
+			StartUntouchable();
+		}
+		else
+		{
+			DebugOut(L">>> Mario DIE >>> \n");
+			SetState(MARIO_STATE_DIE);
+		}
+	}
 }
 
 void CMario::OnCollisionWithFireBall(LPCOLLISIONEVENT e)
@@ -827,15 +856,17 @@ void CMario::SetLevel(int l)
 	{
 		y = (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT) / 2;
 		level = l;
+		DebugOut(L">>> Y SMALL >>> \n", y);
 	}
 	else if (this->level == MARIO_LEVEL_BIG)
 	{
-		y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT)/2;
-		level = 2;
+		y -= MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT;
+		DebugOut(L">>> Y BIG >>> \n", y);
 	}
 	else 
 	{
-		y -= (MARIO_RACCOON_BBOX_HEIGHT - MARIO_BIG_BBOX_HEIGHT)/2;
+		y -= MARIO_RACCOON_BBOX_HEIGHT - MARIO_BIG_BBOX_HEIGHT;
+		DebugOut(L">>> Y RACCOON >>> \n", y);
 	}
 }
 
