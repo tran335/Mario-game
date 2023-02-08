@@ -122,6 +122,7 @@
     <ClCompile Include="Parakoopa.cpp">
       <Filter>Enemy\Koopa</Filter>
     </ClCompile>
+    <ClCompile Include="Tree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TileMap.h">
@@ -251,6 +252,7 @@
     <ClInclude Include="VenusFireTrap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Tree.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Map">

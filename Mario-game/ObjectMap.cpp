@@ -91,6 +91,17 @@ void CObjectMap::ImportData(vector<LPGAMEOBJECT>& coObjects)
 		}
 
 	}
+	if (name.compare("AnimatedBG") == 0) {
+		while (element)
+		{
+			GetInfoElement(element, objectId, x, y, width, height);
+			obj = new CTree(width, height);
+			obj->SetPosition(x, y);
+			coObjects.push_back(obj);
+			element = element->NextSiblingElement();
+		}
+
+	}
 	if (name.compare("Portal") == 0) {
 		while (element)
 		{

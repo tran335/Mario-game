@@ -1,6 +1,7 @@
 # list of object assets to load in this scene
 [ASSETS]
 mario.txt
+map\overworld\objectmap-overworld\tree.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -8,10 +9,10 @@ mario.txt
 # See OBJECT_TYPE constants in AssetIDs.h
 
 # MARIO
-0	20	10
+0	120	250
 
 #Portal 
-50	300	110	316	140	3
+50	170	400	216	440	1
 
 [MAP]
 #id	.tmx	prefix
