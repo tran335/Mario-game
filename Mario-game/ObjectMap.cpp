@@ -161,6 +161,11 @@ void CObjectMap::ImportData(vector<LPGAMEOBJECT>& coObjects)
 					obj->SetPosition(x, y);
 					coObjects.push_back(obj);
 				}
+				else if (typeKoopa.compare("para") == 0) {
+					obj = new CParakoopa(x, y);
+					obj->SetPosition(x, y);
+					coObjects.push_back(obj);
+				}
 			}
 			if (enemyName.compare("piranha") == 0) {
 				obj = new CPiranha(x, y);

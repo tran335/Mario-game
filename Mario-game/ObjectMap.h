@@ -19,6 +19,7 @@
 #include "Leaf.h"
 #include "OverworldBound.h"
 #include "Piranha.h"
+#include "Parakoopa.h"
 
 class CObjectMap
 {

@@ -18,6 +18,7 @@
 #include "VenusFireTrap.h"
 #include "Fireball.h"
 #include "Piranha.h"
+#include "Parakoopa.h"
 
 
 #include "Collision.h"
@@ -112,6 +113,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPiranha(e);
 	else if (dynamic_cast<CFireball*>(e->obj))
 		OnCollisionWithFireBall(e);
+	else if (dynamic_cast<CKoopa*>(e->obj))
+		OnCollisionWithParaKoopa(e);
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -247,7 +250,7 @@ void CMario::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
 			if (paragoomba->Getlevel() != PARAGOOMBA_LEVEL_NO_WING)
 			{
 				paragoomba->Setlevel(PARAGOOMBA_LEVEL_NO_WING);
-				//StartUntouchable();
+				StartUntouchable();
 			}
 			else {
 				paragoomba->SetState(PARAGOOMBA_STATE_DIE);
@@ -273,6 +276,44 @@ void CMario::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
 		}
 	}
 }
+
+void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
+{
+	CParakoopa* parakoopa = dynamic_cast<CParakoopa*>(e->obj);
+
+	// jump on top >> kill Goomba and deflect a bit 
+	if (e->ny < 0)
+	{
+		if (parakoopa->Getlevel() != PARAGOOMBA_LEVEL_NO_WING)
+		{
+			parakoopa->Setlevel(PARAGOOMBA_LEVEL_NO_WING);
+			StartUntouchable();
+		}
+		else {
+			parakoopa->SetState(PARAGOOMBA_STATE_DIE);
+		}
+	}
+	else // hit by Goomba
+	{
+		if (untouchable == 0)
+		{
+			if (parakoopa->GetState() != PARAGOOMBA_STATE_DIE)
+			{
+				if (level > MARIO_LEVEL_SMALL)
+				{
+					level = MARIO_LEVEL_SMALL;
+					StartUntouchable();
+				}
+				else
+				{
+					DebugOut(L">>> Mario DIE >>> \n");
+					SetState(MARIO_STATE_DIE);
+				}
+			}
+		}
+	}
+}
+
 void CMario::OnCollisionWithBigBox(LPCOLLISIONEVENT e)
 {
 	
@@ -402,7 +443,7 @@ void CMario::OnCollisionWithFireBall(LPCOLLISIONEVENT e)
 
 	if (untouchable == 0)
 	{
-
+		e->obj->Delete();
 		if (level > MARIO_LEVEL_BIG)
 		{
 			level = MARIO_LEVEL_BIG;

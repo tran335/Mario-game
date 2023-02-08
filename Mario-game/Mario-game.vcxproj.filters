@@ -119,6 +119,9 @@
     <ClCompile Include="Fireball.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Parakoopa.cpp">
+      <Filter>Enemy\Koopa</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TileMap.h">
@@ -232,9 +235,6 @@
     <ClInclude Include="CoinBrick.h">
       <Filter>Misc</Filter>
     </ClInclude>
-    <ClInclude Include="VenusFireTrap.h">
-      <Filter>Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="Leaf.h">
       <Filter>Misc</Filter>
     </ClInclude>
@@ -244,6 +244,12 @@
     </ClInclude>
     <ClInclude Include="Fireball.h">
       <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Parakoopa.h">
+      <Filter>Enemy\Koopa</Filter>
+    </ClInclude>
+    <ClInclude Include="VenusFireTrap.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "CameraBound.h"
 #include "debug.h"
 
 #define PARAGOOMBA_GRAVITY 0.002f
@@ -16,6 +17,7 @@
 #define PARAGOOMBA_STATE_DIE 200
 #define PARAGOOMBA_STATE_NORMAL 300
 #define PARAGOOMBA_STATE_FLY 400
+#define PARAGOOMBA_STATE_REVIVE 500
 
 #define PARAGOOMBA_LEVEL_WING 1
 #define PARAGOOMBA_LEVEL_NO_WING 2
@@ -33,16 +35,19 @@
 #define PARAGOOMBA_JUMP_HIGH_SPEED 0.4f
 #define PARAGOOMBA_JUMP_LOW_SPEED 0.3f
 
-class CParaGoomba : public CGameObject
+class CParakoopa : public CGameObject
 {
-protected:
+
 	float ax;
 	float ay;
+	float start_x;
+	float start_y;
 
 	float die_start;
 	BOOLEAN isOnPlatform;
 	int jumpTime;
 	float walkingTime;
+	CParakoopa* parakoopa;
 
 	int level;
 
@@ -55,12 +60,13 @@ protected:
 	virtual void OnNoCollision(DWORD dt);
 
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
+	void OnCollisionWithCameraBound(LPCOLLISIONEVENT e);
 
 public:
-	CParaGoomba(float x, float y);
+	CParakoopa (float x, float y);
 	virtual void SetState(int state);
 	void StartWalkingTime() { walkingTime = GetTickCount64(); };
 	int Getlevel() { return this->level; }
-	void Setlevel(int level) {  this->level=level ; };
+	void Setlevel(int level) { this->level = level; };
 };
 
