@@ -112,7 +112,6 @@
     <ClCompile Include="Leaf.cpp">
       <Filter>Misc</Filter>
     </ClCompile>
-    <ClCompile Include="OverworldBound.cpp" />
     <ClCompile Include="Piranha.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
@@ -122,7 +121,12 @@
     <ClCompile Include="Parakoopa.cpp">
       <Filter>Enemy\Koopa</Filter>
     </ClCompile>
-    <ClCompile Include="Tree.cpp" />
+    <ClCompile Include="OverworldBound.cpp">
+      <Filter>Overworld</Filter>
+    </ClCompile>
+    <ClCompile Include="Tree.cpp">
+      <Filter>Overworld</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TileMap.h">
@@ -239,7 +243,6 @@
     <ClInclude Include="Leaf.h">
       <Filter>Misc</Filter>
     </ClInclude>
-    <ClInclude Include="OverworldBound.h" />
     <ClInclude Include="Piranha.h">
       <Filter>Enemy</Filter>
     </ClInclude>
@@ -252,7 +255,12 @@
     <ClInclude Include="VenusFireTrap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Tree.h" />
+    <ClInclude Include="OverworldBound.h">
+      <Filter>Overworld</Filter>
+    </ClInclude>
+    <ClInclude Include="Tree.h">
+      <Filter>Overworld</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Map">
@@ -284,6 +292,9 @@
     </Filter>
     <Filter Include="Enemy\Goomba">
       <UniqueIdentifier>{8992f042-2981-4f2d-931f-cd6e3050ce36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Overworld">
+      <UniqueIdentifier>{d4d92710-bc8b-44aa-987e-153aca42e969}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -1,53 +1,55 @@
 #pragma once
 #include "GameObject.h"
-#include "CameraBound.h"
-#include "debug.h"
-
-#define PARAGOOMBA_GRAVITY 0.002f
-#define PARAGOOMBA_WALKING_SPEED 0.05f
+#include "Mario.h"
+#include "Game.h"
 
 
-#define PARAGOOMBA_BBOX_WIDTH 48
-#define PARAGOOMBA_BBOX_HEIGHT 48
-#define PARAGOOMBA_BBOX_HEIGHT_DIE 28
 
-#define PARAGOOMBA_DIE_TIMEOUT 500
+#define PARAKOOPA_GRAVITY 0.001f
+#define PARAKOOPA_WALKING_SPEED 0.05f
+#define PARAKOOPA_SLIDE_SPEED 1.0f
 
-#define PARAGOOMBA_STATE_WING 100
-#define PARAGOOMBA_STATE_DIE 200
-#define PARAGOOMBA_STATE_NORMAL 300
-#define PARAGOOMBA_STATE_FLY 400
-#define PARAGOOMBA_STATE_REVIVE 500
+#define PARAKOOPA_BBOX_WIDTH 51
+#define PARAKOOPA_BBOX_HEIGHT 79
+#define PARAKOOPA_BBOX_HEIGHT_DIE 51
 
-#define PARAGOOMBA_LEVEL_WING 1
-#define PARAGOOMBA_LEVEL_NO_WING 2
+#define PARAKOOPA_DIE_TIMEOUT 5000
+#define PARAKOOPA_WAKING_TIMEOUT 2000
+
+#define PARAKOOPA_STATE_WALKING 801
+#define PARAKOOPA_STATE_DIE 802
+#define PARAKOOPA_STATE_WAKING 804
+#define PARAKOOPA_STATE_SLIDE 803
+
+#define ID_ANI_PARAKOOPA_WALKING_LEFT 801
+#define ID_ANI_PARAKOOPA_WALKING_RIGHT 805
+#define ID_ANI_PARAKOOPA_DIE 802
+#define ID_ANI_PARAKOOPA_WAKING 804
+#define ID_ANI_PARAKOOPA_SLIDE 803
+
+#define ID_ANI_GREEN_PARAKOOPA_WALKING_LEFT 806
+#define ID_ANI_GREEN_PARAKOOPA_WALKING_RIGHT 807
+#define ID_ANI_GREEN_PARAKOOPA_DIE 808
+#define ID_ANI_GREEN_PARAKOOPA_WAKING 809
+#define ID_ANI_GREEN_PARAKOOPA_SLIDE 810
+
+#define PARAKOOPA_LEVEL_WING 1
+#define PARAKOOPA_LEVEL_NO_WING 2
 
 
-#define ID_ANI_PARAGOOMBA_WING 6000
-#define ID_ANI_PARAGOOMBA_DIE 6001
-#define ID_ANI_PARAGOOMBA_NORMAL 6002
-#define ID_ANI_PARAGOOMBA_FLY 6003
-
-#define PARAGOOMBA_FLY_TIMES 4
-#define PARAGOOMBA_WALK_TIME 2000
-
-
-#define PARAGOOMBA_JUMP_HIGH_SPEED 0.4f
-#define PARAGOOMBA_JUMP_LOW_SPEED 0.3f
-
-class CParakoopa : public CGameObject
+class CParaKoopa : public CGameObject
 {
-
+protected:
 	float ax;
 	float ay;
+	int type;
 	float start_x;
 	float start_y;
-
-	float die_start;
-	BOOLEAN isOnPlatform;
-	int jumpTime;
-	float walkingTime;
-	CParakoopa* parakoopa;
+	CMario* mario;
+	ULONGLONG die_start;
+	ULONGLONG waking_start;
+	bool isRight = true;
+	int untouchable = 0;
 
 	int level;
 
@@ -60,13 +62,14 @@ class CParakoopa : public CGameObject
 	virtual void OnNoCollision(DWORD dt);
 
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
-	void OnCollisionWithCameraBound(LPCOLLISIONEVENT e);
+
+	void OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e);
 
 public:
-	CParakoopa (float x, float y);
+	CParaKoopa(float x, float y);
 	virtual void SetState(int state);
-	void StartWalkingTime() { walkingTime = GetTickCount64(); };
+	void FindSlideDirection();
+	void startWakingTime() { waking_start = GetTickCount64(); }
 	int Getlevel() { return this->level; }
 	void Setlevel(int level) { this->level = level; };
 };
-

@@ -71,7 +71,7 @@ void CMario::OnNoCollision(DWORD dt)
 
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-
+	if (e->ny < 0) isOnPlatform = true;
 
 	if (e->ny != 0 && e->obj->IsBlocking())
 	{
@@ -279,7 +279,7 @@ void CMario::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
 {
-	CParakoopa* parakoopa = dynamic_cast<CParakoopa*>(e->obj);
+	CParaKoopa* parakoopa = dynamic_cast<CParaKoopa*>(e->obj);
 
 	// jump on top >> kill Goomba and deflect a bit 
 	if (e->ny < 0)
@@ -322,12 +322,7 @@ void CMario::OnCollisionWithBigBox(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithKoopaBound(LPCOLLISIONEVENT e)
 {
-	if (e->nx != 0) {
-		vx = ax * dt;
-	}
-	else if (e->ny != 0) {
-		vy = ay * dt;
-	}
+	
 
 }
 
@@ -471,7 +466,9 @@ void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 {
 	CPortal* p = (CPortal*)e->obj;
-	CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId());
+	
+		CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId());
+	
 }
 
 //

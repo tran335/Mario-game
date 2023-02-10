@@ -1,95 +1,102 @@
 #include "Parakoopa.h"
-
-CParakoopa ::CParakoopa(float x, float y)
+#include "PlayScene.h"
+#include "SuperMushroom.h"
+CParaKoopa::CParaKoopa(float x, float y) :CGameObject(x, y)
 {
 	this->ax = 0;
-	this->x = x;
-	this->y = y;
-	start_x = x;
+	this->ay = PARAKOOPA_GRAVITY;
+	this->type = type;
 	start_y = y;
-	vx = PARAGOOMBA_WALKING_SPEED;
-	this->ay = PARAGOOMBA_GRAVITY;
+	start_x = x;
 	die_start = -1;
-	jumpTime = PARAGOOMBA_FLY_TIMES;
-	isOnPlatform = false;
-	level = PARAGOOMBA_LEVEL_WING;
-
+	waking_start = -1;
+	SetState(PARAKOOPA_STATE_WALKING);
+	mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 }
 
-void CParakoopa::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+void CParaKoopa::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	if (state == PARAGOOMBA_STATE_DIE)
+	if (state == PARAKOOPA_STATE_DIE || state == PARAKOOPA_STATE_SLIDE)
 	{
-		left = x - PARAGOOMBA_BBOX_WIDTH / 2;
-		top = y - PARAGOOMBA_BBOX_HEIGHT_DIE / 2;
-		right = left + PARAGOOMBA_BBOX_WIDTH;
-		bottom = top + PARAGOOMBA_BBOX_HEIGHT_DIE;
+		left = x - PARAKOOPA_BBOX_WIDTH / 2;
+		top = y - PARAKOOPA_BBOX_HEIGHT_DIE / 2;
+		right = left + PARAKOOPA_BBOX_WIDTH;
+		bottom = top + PARAKOOPA_BBOX_HEIGHT_DIE;
 	}
 	else
 	{
-		left = x - PARAGOOMBA_BBOX_WIDTH / 2;
-		top = y - PARAGOOMBA_BBOX_HEIGHT / 2;
-		right = left + PARAGOOMBA_BBOX_WIDTH;
-		bottom = top + PARAGOOMBA_BBOX_HEIGHT;
+		left = x - PARAKOOPA_BBOX_WIDTH / 2;
+		top = y - PARAKOOPA_BBOX_HEIGHT / 2;
+		right = left + PARAKOOPA_BBOX_WIDTH;
+		bottom = top + PARAKOOPA_BBOX_HEIGHT;
 	}
 }
 
-void CParakoopa::OnNoCollision(DWORD dt)
+void CParaKoopa::OnNoCollision(DWORD dt)
 {
 	x += vx * dt;
 	y += vy * dt;
 };
 
-void CParakoopa::OnCollisionWith(LPCOLLISIONEVENT e)
+void CParaKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (!e->obj->IsBlocking()) return;
-	if (dynamic_cast<CParakoopa*>(e->obj)) return;
+	//	if (!e->obj->IsBlocking()) return;
+	if (dynamic_cast<CKoopa*>(e->obj)) return;
 
 	if (e->ny != 0)
 	{
 		vy = 0;
-		if (e->ny < 0) {
-			isOnPlatform = true;
-		}
 	}
 	else if (e->nx != 0)
 	{
 		vx = -vx;
 	}
-	if (dynamic_cast<CCameraBound*>(e->obj)) {
-		OnCollisionWithCameraBound(e);
-	}
+	if (dynamic_cast<CSuperMushroom*>(e->obj))
+		OnCollisionWithSuperMushroom(e);
 
 }
-
-void CParakoopa::OnCollisionWithCameraBound(LPCOLLISIONEVENT e)
+void CParaKoopa::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
 {
-	CCameraBound* camerabound = dynamic_cast<CCameraBound*>(e->obj);
-
-	if (e->ny < 0)
+	CSuperMushroom* supermushroom = dynamic_cast<CSuperMushroom*>(e->obj);
+	// jump on top >> kill Goomba and deflect a bit 
+	if (untouchable == 0)
 	{
-		SetState(PARAGOOMBA_STATE_REVIVE);
+		if (supermushroom->GetState() != SUPERMUSHROOM_STATE_WALKING)
+		{
+			supermushroom->SetState(SUPERMUSHROOM_STATE_WALKING);
+		}
 	}
 }
 
-void CParakoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
-	if (level == PARAGOOMBA_LEVEL_WING) {
-		if (isOnPlatform == true && jumpTime > 0) {
-			SetState(PARAGOOMBA_STATE_FLY);
-		}
-		if (GetTickCount64() - walkingTime > PARAGOOMBA_WALK_TIME && walkingTime > 0) {
-			walkingTime = 0;
-			jumpTime = PARAGOOMBA_FLY_TIMES;
-		}
-	}
-	if ((state == PARAGOOMBA_STATE_DIE) && (GetTickCount64() - die_start > PARAGOOMBA_DIE_TIMEOUT))
-	{
-		isDeleted = true;
-		return;
 
+	float x_mario, y_mario;
+	mario->GetPosition(x_mario, y_mario);
+
+	if ((state == PARAKOOPA_STATE_DIE) && (GetTickCount64() - die_start > PARAKOOPA_DIE_TIMEOUT))
+	{
+		SetState(PARAKOOPA_STATE_WAKING);
+		startWakingTime();
+	}
+	else if (state == PARAKOOPA_STATE_WAKING && (GetTickCount64() - waking_start > PARAKOOPA_WAKING_TIMEOUT)) {
+		SetState(PARAKOOPA_STATE_WALKING);
+		waking_start = 0;
+	}
+	else if (state == PARAKOOPA_STATE_SLIDE) {
+		if (x_mario > x) {
+			isRight = false;
+		}
+		else
+			isRight = true;
+		FindSlideDirection();
+		if (vx == 0 && (GetTickCount64() - die_start > PARAKOOPA_DIE_TIMEOUT)) {
+
+			SetState(PARAKOOPA_STATE_WAKING);
+			startWakingTime();
+		}
 	}
 
 	CGameObject::Update(dt, coObjects);
@@ -97,64 +104,63 @@ void CParakoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 }
 
 
-void CParakoopa::Render()
+void CParaKoopa::Render()
 {
-	CAnimations* animations = CAnimations::GetInstance();
+
 	int aniId = -1;
-	if (level == PARAGOOMBA_LEVEL_WING) {
-		if (isOnPlatform == true) {
-			aniId = ID_ANI_PARAGOOMBA_WING;
+
+		if (state == PARAKOOPA_STATE_WALKING) {
+			if (vx > 0) {
+				aniId = ID_ANI_PARAKOOPA_WALKING_RIGHT;
+			}
+			else
+				aniId = ID_ANI_PARAKOOPA_WALKING_LEFT;
 		}
-		else
-			aniId = ID_ANI_PARAGOOMBA_FLY;
-	}
-	else if (level == PARAGOOMBA_LEVEL_NO_WING) {
-		if (state == PARAGOOMBA_STATE_DIE)
-			aniId = ID_ANI_PARAGOOMBA_DIE;
-		else
-			aniId = ID_ANI_PARAGOOMBA_NORMAL;
-	}
-
-
-	animations->Get(aniId)->Render(x, y);
-
+		if (state == PARAKOOPA_STATE_DIE)
+		{
+			aniId = ID_ANI_PARAKOOPA_DIE;
+		}
+		if (state == KOOPA_STATE_WAKING) {
+			aniId = ID_ANI_PARAKOOPA_WAKING;
+		}
+		if (state == PARAKOOPA_STATE_SLIDE) {
+			aniId = ID_ANI_PARAKOOPA_SLIDE;
+		}
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	//RenderBoundingBox();
 }
 
-void CParakoopa::SetState(int state)
+void CParaKoopa::SetState(int state)
 {
 	CGameObject::SetState(state);
 	switch (state)
 	{
-	case PARAGOOMBA_STATE_DIE:
+	case PARAKOOPA_STATE_DIE:
 		die_start = GetTickCount64();
-		y += (PARAGOOMBA_BBOX_HEIGHT - PARAGOOMBA_BBOX_HEIGHT_DIE) / 2;
+		y += (PARAKOOPA_BBOX_HEIGHT - PARAKOOPA_BBOX_HEIGHT_DIE) / 2;
 		vx = 0;
 		vy = 0;
 		ay = 0;
 		break;
-	case PARAGOOMBA_STATE_FLY:
-		jumpTime--;
-		isOnPlatform = false;
-		if (jumpTime == 0) {
-			vy = -PARAGOOMBA_JUMP_HIGH_SPEED;
-			vx = -PARAGOOMBA_WALKING_SPEED;
-			StartWalkingTime();
+	case PARAKOOPA_STATE_WALKING:
+		if (waking_start > 0) {
+			y -= (PARAKOOPA_BBOX_HEIGHT - PARAKOOPA_BBOX_HEIGHT_DIE) / 2;
 		}
-		else
-		{
-			vy = -PARAGOOMBA_JUMP_LOW_SPEED;
-		}
+		vx = -PARAKOOPA_WALKING_SPEED;
 		break;
-	case PARAGOOMBA_STATE_REVIVE:
-		SetPosition(start_x, start_y);
-		level = PARAGOOMBA_LEVEL_WING;
-		vx = 0;
-		vy = 0;
-		ay = PARAGOOMBA_GRAVITY;
+	case PARAKOOPA_STATE_SLIDE:
+		y += (PARAKOOPA_BBOX_HEIGHT - PARAKOOPA_BBOX_HEIGHT_DIE) / 2;
+		ay = PARAKOOPA_GRAVITY;
+		vx = PARAKOOPA_SLIDE_SPEED;
 		break;
 	}
-	
 }
 
+void CParaKoopa::FindSlideDirection()
+{
+	if (isRight == true) {
+		vx = PARAKOOPA_SLIDE_SPEED;
+	}
+	else
+		vx = -PARAKOOPA_SLIDE_SPEED;
+}

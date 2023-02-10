@@ -11,7 +11,7 @@ mario.txt
 0	120	250
 
 #Portal 
-50	170	400	216	440	2
+50	170	500	216	600	2
 
 [MAP]
 #id	.tmx	prefix

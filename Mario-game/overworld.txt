@@ -9,7 +9,7 @@ map\overworld\objectmap-overworld\tree.txt
 # See OBJECT_TYPE constants in AssetIDs.h
 
 # MARIO
-0	120	250
+0	144	192
 
 #Portal 
 50	170	400	216	440	1
