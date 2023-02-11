@@ -15,12 +15,7 @@ protected:
 
 
 public: 
-	CScene(int id, LPCWSTR filePath)
-	{
-		this->id = id;
-		this->sceneFilePath = filePath;
-		this->key_handler = NULL;
-	}
+	CScene(int id, LPCWSTR filePath);
 
 	LPKEYEVENTHANDLER GetKeyEventHandler() { return key_handler; }
 	virtual void Load() = 0;

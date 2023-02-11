@@ -162,7 +162,7 @@
 
 #define MARIO_UNTOUCHABLE_TIME 2500
 #define MARIO_SPIN_TIME 1000
-#define MARIO_RUNNING_TIME 1000
+#define MARIO_RUNNING_TIME 200
 #define MARIO_PRE_FLY_TIME 1000
 
 class CMario : public CGameObject
@@ -223,7 +223,7 @@ public:
 		ax = 0.0f;
 		ay = MARIO_GRAVITY; 
 
-		level = MARIO_LEVEL_BIG;
+		level = MARIO_LEVEL_RACCOON;
 		untouchable = 0;
 		untouchable_start = -1;
 		pre_fly_time = -1;
@@ -252,8 +252,8 @@ public:
 	int GetLevel() { return level; }
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 	void startIsSpin() { spin_time = GetTickCount64(); }
-	void startRunning() { running_time = GetTickCount64(); }
-	void startPreFly() { pre_fly_time = GetTickCount64(); }
+	void startRunning() { running_time = GetTickCount64(); 	DebugOut(L">>> start running >>> \n");}
+	void startPreFly() { pre_fly_time = GetTickCount64(); DebugOut(L">>> state fly >>> \n");}
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };

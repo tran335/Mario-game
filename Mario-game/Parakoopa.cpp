@@ -10,7 +10,7 @@ CParaKoopa::CParaKoopa(float x, float y) :CGameObject(x, y)
 	start_x = x;
 	die_start = -1;
 	waking_start = -1;
-	SetState(PARAKOOPA_STATE_WALKING);
+	level = PARAKOOPA_LEVEL_WING;
 	mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 }
 
@@ -75,6 +75,9 @@ void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	float x_mario, y_mario;
 	mario->GetPosition(x_mario, y_mario);
+	if (level == PARAKOOPA_LEVEL_WING) {
+			SetState(PARAKOOPA_STATE_FLY);
+	}
 
 	if ((state == PARAKOOPA_STATE_DIE) && (GetTickCount64() - die_start > PARAKOOPA_DIE_TIMEOUT))
 	{
@@ -109,7 +112,28 @@ void CParaKoopa::Render()
 
 	int aniId = -1;
 
-		if (state == PARAKOOPA_STATE_WALKING) {
+
+	if (level == PARAKOOPA_LEVEL_WING) {
+		if (vx > 0)
+			aniId = ID_ANI_PARAKOOPA_FLY_RIGHT;
+		else
+			aniId = ID_ANI_PARAKOOPA_FLY_LEFT;
+	}
+	else if (level == PARAKOOPA_LEVEL_NO_WING) {
+		if (state == PARAKOOPA_STATE_DIE)
+			aniId = ID_ANI_PARAKOOPA_DIE;
+		else if (state == PARAKOOPA_STATE_SLIDE)
+			aniId = ID_ANI_PARAKOOPA_SLIDE;
+		else {
+			if (vx > 0)
+				aniId = ID_ANI_PARAKOOPA_WALKING_RIGHT;
+			else
+				aniId = ID_ANI_PARAKOOPA_WALKING_LEFT;
+		}
+			
+	}
+
+		/*if (state == PARAKOOPA_STATE_WALKING) {
 			if (vx > 0) {
 				aniId = ID_ANI_PARAKOOPA_WALKING_RIGHT;
 			}
@@ -125,7 +149,7 @@ void CParaKoopa::Render()
 		}
 		if (state == PARAKOOPA_STATE_SLIDE) {
 			aniId = ID_ANI_PARAKOOPA_SLIDE;
-		}
+		}*/
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	//RenderBoundingBox();
 }
@@ -135,6 +159,10 @@ void CParaKoopa::SetState(int state)
 	CGameObject::SetState(state);
 	switch (state)
 	{
+	case PARAKOOPA_STATE_FLY:
+	/*	vy = -PARAGOOMBA_JUMP_HIGH_SPEED;
+		vx = -PARAGOOMBA_WALKING_SPEED;*/
+		break;
 	case PARAKOOPA_STATE_DIE:
 		die_start = GetTickCount64();
 		y += (PARAKOOPA_BBOX_HEIGHT - PARAKOOPA_BBOX_HEIGHT_DIE) / 2;

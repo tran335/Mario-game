@@ -160,6 +160,7 @@
     <ClCompile Include="Parakoopa.cpp" />
     <ClCompile Include="Piranha.cpp" />
     <ClCompile Include="QuestionBrick.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SuperMushroom.cpp" />
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="TileSet.cpp" />

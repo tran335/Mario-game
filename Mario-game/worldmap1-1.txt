@@ -9,6 +9,7 @@ map\worldmap1-1\objectmap1-1\paragoomba.txt
 map\worldmap1-1\objectmap1-1\questionbrick.txt
 map\worldmap1-1\objectmap1-1\coinbrick.txt
 map\worldmap1-1\objectmap1-1\koopa.txt
+map\worldmap1-1\objectmap1-1\parakoopa.txt
 map\worldmap1-1\objectmap1-1\venusfiretrap.txt
 map\worldmap1-1\objectmap1-1\mushroom.txt
 map\worldmap1-1\objectmap1-1\fireball.txt

@@ -65,10 +65,10 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 	{
 		if (game->IsKeyDown(DIK_A))
 		{
-			if (game->IsKeyDown(DIK_S)) {
+			/*if (game->IsKeyDown(DIK_S)) {
 				mario->SetState(MARIO_STATE_FLY);
 			}
-			else
+			else*/
 				mario->SetState(MARIO_STATE_RUNNING_RIGHT);
 		}
 		else
@@ -79,10 +79,10 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 	{
 		if (game->IsKeyDown(DIK_A)) 
 		{
-			if (game->IsKeyDown(DIK_S)) {
+			/*if (game->IsKeyDown(DIK_S)) {
 				mario->SetState(MARIO_STATE_FLY);
 			}
-			else
+			else*/
 				mario->SetState(MARIO_STATE_RUNNING_LEFT);
 		}
 		else

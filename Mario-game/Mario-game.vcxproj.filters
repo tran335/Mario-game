@@ -127,6 +127,7 @@
     <ClCompile Include="Tree.cpp">
       <Filter>Overworld</Filter>
     </ClCompile>
+    <ClCompile Include="Scene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TileMap.h">

@@ -49,18 +49,24 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	else if(state==MARIO_STATE_RUNNING_LEFT || state ==MARIO_STATE_RUNNING_RIGHT)
 	{
 		startRunning();
+		DebugOut(L">>> start running >>> \n");
 	}
-	//if (GetTickCount64() - running_time > MARIO_RUNNING_TIME && running_time > 0)
-	//{
-	//	SetState(MARIO_STATE_PRE_FLY);
-	//	running_time = 0;
-	//	startPreFly();
-	//}
+	if (GetTickCount64() - running_time > MARIO_RUNNING_TIME && running_time > 0)
+	{
+		if (CGame::GetInstance()->IsKeyDown(DIK_W)) {
+			SetState(MARIO_STATE_FLY);
+			running_time = 0;
+			startPreFly();
+		}
+	}
 	//if (GetTickCount64() - pre_fly_time > MARIO_PRE_FLY_TIME && pre_fly_time > 0) {
 	//	pre_fly_time = 0;
 	//	SetState(MARIO_STATE_FLY);
 	//}
 	CCollision::GetInstance()->Process(this, dt, coObjects);
+
+
+
 }
 
 void CMario::OnNoCollision(DWORD dt)
@@ -831,6 +837,7 @@ void CMario::SetState(int state)
 		break;
 	case MARIO_STATE_PRE_FLY:
 		isPrefly = true;
+		DebugOut(L">>> PRE_FLY >>> \n");
 		break;
 	case MARIO_STATE_FLY:
 		isFly = true;
