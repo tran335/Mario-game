@@ -19,6 +19,7 @@
 #include "Fireball.h"
 #include "Piranha.h"
 #include "Parakoopa.h"
+#include "PlayScene.h"
 
 
 #include "Collision.h"
@@ -36,6 +37,11 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		untouchable_start = 0;
 		untouchable = 0;
 	}
+	if ((isDie==true) && (GetTickCount64() - die_start > MARIO_DIE_TIMEOUT))
+	{
+		isDie = false;
+		CGame::GetInstance()->InitiateSwitchScene(OVERWORLD_SCENE);
+	}
 	if (GetTickCount64() - spin_time > MARIO_SPIN_TIME and spin_time>0)
 	{
 		spin_time = 0;
@@ -49,7 +55,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	else if(state==MARIO_STATE_RUNNING_LEFT || state ==MARIO_STATE_RUNNING_RIGHT)
 	{
 		startRunning();
-		DebugOut(L">>> start running >>> \n");
 	}
 	if (GetTickCount64() - running_time > MARIO_RUNNING_TIME && running_time > 0)
 	{
@@ -290,20 +295,20 @@ void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
 	// jump on top >> kill Goomba and deflect a bit 
 	if (e->ny < 0)
 	{
-		if (parakoopa->Getlevel() != PARAGOOMBA_LEVEL_NO_WING)
+		if (parakoopa->Getlevel() != PARAKOOPA_LEVEL_NO_WING)
 		{
-			parakoopa->Setlevel(PARAGOOMBA_LEVEL_NO_WING);
+			parakoopa->Setlevel(PARAKOOPA_LEVEL_NO_WING);
 			StartUntouchable();
 		}
 		else {
-			parakoopa->SetState(PARAGOOMBA_STATE_DIE);
+			parakoopa->SetState(PARAKOOPA_STATE_DIE);
 		}
 	}
 	else // hit by Goomba
 	{
 		if (untouchable == 0)
 		{
-			if (parakoopa->GetState() != PARAGOOMBA_STATE_DIE)
+			if (parakoopa->GetState() != PARAKOOPA_STATE_DIE)
 			{
 				if (level > MARIO_LEVEL_SMALL)
 				{
@@ -312,7 +317,7 @@ void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
 				}
 				else
 				{
-					DebugOut(L">>> Mario DIE >>> \n");
+					//DebugOut(L">>> Mario DIE >>> \n");
 					SetState(MARIO_STATE_DIE);
 				}
 			}
@@ -432,7 +437,7 @@ void CMario::OnCollisionWithPiranha(LPCOLLISIONEVENT e)
 		}
 		else
 		{
-			DebugOut(L">>> Mario DIE >>> \n");
+			//DebugOut(L">>> Mario DIE >>> \n");
 			SetState(MARIO_STATE_DIE);
 		}
 	}
@@ -822,7 +827,7 @@ void CMario::SetState(int state)
 		vy = -MARIO_JUMP_DIE_SPEED;
 		ax = 0.0f;
 		vx = 0.0f;
-
+		startDie();
 		break;
 	case MARIO_STATE_KICK:
 		isKicking = true;
@@ -837,7 +842,6 @@ void CMario::SetState(int state)
 		break;
 	case MARIO_STATE_PRE_FLY:
 		isPrefly = true;
-		DebugOut(L">>> PRE_FLY >>> \n");
 		break;
 	case MARIO_STATE_FLY:
 		isFly = true;
@@ -901,17 +905,14 @@ void CMario::SetLevel(int l)
 	{
 		y = (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT) / 2;
 		level = l;
-		DebugOut(L">>> Y SMALL >>> \n", y);
 	}
 	else if (this->level == MARIO_LEVEL_BIG)
 	{
 		y -= MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT;
-		DebugOut(L">>> Y BIG >>> \n", y);
 	}
 	else 
 	{
 		y -= MARIO_RACCOON_BBOX_HEIGHT - MARIO_BIG_BBOX_HEIGHT;
-		DebugOut(L">>> Y RACCOON >>> \n", y);
 	}
 }
 

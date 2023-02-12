@@ -28,6 +28,8 @@
 
 #define MARIO_JUMP_DEFLECT_SPEED  0.4f
 
+
+
 #define MARIO_STATE_DIE				-10
 #define MARIO_STATE_IDLE			0
 #define MARIO_STATE_WALKING_RIGHT	100
@@ -71,7 +73,7 @@
 #define ID_ANI_MARIO_BRACE_LEFT 1001
 
 #define ID_ANI_MARIO_KICK_RIGHT 1101
-#define ID_ANI_MARIO_KICK_LEFT 1100
+#define ID_ANI_MARIO_KICK_LEFT 1110
 
 #define ID_ANI_MARIO_DIE 999
 
@@ -164,6 +166,7 @@
 #define MARIO_SPIN_TIME 1000
 #define MARIO_RUNNING_TIME 200
 #define MARIO_PRE_FLY_TIME 1000
+#define  MARIO_DIE_TIMEOUT 2000
 
 class CMario : public CGameObject
 {
@@ -174,6 +177,7 @@ class CMario : public CGameObject
 	BOOLEAN isRunning;
 	BOOLEAN isPrefly;
 	BOOLEAN isFly;
+	BOOLEAN isDie;
 	float maxVx;
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
@@ -184,6 +188,7 @@ class CMario : public CGameObject
 	ULONGLONG spin_time;
 	ULONGLONG pre_fly_time;
 	ULONGLONG running_time;
+	ULONGLONG die_start;
 	BOOLEAN isOnPlatform;
 	DWORD dt;
 	int coin; 
@@ -218,16 +223,19 @@ public:
 		isRunning = false;
 		isPrefly = false;
 		isFly = false;
+		isDie = false;
+		
 
 		maxVx = 0.0f;
 		ax = 0.0f;
 		ay = MARIO_GRAVITY; 
 
-		level = MARIO_LEVEL_RACCOON;
+		level = MARIO_LEVEL_SMALL;
 		untouchable = 0;
 		untouchable_start = -1;
 		pre_fly_time = -1;
 		running_time = -1;
+		die_start = -1;
 		isOnPlatform = false;
 		coin = 0;
 
@@ -254,6 +262,7 @@ public:
 	void startIsSpin() { spin_time = GetTickCount64(); }
 	void startRunning() { running_time = GetTickCount64(); 	DebugOut(L">>> start running >>> \n");}
 	void startPreFly() { pre_fly_time = GetTickCount64(); DebugOut(L">>> state fly >>> \n");}
+	void startDie() { isDie = true; die_start = GetTickCount64(); }
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };

@@ -20,10 +20,13 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 		mario->SetState(MARIO_STATE_JUMP);
 		break;
 	case DIK_1:
-		mario->SetLevel(MARIO_LEVEL_SMALL);
+		CGame::GetInstance()->InitiateSwitchScene(INTRO_SCENE);
 		break;
 	case DIK_2:
-		mario->SetLevel(MARIO_LEVEL_BIG);
+		CGame::GetInstance()->InitiateSwitchScene(OVERWORLD_SCENE);
+		break;
+	case DIK_3:
+		CGame::GetInstance()->InitiateSwitchScene(WORLD_MAP_1_1_SCENE);
 		break;
 	case DIK_0:
 		mario->SetState(MARIO_STATE_DIE);

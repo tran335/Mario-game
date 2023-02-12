@@ -76,9 +76,6 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SampleKeyEventHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -128,6 +125,15 @@
       <Filter>Overworld</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="MarioOverworld.cpp">
+      <Filter>Mario</Filter>
+    </ClCompile>
+    <ClCompile Include="SampleKeyEventHandler.cpp">
+      <Filter>Keyboard</Filter>
+    </ClCompile>
+    <ClCompile Include="OverworldKeyHandler.cpp">
+      <Filter>Keyboard</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TileMap.h">
@@ -205,12 +211,6 @@
     <ClInclude Include="GameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="KeyEventHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SampleKeyEventHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="AssetIDs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -253,14 +253,26 @@
     <ClInclude Include="Parakoopa.h">
       <Filter>Enemy\Koopa</Filter>
     </ClInclude>
-    <ClInclude Include="VenusFireTrap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="OverworldBound.h">
       <Filter>Overworld</Filter>
     </ClInclude>
     <ClInclude Include="Tree.h">
       <Filter>Overworld</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioOverworld.h">
+      <Filter>Mario</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyEventHandler.h">
+      <Filter>Keyboard</Filter>
+    </ClInclude>
+    <ClInclude Include="SampleKeyEventHandler.h">
+      <Filter>Keyboard</Filter>
+    </ClInclude>
+    <ClInclude Include="OverworldKeyHandler.h">
+      <Filter>Keyboard</Filter>
+    </ClInclude>
+    <ClInclude Include="VenusFireTrap.h">
+      <Filter>Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -296,6 +308,9 @@
     </Filter>
     <Filter Include="Overworld">
       <UniqueIdentifier>{d4d92710-bc8b-44aa-987e-153aca42e969}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Keyboard">
+      <UniqueIdentifier>{1eb85d55-3744-491d-86ff-85138cf92f98}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

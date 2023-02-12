@@ -11,6 +11,7 @@
 #include "Platform.h"
 
 #include "SampleKeyEventHandler.h"
+#include "OverworldKeyHandler.h"
 
 using namespace std;
 
@@ -18,7 +19,11 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 	CScene(id, filePath)
 {
 	player = NULL;
+	if (id == OVERWORLD_SCENE)
+		key_handler = new COverworldKeyHandler(this);
+	else
 	key_handler = new CSampleKeyHandler(this);
+	
 }
 
 
@@ -113,8 +118,14 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 			DebugOut(L"[ERROR] MARIO object was created before!\n");
 			return;
 		}
-		obj = new CMario(x,y); 
-		player = (CMario*)obj;  
+		if (id == OVERWORLD_SCENE) {
+			obj = new CMarioOverworld(x, y);
+			player = (CMarioOverworld*)obj;
+		}
+		else {
+			obj = new CMario(x,y); 
+			player = (CMario*)obj; 
+		}
 
 		DebugOut(L"[INFO] Player object has been created!\n");
 		break;
@@ -297,13 +308,11 @@ void CPlayScene::Clear()
 */
 void CPlayScene::Unload()
 {
-	for (int i = 0; i < objects.size(); i++)
-		delete objects[i];
-
+	//for (int i = 0; i < objects.size(); i++)
+	//	delete objects[i];
 	objects.clear();
 	player = NULL;
-
-	DebugOut(L"[INFO] Scene %d unloaded! \n", id);
+	//DebugOut(L"[INFO] Scene %d unloaded! \n", id);
 }
 
 bool CPlayScene::IsGameObjectDeleted(const LPGAMEOBJECT& o) { return o == NULL; }

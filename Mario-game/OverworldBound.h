@@ -1,6 +1,9 @@
 #pragma once
 #include "GameObject.h"
 
+#define BOUND_BBOX_WIDTH 48
+#define BOUND_BBOX_HEIGHT 48
+
 class COverworldBound : public CGameObject
 {
 protected:

@@ -9,6 +9,12 @@
 #include "TileMap.h"
 #include "QuestionBrick.h"
 #include "Koopa.h"
+#include "MarioOverworld.h"
+
+
+#define INTRO_SCENE 1
+#define OVERWORLD_SCENE 2
+#define WORLD_MAP_1_1_SCENE 3
 
 
 class CPlayScene: public CScene

@@ -13,8 +13,8 @@ void COverworldBound::Render()
 
 void COverworldBound::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
-	l = x;
-	t = y;
-	r = l + width;
-	b = t + height;
+	l = x - BOUND_BBOX_WIDTH / 2;
+	t = y - BOUND_BBOX_HEIGHT / 2;
+	r = l + BOUND_BBOX_WIDTH;
+	b = t + BOUND_BBOX_HEIGHT;
 }
