@@ -28,6 +28,15 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_3:
 		CGame::GetInstance()->InitiateSwitchScene(WORLD_MAP_1_1_SCENE);
 		break;
+	case DIK_4:
+		mario->SetLevel(MARIO_LEVEL_SMALL);
+		break;
+	case DIK_5:
+		mario->SetLevel(MARIO_LEVEL_BIG);
+		break;
+	case DIK_6:
+		mario->SetLevel(MARIO_LEVEL_RACCOON);
+		break;
 	case DIK_0:
 		mario->SetState(MARIO_STATE_DIE);
 		break;
