@@ -124,15 +124,20 @@
     <ClCompile Include="Tree.cpp">
       <Filter>Overworld</Filter>
     </ClCompile>
-    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="MarioOverworld.cpp">
       <Filter>Mario</Filter>
     </ClCompile>
     <ClCompile Include="SampleKeyEventHandler.cpp">
       <Filter>Keyboard</Filter>
     </ClCompile>
+    <ClCompile Include="Three.cpp">
+      <Filter>Intro</Filter>
+    </ClCompile>
     <ClCompile Include="OverworldKeyHandler.cpp">
-      <Filter>Keyboard</Filter>
+      <Filter>Overworld</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -268,11 +273,14 @@
     <ClInclude Include="SampleKeyEventHandler.h">
       <Filter>Keyboard</Filter>
     </ClInclude>
-    <ClInclude Include="OverworldKeyHandler.h">
-      <Filter>Keyboard</Filter>
-    </ClInclude>
     <ClInclude Include="VenusFireTrap.h">
       <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="OverworldKeyHandler.h">
+      <Filter>Overworld</Filter>
+    </ClInclude>
+    <ClInclude Include="Three.h">
+      <Filter>Intro</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -311,6 +319,9 @@
     </Filter>
     <Filter Include="Keyboard">
       <UniqueIdentifier>{1eb85d55-3744-491d-86ff-85138cf92f98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Intro">
+      <UniqueIdentifier>{f622aa03-a8a2-4b4c-9815-06b73334bc3e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

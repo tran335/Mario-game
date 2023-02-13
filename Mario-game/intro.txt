@@ -1,6 +1,7 @@
 # list of object assets to load in this scene
 [ASSETS]
 mario.txt
+map\intro\objectmap_intro\three.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type

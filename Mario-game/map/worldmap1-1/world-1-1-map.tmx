@@ -367,7 +367,7 @@
 </data>
  </layer>
  <objectgroup id="13" name="Solid">
- <object id="1" x="2" y="1250" width="1869.82" height="44"/>
+  <object id="1" x="2" y="1250" width="1869.82" height="44"/>
   <object id="2" x="1057.42" y="1101.33" width="95.9091" height="144.394"/>
   <object id="3" x="1872" y="1203.33" width="1392" height="90.6667"/>
   <object id="4" x="3458" y="1252" width="1004" height="42"/>
@@ -398,7 +398,7 @@
   <object id="209" x="6720" y="1104.67" width="94.6666" height="47.3333"/>
  </objectgroup>
  <objectgroup id="14" name="Ghost">
-  <object id="28" type="1" x="720.523" y="1104.97" width="142.597" height="144.447"/>
+   <object id="28" type="1" x="720.523" y="1104.97" width="142.597" height="144.447"/>
   <object id="29" type="1" x="817.891" y="1008.86" width="140.712" height="239.742"/>
   <object id="30" type="1" x="1200.45" y="1107.01" width="239.337" height="140.446"/>
   <object id="31" type="1" x="1392.68" y="1008.23" width="190.967" height="239.113"/>
@@ -421,7 +421,7 @@
   <object id="320" x="5628.91" y="1991.88" width="2047.52" height="24.2424"/>
  </objectgroup>
  <objectgroup id="18" name="QuestionBlocks">
-  <object id="47" name="coin" type="1" x="538.667" y="1065.33"/>
+ <object id="47" name="coin" type="1" x="538.667" y="1065.33"/>
   <object id="49" name="coin" type="1" x="586.667" y="1065.33"/>
   <object id="50" name="coin" type="1" x="683.333" y="920.667"/>
   <object id="51" name="powerup" type="1" x="730.667" y="920.667"/>
@@ -490,7 +490,7 @@
   <object id="266" x="5902.25" y="1104" width="27" height="24"/>
  </objectgroup>
  <objectgroup id="15" name="Enemy">
-  <object id="91" name="koopa" type="red" x="1641.33" y="1034.66" width="13" height="13">
+    <object id="91" name="koopa" type="red" x="1641.33" y="1034.66" width="13" height="13">
    <properties>
     <property name="ani_id" value="70"/>
    </properties>

@@ -4,11 +4,12 @@
 #include "Game.h"
 
 #include "Mario.h"
+#include "MarioOverworld.h"
 #include "PlayScene.h"
 
 void COverworldKeyHandler::OnKeyDown(int KeyCode)
 {
-	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+	CMarioOverworld* mario = (CMarioOverworld*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 
 	switch (KeyCode)
 	{
@@ -21,49 +22,28 @@ void COverworldKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_3:
 		CGame::GetInstance()->InitiateSwitchScene(WORLD_MAP_1_1_SCENE);
 		break;
+	case DIK_RIGHT:
+		mario->SetState(MARIO_STATE_WALKING_RIGHT);
+		break;
+	case DIK_LEFT:
+		mario->SetState(MARIO_STATE_WALKING_LEFT);
+		break;
+	case DIK_UP:
+		mario->SetState(MARIO_STATE_WALKING_UP);
+		break;
+	case DIK_DOWN:
+		mario->SetState(MARIO_STATE_WALKING_DOWN);
+		break;
 	}
 }
 
 void COverworldKeyHandler::OnKeyUp(int KeyCode)
 {
-	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
-	//switch (KeyCode)
-	//{
-	//case DIK_S:
-	//	mario->SetState(MARIO_STATE_RELEASE_JUMP);
-	//	break;
-	//case DIK_DOWN:
-	//	mario->SetState(MARIO_STATE_SIT_RELEASE);
-	//	break;
-	//case DIK_A:
-	//	mario->SetState(MARIO_STATE_SPIN_RELEASE);
-	//	break;
-	//case DIK_4:
-	//	CGame::GetInstance()->InitiateSwitchScene(1);
-	//	break;
-	//case DIK_5:
-	//	CGame::GetInstance()->InitiateSwitchScene(2);
-	//	break;
-	//case DIK_6:
-	//	CGame::GetInstance()->InitiateSwitchScene(3);
-	//	break;
-	//}
+	CMarioOverworld* mario = (CMarioOverworld*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 }
 
 void COverworldKeyHandler::KeyState(BYTE* states)
 {
 	LPGAME game = CGame::GetInstance();
-	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
-
-	if (game->IsKeyDown(DIK_RIGHT))
-	{
-			mario->SetState(MARIO_STATE_WALKING_RIGHT);
-
-	}
-	else if (game->IsKeyDown(DIK_LEFT))
-	{
-			mario->SetState(MARIO_STATE_WALKING_LEFT);
-	}
-	else
-		mario->SetState(MARIO_STATE_IDLE);
+	CMarioOverworld* mario = (CMarioOverworld*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 }

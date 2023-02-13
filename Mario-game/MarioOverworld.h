@@ -7,7 +7,7 @@
 #include "debug.h"
 #include "Mario.h"
 
-#define MARIO_WALKING_SPEED		0.3f
+#define MARIO_WALKING_SPEED		1.0f
 
 #define MARIO_GRAVITY			0.002f
 
@@ -33,6 +33,7 @@
 class CMarioOverworld : public CMario
 {
 	float maxVx;
+	float maxVy;
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
 
@@ -45,6 +46,7 @@ public:
 	CMarioOverworld(float x, float y) : CMario(x, y)
 	{
 		maxVx = 0.0f;
+		maxVy = 0.0f;
 		ax = 0.0f;
 		ay = MARIO_GRAVITY;
 		untouchable = 0;

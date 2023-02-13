@@ -1,5 +1,5 @@
 [SETTINGS]
-start	2	
+start	1	
 width	320
 height	240
 
@@ -22,3 +22,4 @@ height	240
 50	textures\enemy - 2.png
 60	textures\fireball.png
 70	textures\overworld.png
+80	textures\intro.png

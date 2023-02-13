@@ -1,6 +1,6 @@
 # id	left	top	right	bottom	texture_id
 [SPRITES]
-51001	466	361	517	413	40
+51001	468	361	516	413	40
 
 
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
