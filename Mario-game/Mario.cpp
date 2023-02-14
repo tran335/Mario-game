@@ -215,28 +215,27 @@ void CMario::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
 	// jump on top >> kill Goomba and deflect a bit 
 	if (e->ny > 0)
 	{
-		if (supermushroom->GetState() != SUPERMUSHROOM_STATE_WALKING)
+		if (supermushroom->GetState() != SUPERMUSHROOM_STATE_WALKING || supermushroom->GetState() != LEAF_STATE_FLY)
 		{
-			supermushroom->SetState(SUPERMUSHROOM_STATE_WALKING);
+			if (level == MARIO_LEVEL_SMALL)
+				supermushroom->SetState(SUPERMUSHROOM_STATE_WALKING);
+			else
+				supermushroom->SetState(LEAF_STATE_FLY);
 		}
 	}
 	else
 	{
 		if (untouchable == 0)
 		{
-			if (supermushroom->GetState() == SUPERMUSHROOM_STATE_WALKING) {
-				if (level == MARIO_LEVEL_SMALL) {
-					level = MARIO_LEVEL_BIG;
+
+			if (supermushroom->GetState() == SUPERMUSHROOM_STATE_WALKING) 
 					SetLevel(MARIO_LEVEL_BIG);
-				}
-				else if (level == MARIO_LEVEL_BIG) 
-				{
-					SetLevel(MARIO_LEVEL_RACCOON);
-					level = MARIO_LEVEL_RACCOON;
-				}
+			else {
+				SetLevel(MARIO_LEVEL_RACCOON);
+				level = MARIO_LEVEL_RACCOON;
+			}	
 				e->obj->Delete();
 				StartUntouchable();
-			}
 		}
 	}
 }
@@ -911,7 +910,7 @@ void CMario::SetLevel(int l)
 		level = l;
 		break;
 	case MARIO_LEVEL_RACCOON:
-		y -= (MARIO_RACCOON_BBOX_HEIGHT - MARIO_BIG_BBOX_HEIGHT)/2;
+		y -= MARIO_RACCOON_BBOX_HEIGHT - MARIO_BIG_BBOX_HEIGHT;
 		level = l;
 		break;
 	}

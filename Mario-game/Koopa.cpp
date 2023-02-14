@@ -1,6 +1,7 @@
 #include "Koopa.h"
 #include "PlayScene.h"
 #include "SuperMushroom.h"
+#include "QuestionBrick.h"
 CKoopa::CKoopa(float x, float y, int type) :CGameObject(x, y)
 {
 	this->ax = 0;
@@ -53,6 +54,8 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 		}
 		if (dynamic_cast<CSuperMushroom*>(e->obj))
 			OnCollisionWithSuperMushroom(e);
+		if (dynamic_cast<CQuestionBrick*>(e->obj))
+			OnCollisionWithQuestionBrick(e);
 	
 }
 void CKoopa::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
@@ -61,11 +64,27 @@ void CKoopa::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
 	// jump on top >> kill Goomba and deflect a bit 
 	if (untouchable==0)
 	{
-		if (supermushroom->GetState() != SUPERMUSHROOM_STATE_WALKING)
+		if (supermushroom->GetState() != SUPERMUSHROOM_STATE_WALKING || supermushroom->GetState() != LEAF_STATE_FLY)
 		{
-			supermushroom->SetState(SUPERMUSHROOM_STATE_WALKING);
+			if (mario->GetLevel() == MARIO_LEVEL_SMALL)
+				supermushroom->SetState(SUPERMUSHROOM_STATE_WALKING);
+			else
+				supermushroom->SetState(LEAF_STATE_FLY);
 		}
 	} 
+}
+
+void CKoopa::OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e)
+{
+	CQuestionBrick* questionbrick = dynamic_cast<CQuestionBrick*>(e->obj);
+	// jump on top >> kill Goomba and deflect a bit 
+	if (untouchable == 0)
+	{
+		if (questionbrick->GetState() != QUESTIONBRICK_STATE_DISABLE)
+		{
+			questionbrick->SetState(QUESTIONBRICK_STATE_DISABLE);
+		}
+	}
 }
 
 void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
