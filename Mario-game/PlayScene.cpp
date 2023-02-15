@@ -12,6 +12,7 @@
 
 #include "SampleKeyEventHandler.h"
 #include "OverworldKeyHandler.h"
+#include "IntroKeyHandler.h"
 
 using namespace std;
 
@@ -19,10 +20,18 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 	CScene(id, filePath)
 {
 	player = NULL;
-	if (id == OVERWORLD_SCENE)
+	switch (id) 
+	{
+	case INTRO_SCENE:
+		key_handler = new CIntroKeyHandler(this);
+		break;
+	case OVERWORLD_SCENE:
 		key_handler = new COverworldKeyHandler(this);
-	else
-	key_handler = new CSampleKeyHandler(this);
+		break;
+	case WORLD_MAP_1_1_SCENE:
+		key_handler = new CSampleKeyHandler(this);
+		break;
+	}
 	
 }
 

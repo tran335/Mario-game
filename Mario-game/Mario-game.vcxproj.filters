@@ -139,6 +139,9 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
+    <ClCompile Include="IntroKeyHandler.cpp">
+      <Filter>Intro</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TileMap.h">
@@ -280,6 +283,9 @@
       <Filter>Overworld</Filter>
     </ClInclude>
     <ClInclude Include="Three.h">
+      <Filter>Intro</Filter>
+    </ClInclude>
+    <ClInclude Include="IntroKeyHandler.h">
       <Filter>Intro</Filter>
     </ClInclude>
   </ItemGroup>

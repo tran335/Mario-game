@@ -20,11 +20,22 @@ class CFireball : public CGameObject
 	float ay;
 	ULONGLONG unfindslidedirecttion_time;
 	BOOLEAN unfindslidedirecttion;
+
+	ULONGLONG untouchable = 0;
+	ULONGLONG untouchable_start = -1;
+
+	virtual int IsCollidable() { return 1; };
+	virtual int IsBlocking() { return 0; }
+
+
+	void OnCollisionWith(LPCOLLISIONEVENT e);
+
 public:
 	CFireball(float x, float y);
 	void Render();
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 	void startfindslidedirecttion(DWORD dt);
+	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 };
 

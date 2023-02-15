@@ -52,18 +52,18 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	{
 		startIsSpin();
 	}
-	else if(state==MARIO_STATE_RUNNING_LEFT || state ==MARIO_STATE_RUNNING_RIGHT)
+	else if((state==MARIO_STATE_RUNNING_LEFT || state ==MARIO_STATE_RUNNING_RIGHT) && running_time< 0)
 	{
 		startRunning();
-	}
-	if (GetTickCount64() - running_time > MARIO_RUNNING_TIME && running_time > 0)
-	{
-		if (CGame::GetInstance()->IsKeyDown(DIK_W)) {
-			SetState(MARIO_STATE_FLY);
-			running_time = 0;
+		if (GetTickCount64() - running_time > MARIO_RUNNING_TIME)
+		{
+			SetState(MARIO_STATE_PRE_FLY);
 			startPreFly();
+			running_time = 0;
+			
 		}
 	}
+	
 	//if (GetTickCount64() - pre_fly_time > MARIO_PRE_FLY_TIME && pre_fly_time > 0) {
 	//	pre_fly_time = 0;
 	//	SetState(MARIO_STATE_FLY);

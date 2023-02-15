@@ -1,6 +1,14 @@
 #include "Fireball.h"
 #include "PlayScene.h"
 
+
+
+void CFireball::OnCollisionWith(LPCOLLISIONEVENT e)
+{
+	if (dynamic_cast<CFireball*>(e->obj)) return;
+
+}
+
 CFireball::CFireball(float x, float y)
 {
 	this->x = x;
@@ -19,7 +27,6 @@ void CFireball::Render()
 	animations->Get(ani)->Render(x, y);
 	//RenderBoundingBox();
 }
-
 
 
 void CFireball::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -44,6 +51,7 @@ void CFireball::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 
 	CGameObject::Update(dt, coObjects);
+	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
 void CFireball::GetBoundingBox(float& l, float& t, float& r, float& b)
