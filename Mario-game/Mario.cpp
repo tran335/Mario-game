@@ -47,8 +47,29 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		spin_time = 0;
 		isSpining = false;
 	}
-	isOnPlatform = false;
-	if (state == MARIO_STATE_SPIN) 
+	//isOnPlatform = false;
+
+	if (GetTickCount64() - running_time > MARIO_RUNNING_TIME && isRunning==true)
+	{
+		SetState(MARIO_STATE_PRE_FLY);
+		running_time = 0;
+		isRunning = false;
+	}
+
+	//switch(state)
+	//{
+	//case MARIO_STATE_SPIN:
+	//	startIsSpin();
+	//	break;
+	//case MARIO_STATE_RUNNING_LEFT:
+	//	startRunning();
+	//	break;
+	//case MARIO_STATE_RUNNING_RIGHT:
+	//	startRunning();
+	//	break;
+	//}
+
+	/*if (state == MARIO_STATE_SPIN) 
 	{
 		startIsSpin();
 	}
@@ -62,7 +83,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			running_time = 0;
 			
 		}
-	}
+	}*/
 	
 	//if (GetTickCount64() - pre_fly_time > MARIO_PRE_FLY_TIME && pre_fly_time > 0) {
 	//	pre_fly_time = 0;
@@ -757,6 +778,7 @@ void CMario::SetState(int state)
 	{
 	case MARIO_STATE_RUNNING_RIGHT:
 		if (isSitting) break;
+		startRunning();
 		isRunning = true;
 		maxVx = MARIO_RUNNING_SPEED;
 		ax = MARIO_ACCEL_RUN_X;
@@ -764,6 +786,7 @@ void CMario::SetState(int state)
 		break;
 	case MARIO_STATE_RUNNING_LEFT:
 		if (isSitting) break;
+		startRunning();
 		isRunning = true;
 		maxVx = -MARIO_RUNNING_SPEED;
 		ax = -MARIO_ACCEL_RUN_X;
@@ -835,11 +858,13 @@ void CMario::SetState(int state)
 	case MARIO_STATE_SPIN:
 		isSpin = true;
 		isSpining = true;
+		startIsSpin();
 		break;
 	case MARIO_STATE_SPIN_RELEASE:
 		isSpin = false;
 		break;
 	case MARIO_STATE_PRE_FLY:
+		startPreFly();
 		isPrefly = true;
 		break;
 	case MARIO_STATE_FLY:
