@@ -6,7 +6,6 @@ CVenusFireTrap::CVenusFireTrap(float x, float y, int type)
 	this->x = x;
 	this->y = y;
 	start_y = y;
-	DebugOut(L"BBBB:\n", start_y);
 	this->type = type;
 	vy = -VENUS_SPEED;
 	 mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();

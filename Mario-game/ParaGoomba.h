@@ -3,7 +3,7 @@
 #include "debug.h"
 
 #define PARAGOOMBA_GRAVITY 0.002f
-#define PARAGOOMBA_WALKING_SPEED 0.05f
+#define PARAGOOMBA_WALKING_SPEED 0.2f
 
 
 #define PARAGOOMBA_BBOX_WIDTH 48

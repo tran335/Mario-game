@@ -20,6 +20,7 @@
 #include "Piranha.h"
 #include "Parakoopa.h"
 #include "PlayScene.h"
+#include "Switch.h"
 
 
 #include "Collision.h"
@@ -47,13 +48,13 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		spin_time = 0;
 		isSpining = false;
 	}
-	//isOnPlatform = false;
+	isOnPlatform = false;
 
-	if (GetTickCount64() - running_time > MARIO_RUNNING_TIME && isRunning==true)
+	if (isRunning==true)
 	{
-		SetState(MARIO_STATE_PRE_FLY);
-		running_time = 0;
-		isRunning = false;
+		if (GetTickCount64() - running_time > MARIO_RUNNING_TIME) {
+			SetState(MARIO_STATE_PRE_FLY);
+		}
 	}
 
 	//switch(state)
@@ -147,6 +148,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithFireBall(e);
 	else if (dynamic_cast<CKoopa*>(e->obj))
 		OnCollisionWithParaKoopa(e);
+	else if (dynamic_cast<CSwitch*>(e->obj))
+		OnCollisionWithSwitch(e);
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -253,7 +256,7 @@ void CMario::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
 					SetLevel(MARIO_LEVEL_BIG);
 			else {
 				SetLevel(MARIO_LEVEL_RACCOON);
-				level = MARIO_LEVEL_RACCOON;
+				//level = MARIO_LEVEL_RACCOON;
 			}	
 				e->obj->Delete();
 				StartUntouchable();
@@ -265,9 +268,19 @@ void CMario::OnCollisionWithCameraBound(LPCOLLISIONEVENT e)
 {
 	CCameraBound * camerabound  = dynamic_cast<CCameraBound*>(e->obj);
 
-	if (e->ny < 0)
+	if (e->ny > 0)
 	{
 		SetState(MARIO_STATE_DIE);
+	}
+}
+
+void CMario::OnCollisionWithSwitch(LPCOLLISIONEVENT e)
+{
+	CSwitch* cswitch = dynamic_cast<CSwitch*>(e->obj);
+
+	if (e->nx < 0)
+	{
+		cswitch->SetState(SWITCH_STATE_JUMP);
 	}
 }
 
@@ -864,6 +877,8 @@ void CMario::SetState(int state)
 		isSpin = false;
 		break;
 	case MARIO_STATE_PRE_FLY:
+		running_time = 0;
+		isRunning = false;
 		startPreFly();
 		isPrefly = true;
 		break;

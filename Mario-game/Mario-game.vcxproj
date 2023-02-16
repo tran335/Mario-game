@@ -165,6 +165,7 @@
     <ClCompile Include="QuestionBrick.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SuperMushroom.cpp" />
+    <ClCompile Include="Switch.cpp" />
     <ClCompile Include="Three.cpp" />
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="TileSet.cpp" />
@@ -215,6 +216,7 @@
     <ClInclude Include="Piranha.h" />
     <ClInclude Include="QuestionBrick.h" />
     <ClInclude Include="SuperMushroom.h" />
+    <ClInclude Include="Switch.h" />
     <ClInclude Include="Three.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="TileSet.h" />

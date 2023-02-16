@@ -22,6 +22,7 @@
 #include "Parakoopa.h"
 #include "Tree.h"
 #include "Three.h"
+#include "Switch.h"
 
 class CObjectMap
 {

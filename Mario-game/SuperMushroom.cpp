@@ -6,6 +6,7 @@ CSuperMushroom::CSuperMushroom(float x, float y) :CGameObject(x, y)
 	this->y = y;
 	this->x = x;
 	this->ax = 0;
+	direct_time = -1;
 	this->ay = SUPERMUSHROOM_GRAVITY;
 	start_y = y;
 	mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
@@ -25,46 +26,59 @@ void CSuperMushroom::OnNoCollision(DWORD dt)
 	y += vy * dt;
 };
 
-void CSuperMushroom::OnCollisionWith(LPCOLLISIONEVENT e)
-{
-	if (!e->obj->IsBlocking()) return;
-
-	if (e->ny != 0)
-	{
-		vy = 0;
-	}
-	else if (e->nx != 0)
-	{
-		vx = -vx;
-	}
-	if (dynamic_cast<CMario*>(e->obj))
-		OnCollisionWithMario(e);
-}
-void CSuperMushroom::OnCollisionWithMario(LPCOLLISIONEVENT e)
-{
-	CMario*mario= dynamic_cast<CMario*>(e->obj);
-		if (mario->GetLevel() < MARIO_LEVEL_BIG)
-			SetState(SUPERMUSHROOM_STATE_WALKING);
-		else
-			SetState(LEAF_STATE_FLY);
-}
+//void CSuperMushroom::OnCollisionWith(LPCOLLISIONEVENT e)
+//{
+//	if (!e->obj->IsBlocking()) return;
+//
+//	if (e->ny != 0)
+//	{
+//		vy = 0;
+//	}
+//	else if (e->nx != 0)
+//	{
+//		vx = -vx;
+//	}
+//	if (dynamic_cast<CMario*>(e->obj))
+//		OnCollisionWithMario(e);
+//}
+//void CSuperMushroom::OnCollisionWithMario(LPCOLLISIONEVENT e)
+//{
+//	//CMario* mario = dynamic_cast<CMario*>(e->obj);
+//	//if (e->ny < 0) {
+//	//	if (mario->GetLevel() < MARIO_LEVEL_BIG)
+//	//		SetState(SUPERMUSHROOM_STATE_WALKING);
+//	//	else
+//	//		SetState(LEAF_STATE_FLY);
+//	//}
+//}
 void CSuperMushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (state == SUPERMUSHROOM_STATE_WALKING) {
 	vy += ay * dt;
 	vx += ax * dt;
-
 		if (y < start_y - SUPERMUSHROOM_BBOX_HEIGHT) {
 			vy = 0.0f;
 			y = start_y - SUPERMUSHROOM_BBOX_HEIGHT;
 		}
 	}
-	else if(state==LEAF_STATE_FLY) {
-		vy += ay * dt;
-		vx += ax * dt;
-		if (y < start_y-MAX_Y)
-			vy = MAX_Y;
+	if (state == LEAF_STATE_FLY) {
+	
+			x += vx * dt;
+			y += vy * dt;
+			vy = ay * dt;
+			if (isDirect == false && GetTickCount64() - direct_time > DIRECT_TIME) {
+				vx = LEAF_GRAVITY;
+				isDirect = true;
+				startDirect();
+			}
+			else if (isDirect == true && (GetTickCount64() - direct_time > DIRECT_TIME)) {
+				vx = -LEAF_GRAVITY;
+				isDirect = false;
+				direct_time = 0;
+				startDirect();
+			}
 	}
+
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
@@ -95,7 +109,7 @@ void CSuperMushroom::SetState(int state)
 		vx = -SUPERMUSHROOM_WALKING_SPEED;
 		break;
 	case LEAF_STATE_FLY:
-		vx = 0;
-		vy = -MAX_Y;
+		y = start_y - MAX_Y;
+		break;
 	}
 }

@@ -272,11 +272,13 @@ void CPlayScene::Update(DWORD dt)
 	
 	if (id == WORLD_MAP_1_1_SCENE) {
 		cx -= game->GetBackBufferWidth() / 2;
-		if (cy < game->GetBackBufferHeight()*2- start_cy) {
-			cy -= game->GetBackBufferHeight();
-		}
-		else {
+		if (cy > game->GetBackBufferHeight()*2- start_cy) {
 			cy = game->GetBackBufferHeight();
+		}
+		//else if(cy>start_cy)
+		//	cy -= game->GetBackBufferHeight() / 2;
+		else {
+			cy -= game->GetBackBufferHeight()/2;
 		}
 	}
 	else
