@@ -21,6 +21,7 @@
 #include "Parakoopa.h"
 #include "PlayScene.h"
 #include "Switch.h"
+#include "Card.h"
 
 
 #include "Collision.h"
@@ -146,10 +147,12 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPiranha(e);
 	else if (dynamic_cast<CFireball*>(e->obj))
 		OnCollisionWithFireBall(e);
-	else if (dynamic_cast<CKoopa*>(e->obj))
+	else if (dynamic_cast<CParaKoopa*>(e->obj))
 		OnCollisionWithParaKoopa(e);
 	else if (dynamic_cast<CSwitch*>(e->obj))
 		OnCollisionWithSwitch(e);
+	else if (dynamic_cast<CCard*>(e->obj))
+		OnCollisionWithCard(e);
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -236,7 +239,6 @@ void CMario::OnCollisionWithCoinBrick(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
 {
 	CSuperMushroom* supermushroom = dynamic_cast<CSuperMushroom*>(e->obj);
-	// jump on top >> kill Goomba and deflect a bit 
 	if (e->ny > 0)
 	{
 		if (supermushroom->GetState() != SUPERMUSHROOM_STATE_WALKING || supermushroom->GetState() != LEAF_STATE_FLY)
@@ -251,13 +253,12 @@ void CMario::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
 	{
 		if (untouchable == 0)
 		{
-
-			if (supermushroom->GetState() == SUPERMUSHROOM_STATE_WALKING) 
-					SetLevel(MARIO_LEVEL_BIG);
-			else {
+			if (supermushroom->GetState() == LEAF_STATE_FLY) 
 				SetLevel(MARIO_LEVEL_RACCOON);
-				//level = MARIO_LEVEL_RACCOON;
-			}	
+			else {
+				SetLevel(MARIO_LEVEL_BIG);
+			}
+			
 				e->obj->Delete();
 				StartUntouchable();
 		}
@@ -287,8 +288,6 @@ void CMario::OnCollisionWithSwitch(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
 {
 	CParaGoomba* paragoomba = dynamic_cast<CParaGoomba*>(e->obj);
-
-	// jump on top >> kill Goomba and deflect a bit 
 	if (e->ny < 0)
 	{
 			if (paragoomba->Getlevel() != PARAGOOMBA_LEVEL_NO_WING)
@@ -300,7 +299,7 @@ void CMario::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
 				paragoomba->SetState(PARAGOOMBA_STATE_DIE);
 			}
 	}
-	else // hit by Goomba
+	else 
 	{
 		if (untouchable == 0)
 		{
@@ -313,7 +312,6 @@ void CMario::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
 				}
 				else
 				{
-					DebugOut(L">>> Mario DIE >>> \n");
 					SetState(MARIO_STATE_DIE);
 				}
 			}
@@ -335,6 +333,7 @@ void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
 		}
 		else {
 			parakoopa->SetState(PARAKOOPA_STATE_DIE);
+			StartUntouchable();
 		}
 	}
 	else // hit by Goomba
@@ -350,9 +349,14 @@ void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
 				}
 				else
 				{
-					//DebugOut(L">>> Mario DIE >>> \n");
 					SetState(MARIO_STATE_DIE);
 				}
+			}
+			else
+			{
+				SetState(MARIO_STATE_KICK);
+				parakoopa->SetState(PARAKOOPA_STATE_SLIDE);
+				isKicking = false;
 			}
 		}
 	}
@@ -505,6 +509,11 @@ void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 {
 	e->obj->Delete();
 	coin++;
+}
+
+void CMario::OnCollisionWithCard(LPCOLLISIONEVENT e)
+{
+	e->obj->Delete();
 }
 
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)

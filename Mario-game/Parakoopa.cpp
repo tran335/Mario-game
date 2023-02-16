@@ -58,7 +58,6 @@ void CParaKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 void CParaKoopa::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
 {
 	CSuperMushroom* supermushroom = dynamic_cast<CSuperMushroom*>(e->obj);
-	// jump on top >> kill Goomba and deflect a bit 
 	if (untouchable == 0)
 	{
 		if (supermushroom->GetState() != SUPERMUSHROOM_STATE_WALKING)

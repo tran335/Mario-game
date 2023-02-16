@@ -142,7 +142,12 @@
     <ClCompile Include="IntroKeyHandler.cpp">
       <Filter>Intro</Filter>
     </ClCompile>
-    <ClCompile Include="Switch.cpp" />
+    <ClCompile Include="Switch.cpp">
+      <Filter>Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Card.cpp">
+      <Filter>Misc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TileMap.h">
@@ -289,7 +294,12 @@
     <ClInclude Include="IntroKeyHandler.h">
       <Filter>Intro</Filter>
     </ClInclude>
-    <ClInclude Include="Switch.h" />
+    <ClInclude Include="Switch.h">
+      <Filter>Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Card.h">
+      <Filter>Misc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Map">

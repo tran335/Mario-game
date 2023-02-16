@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "Mario.h"
 
-#define SUPERMUSHROOM_GRAVITY 0.002f
+#define SUPERMUSHROOM_GRAVITY 0.001f
 #define LEAF_GRAVITY 0.05f
 #define SUPERMUSHROOM_WALKING_SPEED 0.05f
 
@@ -42,10 +42,7 @@ protected:
 	virtual int IsCollidable() { return 1; };
 	virtual int IsBlocking() { return 0; }
 	virtual void OnNoCollision(DWORD dt);
-
-
-	//virtual void OnCollisionWith(LPCOLLISIONEVENT e);
-	//void OnCollisionWithMario(LPCOLLISIONEVENT e);
+	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 
 public:
 	CSuperMushroom(float x, float y);

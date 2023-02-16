@@ -18,6 +18,7 @@ map\worldmap1-1\objectmap1-1\greenvenusfiretrap.txt
 map\worldmap1-1\objectmap1-1\piranha.txt
 map\worldmap1-1\objectmap1-1\greenkoopa.txt
 map\worldmap1-1\objectmap1-1\switch.txt
+map\worldmap1-1\objectmap1-1\card.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type

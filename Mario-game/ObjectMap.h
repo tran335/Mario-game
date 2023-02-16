@@ -23,6 +23,7 @@
 #include "Tree.h"
 #include "Three.h"
 #include "Switch.h"
+#include "Card.h"
 
 class CObjectMap
 {

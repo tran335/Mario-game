@@ -69,6 +69,17 @@ void CObjectMap::ImportData(vector<LPGAMEOBJECT>& coObjects)
 		}
 
 	}
+	if (name.compare("Card") == 0) {
+		while (element)
+		{
+			GetInfoElement(element, objectId, x, y, width, height);
+			obj = new CCard(width, height);
+			obj->SetPosition(x, y);
+			coObjects.push_back(obj);
+			element = element->NextSiblingElement();
+		}
+
+	}
 	if (name.compare("CameraBound") == 0) {
 		while (element)
 		{

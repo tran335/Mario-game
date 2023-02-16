@@ -26,31 +26,18 @@ void CSuperMushroom::OnNoCollision(DWORD dt)
 	y += vy * dt;
 };
 
-//void CSuperMushroom::OnCollisionWith(LPCOLLISIONEVENT e)
-//{
-//	if (!e->obj->IsBlocking()) return;
-//
-//	if (e->ny != 0)
-//	{
-//		vy = 0;
-//	}
-//	else if (e->nx != 0)
-//	{
-//		vx = -vx;
-//	}
-//	if (dynamic_cast<CMario*>(e->obj))
-//		OnCollisionWithMario(e);
-//}
-//void CSuperMushroom::OnCollisionWithMario(LPCOLLISIONEVENT e)
-//{
-//	//CMario* mario = dynamic_cast<CMario*>(e->obj);
-//	//if (e->ny < 0) {
-//	//	if (mario->GetLevel() < MARIO_LEVEL_BIG)
-//	//		SetState(SUPERMUSHROOM_STATE_WALKING);
-//	//	else
-//	//		SetState(LEAF_STATE_FLY);
-//	//}
-//}
+void CSuperMushroom::OnCollisionWith(LPCOLLISIONEVENT e)
+{
+	if (!e->obj->IsBlocking()) return;
+		if (e->ny != 0)
+		{
+			vy = 0;
+		}
+		else if (e->nx != 0)
+		{
+			vx = -vx;
+		}
+}
 void CSuperMushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (state == SUPERMUSHROOM_STATE_WALKING) {
@@ -61,8 +48,7 @@ void CSuperMushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			y = start_y - SUPERMUSHROOM_BBOX_HEIGHT;
 		}
 	}
-	if (state == LEAF_STATE_FLY) {
-	
+	else if (state == LEAF_STATE_FLY) {
 			x += vx * dt;
 			y += vy * dt;
 			vy = ay * dt;
