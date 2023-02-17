@@ -118,8 +118,6 @@ void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			SetState(PARAKOOPA_STATE_FLY);
 			level = PARAKOOPA_LEVEL_WING;
 			SetPosition(start_x, start_y);
-			/*x = start_x;
-			y = start_y;*/
 			isBack = false;
 			reset_time = 0;
 		}

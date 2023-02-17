@@ -37,6 +37,8 @@
 #define MARIO_SMALL_HANDLED_WIDTH 24
 #define MARIO_SMALL_HANDLED_HEIGHT 4
 
+
+
 #define RED_KOOPA 1
 #define GREEN_KOOPA 2
 
@@ -54,6 +56,7 @@ protected:
 	BOOLEAN unfinddirecttion;
 	BOOLEAN isHandled;
 	bool isRight=true;
+	bool isDrop = false;
 	int untouchable = 0;
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
@@ -75,6 +78,6 @@ public:
 	void FindSlideDirection(DWORD dt);
 	void startWakingTime(){waking_start = GetTickCount64();}
 	void setPositionHandled();
-	void HandledByMario() { isHandled = true; };
-	void HandledByMarioRelease() { isHandled = false; };
+	void HandledByMario() { isHandled = true; SetState(KOOPA_STATE_DIE); };
+	void HandledByMarioRelease() { isHandled = false; isDrop = true; DebugOut(L"handle release"); };
 };

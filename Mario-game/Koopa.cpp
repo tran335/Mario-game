@@ -41,7 +41,7 @@ void CKoopa::OnNoCollision(DWORD dt)
 
 void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (!e->obj->IsBlocking()) return;
+	//if (!e->obj->IsBlocking()) return;
 	if (dynamic_cast<CKoopa*>(e->obj)) return;
 
 		if (e->ny != 0)
@@ -63,9 +63,10 @@ void CKoopa::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
 	CSuperMushroom* supermushroom = dynamic_cast<CSuperMushroom*>(e->obj);
 	if (untouchable==0)
 	{
-		if (supermushroom->GetState() != SUPERMUSHROOM_STATE_WALKING || supermushroom->GetState() != LEAF_STATE_FLY)
+		if (supermushroom->GetState() != SUPERMUSHROOM_STATE_WALKING && supermushroom->GetState() != LEAF_STATE_FLY)
 		{
 			if (mario->GetLevel() == MARIO_LEVEL_SMALL)
+
 				supermushroom->SetState(SUPERMUSHROOM_STATE_WALKING);
 			else
 				supermushroom->SetState(LEAF_STATE_FLY);
@@ -95,6 +96,12 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	if (isHandled == true) {
 		setPositionHandled();
+	}
+	if (isDrop == true) {
+			DebugOut(L"Drop koopa");
+			vy += ay * dt;
+			ay = KOOPA_GRAVITY;
+			isDrop = false;
 	}
 	if ((state == KOOPA_STATE_DIE) && (GetTickCount64() - die_start > KOOPA_DIE_TIMEOUT && isHandled==false))
 	{
@@ -210,9 +217,10 @@ void CKoopa::setPositionHandled()
 	mario->GetPosition(x_mario, y_mario);
 	//if (mario->GetLevel() == MARIO_LEVEL_SMALL)
 	//{
-		if (isRight==false)
+		if (nx == -1)
 			SetPosition(x_mario - MARIO_SMALL_HANDLED_WIDTH, y_mario - MARIO_SMALL_HANDLED_HEIGHT);
 		else
 			SetPosition(x_mario + MARIO_SMALL_HANDLED_WIDTH, y_mario - MARIO_SMALL_HANDLED_HEIGHT);
 	//}
 }
+

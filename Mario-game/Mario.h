@@ -168,6 +168,7 @@
 #define MARIO_UNTOUCHABLE_TIME 2500
 #define MARIO_SPIN_TIME 1000
 #define MARIO_RUNNING_TIME 10
+#define MARIO_RUNNING_TIME 15
 #define MARIO_PRE_FLY_TIME 1000
 #define  MARIO_DIE_TIMEOUT 2000
 
@@ -267,6 +268,7 @@ public:
 
 	void SetLevel(int l);
 	int GetLevel() { return level; }
+	int GetPower() { return power; }
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 	void startIsSpin() { spin_time = GetTickCount64(); }
 	void startRunning() { running_time = GetTickCount64();  DebugOut(L">>> state running >>> \n");}

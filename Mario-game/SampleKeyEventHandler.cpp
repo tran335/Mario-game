@@ -41,7 +41,7 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 		mario->SetState(MARIO_STATE_DIE);
 		break;
 	case DIK_A:
-			mario->SetState(MARIO_STATE_SPIN);
+		mario->SetState(MARIO_STATE_SPIN);
 		break;
 	case DIK_R: // reset
 		//Reload();
@@ -54,6 +54,7 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 	//DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
 
 	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+	CKoopa* koopa = (CKoopa*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene());
 	switch (KeyCode)
 	{
 	case DIK_S:
@@ -77,11 +78,12 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 	{
 		if (game->IsKeyDown(DIK_A))
 		{
-			if (game->IsKeyDown(DIK_S)) {
+			if (game->IsKeyDown(DIK_S) && mario->GetLevel() == MARIO_LEVEL_RACCOON) {
 				mario->SetState(MARIO_STATE_FLY);
 			}
-			else
-				mario->SetState(MARIO_STATE_RUNNING_RIGHT);
+				else
+					mario->SetState(MARIO_STATE_RUNNING_RIGHT);
+				
 		}
 		else
 			mario->SetState(MARIO_STATE_WALKING_RIGHT);
@@ -89,17 +91,17 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 	}
 	else if (game->IsKeyDown(DIK_LEFT))
 	{
-		if (game->IsKeyDown(DIK_A)) 
-		{
-			if (game->IsKeyDown(DIK_S)) {
-				mario->SetState(MARIO_STATE_FLY);
-			}
-			else
-				mario->SetState(MARIO_STATE_RUNNING_LEFT);
+	if (game->IsKeyDown(DIK_A))
+	{
+		if (game->IsKeyDown(DIK_S) && mario->GetLevel() == MARIO_LEVEL_RACCOON) {
+			mario->SetState(MARIO_STATE_FLY);
 		}
 		else
-			mario->SetState(MARIO_STATE_WALKING_LEFT);
+			mario->SetState(MARIO_STATE_RUNNING_LEFT);
 	}
+	else
+		mario->SetState(MARIO_STATE_WALKING_LEFT);
+		}
 	else
 		mario->SetState(MARIO_STATE_IDLE);
 }

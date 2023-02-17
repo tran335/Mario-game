@@ -28,12 +28,12 @@
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
+	LPGAME game = CGame::GetInstance();
 	vy += ay * dt;
 	vx += ax * dt;
 
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
 
-	// reset untouchable timer if untouchable time has passed
 	if ( GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
 	{
 		untouchable_start = 0;
@@ -61,13 +61,20 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		isSpining = false;
 	}
 	isOnPlatform = false;
+	if (state != MARIO_STATE_PRE_FLY) {
+		if (isRunning == true)
+		{
+			power++;
 
-	if (isRunning==true)
-	{
-		power++;
-	   
+			if (power > MARIO_RUNNING_TIME) {
+				SetState(MARIO_STATE_PRE_FLY);
+			}
+		}
+	}
+	else {
 		if (power > MARIO_RUNNING_TIME) {
-			SetState(MARIO_STATE_PRE_FLY);
+			SetState(MARIO_STATE_FLY);
+			coin++;
 		}
 	}
 	CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -217,7 +224,7 @@ void CMario::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
 	CSuperMushroom* supermushroom = dynamic_cast<CSuperMushroom*>(e->obj);
 	if (e->ny > 0)
 	{
-		if (supermushroom->GetState() != SUPERMUSHROOM_STATE_WALKING || supermushroom->GetState() != LEAF_STATE_FLY)
+		if (supermushroom->GetState() != SUPERMUSHROOM_STATE_WALKING && supermushroom->GetState() != LEAF_STATE_FLY)
 		{
 			if (level == MARIO_LEVEL_SMALL)
 				supermushroom->SetState(SUPERMUSHROOM_STATE_WALKING);
@@ -367,7 +374,7 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
 		}
 	}
-	else // hit by Goomba
+	else 
 	{
 		if (untouchable == 0)
 		{
@@ -401,13 +408,14 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 			}
 
 			else
-				if (!game->IsKeyDown(DIK_B)) {
+				if (game->IsKeyDown(DIK_B)) {
+					koopa->HandledByMario();
+				}
+				else {
 					SetState(MARIO_STATE_KICK);
 					koopa->SetState(KOOPA_STATE_SLIDE);
 					isKicking = false;
-				}
-				else {
-					koopa->HandledByMario();
+					koopa->HandledByMarioRelease();
 				}
 		}
 
@@ -678,7 +686,6 @@ int CMario::GetAniIdRaccoon()
 				else if (ax == -MARIO_ACCEL_WALK_X)
 					aniId = ID_ANI_MARIO_RACCOON_WALKING_LEFT;
 			}
-
 	if (aniId == -1) aniId = ID_ANI_MARIO_RACCOON_IDLE_RIGHT;
 
 	return aniId;
@@ -870,7 +877,6 @@ void CMario::SetState(int state)
 		break;
 	case MARIO_STATE_PRE_FLY:
 		running_time = 0;
-		isRunning = false;
 		startPreFly();
 		isPrefly = true;
 		break;

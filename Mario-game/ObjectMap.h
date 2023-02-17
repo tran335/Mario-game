@@ -24,7 +24,7 @@
 #include "Three.h"
 #include "Switch.h"
 #include "Card.h"
-#include "Portal.h"
+#include "PortalPipe.h"
 
 class CObjectMap
 {

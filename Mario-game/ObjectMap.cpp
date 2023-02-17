@@ -91,17 +91,26 @@ void CObjectMap::ImportData(vector<LPGAMEOBJECT>& coObjects)
 		}
 
 	}
-	if (name.compare("CameraBound") == 0) {
-		while (element)
-		{
-			GetInfoElement(element, objectId, x, y, width, height);
-			obj = new CCameraBound(width, height);
-			obj->SetPosition(x, y);
-			coObjects.push_back(obj);
-			element = element->NextSiblingElement();
-		}
+	//if (name.compare("Portal") == 0) {
+	//	while (element)
+	//	{
+	//		GetInfoElement(element, objectId, x, y, width, height);
+	//		string typePortal = element->Attribute("type");
+	//		if (typePortal.compare("1") == 0) {
+	//			obj = new CPortalPipe(x, y, width, height, PORTAL_TYPE_INPUT);
+	//			obj->SetPosition(x, y);
+	//			coObjects.push_back(obj);
+	//		}
+	//		else if (typePortal.compare("2") == 0) {
+	//			obj = new CPortalPipe(x, y, width, height, PORTAL_TYPE_OUTPUT);
+	//			DebugOut(L"AAA", x, y);
+	//			obj->SetPosition(x, y);
+	//			coObjects.push_back(obj);
+	//		}
+	//		element = element->NextSiblingElement();
+	//	}
 
-	}
+	//}
 	if (name.compare("BoundOverWorld") == 0) {
 		while (element)
 		{
