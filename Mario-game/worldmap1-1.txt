@@ -26,7 +26,7 @@ map\worldmap1-1\objectmap1-1\card.txt
 # See OBJECT_TYPE constants in AssetIDs.h
 
 # MARIO
-0	120	1050
+0	3500	1050
 
 [MAP]
 #id	.tmx	prefix

@@ -40,7 +40,7 @@ void CParaKoopa::OnNoCollision(DWORD dt)
 
 void CParaKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	//	if (!e->obj->IsBlocking()) return;
+	if (!e->obj->IsBlocking()) return;
 	if (dynamic_cast<CKoopa*>(e->obj)) return;
 
 	if (e->ny != 0)
@@ -53,6 +53,8 @@ void CParaKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 	if (dynamic_cast<CSuperMushroom*>(e->obj))
 		OnCollisionWithSuperMushroom(e);
+	if (dynamic_cast<CCameraBound*>(e->obj))
+		OnCollisionWithCameraBound(e);
 
 }
 void CParaKoopa::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
@@ -64,6 +66,16 @@ void CParaKoopa::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
 		{
 			supermushroom->SetState(SUPERMUSHROOM_STATE_WALKING);
 		}
+	}
+}
+
+void CParaKoopa::OnCollisionWithCameraBound(LPCOLLISIONEVENT e)
+{
+	CCameraBound* camerabound = dynamic_cast<CCameraBound*>(e->obj);
+	if (e->ny < 0) 
+	{
+		isBack = true;
+		reset_time = GetTickCount64();
 	}
 }
 
@@ -100,6 +112,19 @@ void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			startWakingTime();
 		}
 	}
+	if (isBack) {
+		y += PARAGOOMBA_BBOX_HEIGHT;
+		if (GetTickCount64() - reset_time > BACK_TIME) {
+			SetState(PARAKOOPA_STATE_FLY);
+			level = PARAKOOPA_LEVEL_WING;
+			SetPosition(start_x, start_y);
+			/*x = start_x;
+			y = start_y;*/
+			isBack = false;
+			reset_time = 0;
+		}
+	}
+
 
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -132,24 +157,8 @@ void CParaKoopa::Render()
 			
 	}
 
-		/*if (state == PARAKOOPA_STATE_WALKING) {
-			if (vx > 0) {
-				aniId = ID_ANI_PARAKOOPA_WALKING_RIGHT;
-			}
-			else
-				aniId = ID_ANI_PARAKOOPA_WALKING_LEFT;
-		}
-		if (state == PARAKOOPA_STATE_DIE)
-		{
-			aniId = ID_ANI_PARAKOOPA_DIE;
-		}
-		if (state == KOOPA_STATE_WAKING) {
-			aniId = ID_ANI_PARAKOOPA_WAKING;
-		}
-		if (state == PARAKOOPA_STATE_SLIDE) {
-			aniId = ID_ANI_PARAKOOPA_SLIDE;
-		}*/
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
+	
 	//RenderBoundingBox();
 }
 
@@ -159,8 +168,8 @@ void CParaKoopa::SetState(int state)
 	switch (state)
 	{
 	case PARAKOOPA_STATE_FLY:
-	/*	vy = -PARAGOOMBA_JUMP_HIGH_SPEED;
-		vx = -PARAGOOMBA_WALKING_SPEED;*/
+		//vy = -PARAGOOMBA_JUMP_HIGH_SPEED;
+		vx = -PARAGOOMBA_WALKING_SPEED;
 		break;
 	case PARAKOOPA_STATE_DIE:
 		die_start = GetTickCount64();

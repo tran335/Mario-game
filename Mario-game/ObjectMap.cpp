@@ -206,7 +206,7 @@ void CObjectMap::ImportData(vector<LPGAMEOBJECT>& coObjects)
 				}
 				else if (typeKoopa.compare("para") == 0) {
 					obj = new CParaKoopa(x, y);
-					obj->SetPosition(x, y);
+					obj->SetPosition(x, y);	
 					coObjects.push_back(obj);
 				}
 			}

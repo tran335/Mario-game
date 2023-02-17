@@ -53,48 +53,13 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	if (isRunning==true)
 	{
-		if (GetTickCount64() - running_time > MARIO_RUNNING_TIME) {
+		power++;
+	   
+		if (power > MARIO_RUNNING_TIME) {
 			SetState(MARIO_STATE_PRE_FLY);
 		}
 	}
-
-	//switch(state)
-	//{
-	//case MARIO_STATE_SPIN:
-	//	startIsSpin();
-	//	break;
-	//case MARIO_STATE_RUNNING_LEFT:
-	//	startRunning();
-	//	break;
-	//case MARIO_STATE_RUNNING_RIGHT:
-	//	startRunning();
-	//	break;
-	//}
-
-	/*if (state == MARIO_STATE_SPIN) 
-	{
-		startIsSpin();
-	}
-	else if((state==MARIO_STATE_RUNNING_LEFT || state ==MARIO_STATE_RUNNING_RIGHT) && running_time< 0)
-	{
-		startRunning();
-		if (GetTickCount64() - running_time > MARIO_RUNNING_TIME)
-		{
-			SetState(MARIO_STATE_PRE_FLY);
-			startPreFly();
-			running_time = 0;
-			
-		}
-	}*/
-	
-	//if (GetTickCount64() - pre_fly_time > MARIO_PRE_FLY_TIME && pre_fly_time > 0) {
-	//	pre_fly_time = 0;
-	//	SetState(MARIO_STATE_FLY);
-	//}
 	CCollision::GetInstance()->Process(this, dt, coObjects);
-
-
-
 }
 
 void CMario::OnNoCollision(DWORD dt)
@@ -269,7 +234,7 @@ void CMario::OnCollisionWithCameraBound(LPCOLLISIONEVENT e)
 {
 	CCameraBound * camerabound  = dynamic_cast<CCameraBound*>(e->obj);
 
-	if (e->ny > 0)
+	if (e->ny < 0)
 	{
 		SetState(MARIO_STATE_DIE);
 	}

@@ -30,6 +30,7 @@
 
 
 
+
 #define MARIO_STATE_DIE				-10
 #define MARIO_STATE_IDLE			0
 #define MARIO_STATE_WALKING_RIGHT	100
@@ -164,7 +165,7 @@
 
 #define MARIO_UNTOUCHABLE_TIME 2500
 #define MARIO_SPIN_TIME 1000
-#define MARIO_RUNNING_TIME 100
+#define MARIO_RUNNING_TIME 10
 #define MARIO_PRE_FLY_TIME 1000
 #define  MARIO_DIE_TIMEOUT 2000
 
@@ -181,6 +182,7 @@ class CMario : public CGameObject
 	float maxVx;
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
+	float power;
 
 	int level; 
 	int untouchable; 
@@ -226,7 +228,7 @@ public:
 		isPrefly = false;
 		isFly = false;
 		isDie = false;
-		
+		power = 0;
 
 		maxVx = 0.0f;
 		ax = 0.0f;
@@ -262,8 +264,8 @@ public:
 	int GetLevel() { return level; }
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 	void startIsSpin() { spin_time = GetTickCount64(); }
-	void startRunning() { running_time = GetTickCount64(); 	DebugOut(L">>> start running >>> \n");}
-	void startPreFly() { pre_fly_time = GetTickCount64(); DebugOut(L">>> state fly >>> \n");}
+	void startRunning() { running_time = GetTickCount64();  DebugOut(L">>> state running >>> \n");}
+	void startPreFly() { pre_fly_time = GetTickCount64(); DebugOut(L">>> state pre fly >>> \n");}
 	void startDie() { isDie = true; die_start = GetTickCount64(); }
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);

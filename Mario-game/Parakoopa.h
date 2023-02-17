@@ -8,6 +8,7 @@
 #define PARAKOOPA_GRAVITY 0.001f
 #define PARAKOOPA_WALKING_SPEED 0.05f
 #define PARAKOOPA_SLIDE_SPEED 1.0f
+#define BACK_TIME 6000
 
 #define PARAKOOPA_BBOX_WIDTH 51
 #define PARAKOOPA_BBOX_HEIGHT 79
@@ -43,9 +44,12 @@ protected:
 	int type;
 	float start_x;
 	float start_y;
+	float reset_time;
 	CMario* mario;
 	ULONGLONG die_start;
 	ULONGLONG waking_start;
+
+	BOOLEAN isBack;
 	bool isRight = true;
 	int untouchable = 0;
 
@@ -62,6 +66,7 @@ protected:
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 
 	void OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e);
+	void OnCollisionWithCameraBound(LPCOLLISIONEVENT e);
 
 public:
 	CParaKoopa(float x, float y);
