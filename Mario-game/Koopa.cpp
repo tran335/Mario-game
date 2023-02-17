@@ -41,7 +41,7 @@ void CKoopa::OnNoCollision(DWORD dt)
 
 void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-//	if (!e->obj->IsBlocking()) return;
+	if (!e->obj->IsBlocking()) return;
 	if (dynamic_cast<CKoopa*>(e->obj)) return;
 
 		if (e->ny != 0)
@@ -61,7 +61,6 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 void CKoopa::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
 {
 	CSuperMushroom* supermushroom = dynamic_cast<CSuperMushroom*>(e->obj);
-	// jump on top >> kill Goomba and deflect a bit 
 	if (untouchable==0)
 	{
 		if (supermushroom->GetState() != SUPERMUSHROOM_STATE_WALKING || supermushroom->GetState() != LEAF_STATE_FLY)
@@ -77,7 +76,6 @@ void CKoopa::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
 void CKoopa::OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e)
 {
 	CQuestionBrick* questionbrick = dynamic_cast<CQuestionBrick*>(e->obj);
-	// jump on top >> kill Goomba and deflect a bit 
 	if (untouchable == 0)
 	{
 		if (questionbrick->GetState() != QUESTIONBRICK_STATE_DISABLE)
@@ -92,10 +90,13 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vy += ay * dt;
 	vx += ax * dt;
 
-	float x_mario, y_mario;
-	mario->GetPosition(x_mario, y_mario);
-
-	if ((state == KOOPA_STATE_DIE) && (GetTickCount64() - die_start > KOOPA_DIE_TIMEOUT))
+	if (unfinddirecttion) {
+		FindSlideDirection(dt);
+	}
+	if (isHandled == true) {
+		setPositionHandled();
+	}
+	if ((state == KOOPA_STATE_DIE) && (GetTickCount64() - die_start > KOOPA_DIE_TIMEOUT && isHandled==false))
 	{
 		SetState(KOOPA_STATE_WAKING);
 		startWakingTime();
@@ -105,16 +106,9 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		waking_start = 0;
 	}
 	else if (state == KOOPA_STATE_SLIDE) {
-		if (x_mario > x) {
-			isRight = false;
-		}
-		else
-			isRight = true;
-		FindSlideDirection();
-		if (vx == 0 && (GetTickCount64() - die_start > KOOPA_DIE_TIMEOUT)) {
-		
-			SetState(KOOPA_STATE_WAKING);
-			startWakingTime();
+		if (GetTickCount64() - die_start > KOOPA_RESET_TIMEOUT && isHandled == false) {
+			SetState(KOOPA_STATE_WALKING);
+			SetPosition(start_x, start_y);
 		}
 	}
 
@@ -185,21 +179,40 @@ void CKoopa::SetState(int state)
 		if (waking_start > 0) {
 			y -= (KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_DIE) / 2;
 		}
-		vx = -KOOPA_WALKING_SPEED;
+		vx = KOOPA_WALKING_SPEED;
 		break;
 	case KOOPA_STATE_SLIDE:
 			y += (KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_DIE)/2;
 			ay = KOOPA_GRAVITY;
-			vx = KOOPA_SLIDE_SPEED;
+			if (nx == -1) {
+				vx = -KOOPA_SLIDE_SPEED;
+			}
+			else if (nx == 1) {
+				vx = KOOPA_SLIDE_SPEED;
+			}
 		break;
 	}
 }
 
-void CKoopa::FindSlideDirection()
+void CKoopa::FindSlideDirection(DWORD dt)
 {
-	if (isRight == true) {
-		vx = KOOPA_SLIDE_SPEED;
-	}
-	else
-		vx = - KOOPA_SLIDE_SPEED;
+	float x_mario, y_mario;
+	mario->GetPosition(x_mario, y_mario);
+
+	if (x_mario < x)
+		nx = -1;
+	else if (x_mario > x) 
+		nx = 1;
+}
+void CKoopa::setPositionHandled()
+{
+	float x_mario, y_mario;
+	mario->GetPosition(x_mario, y_mario);
+	//if (mario->GetLevel() == MARIO_LEVEL_SMALL)
+	//{
+		if (isRight==false)
+			SetPosition(x_mario - MARIO_SMALL_HANDLED_WIDTH, y_mario - MARIO_SMALL_HANDLED_HEIGHT);
+		else
+			SetPosition(x_mario + MARIO_SMALL_HANDLED_WIDTH, y_mario - MARIO_SMALL_HANDLED_HEIGHT);
+	//}
 }

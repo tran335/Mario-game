@@ -28,6 +28,6 @@
 #up_right
 615	61016	100	61017	100
 #shoot down_right
-616	61005	100
+616	61014	100
 #shoot up_right
 617	61016	100

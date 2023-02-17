@@ -148,6 +148,7 @@
     <ClCompile Include="Card.cpp">
       <Filter>Misc</Filter>
     </ClCompile>
+    <ClCompile Include="PortalPipe.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TileMap.h">
@@ -300,6 +301,7 @@
     <ClInclude Include="Card.h">
       <Filter>Misc</Filter>
     </ClInclude>
+    <ClInclude Include="PortalPipe.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Map">

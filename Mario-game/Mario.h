@@ -12,6 +12,8 @@
 #define MARIO_ACCEL_WALK_X	0.0005f
 #define MARIO_ACCEL_RUN_X	0.0007f
 
+#define MAX_Y 90
+
 
 
 #define MARIO_JUMP_SPEED_Y		1.0f
@@ -179,6 +181,9 @@ class CMario : public CGameObject
 	BOOLEAN isPrefly;
 	BOOLEAN isFly;
 	BOOLEAN isDie;
+	BOOLEAN isBigBox;
+	BOOLEAN isSkipX;
+	BOOLEAN isSkipY;
 	float maxVx;
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 

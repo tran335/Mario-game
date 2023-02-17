@@ -5,15 +5,16 @@
 
 
 
-#define KOOPA_GRAVITY 0.001f
+#define KOOPA_GRAVITY 0.0005f
 #define KOOPA_WALKING_SPEED 0.05f
-#define KOOPA_SLIDE_SPEED 1.0f
+#define KOOPA_SLIDE_SPEED 1.5f
 
 #define KOOPA_BBOX_WIDTH 51
 #define KOOPA_BBOX_HEIGHT 79
 #define KOOPA_BBOX_HEIGHT_DIE 51
 
 #define KOOPA_DIE_TIMEOUT 5000
+#define KOOPA_RESET_TIMEOUT 10000
 #define KOOPA_WAKING_TIMEOUT 2000
 
 #define KOOPA_STATE_WALKING 801
@@ -33,6 +34,9 @@
 #define ID_ANI_GREEN_KOOPA_WAKING 809
 #define ID_ANI_GREEN_KOOPA_SLIDE 810
 
+#define MARIO_SMALL_HANDLED_WIDTH 24
+#define MARIO_SMALL_HANDLED_HEIGHT 4
+
 #define RED_KOOPA 1
 #define GREEN_KOOPA 2
 
@@ -47,6 +51,8 @@ protected:
 	CMario* mario;
 	ULONGLONG die_start;
 	ULONGLONG waking_start;
+	BOOLEAN unfinddirecttion;
+	BOOLEAN isHandled;
 	bool isRight=true;
 	int untouchable = 0;
 
@@ -66,6 +72,9 @@ protected:
 public:
 	CKoopa(float x, float y, int type);
 	virtual void SetState(int state);
-	void FindSlideDirection();
+	void FindSlideDirection(DWORD dt);
 	void startWakingTime(){waking_start = GetTickCount64();}
+	void setPositionHandled();
+	void HandledByMario() { isHandled = true; };
+	void HandledByMarioRelease() { isHandled = false; };
 };

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="16" height="15" tilewidth="48" tileheight="48" infinite="0" nextlayerid="11" nextobjectid="84">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="16" height="15" tilewidth="48" tileheight="48" infinite="0" nextlayerid="11" nextobjectid="85">
  <tileset firstgid="1" name="tileset(x3)" tilewidth="48" tileheight="48" tilecount="63" columns="9">
   <image source="overworld-1.png" width="432" height="336"/>
  </tileset>
@@ -82,12 +82,13 @@
  <objectgroup id="7" name="BoundOverWorld">
   <object id="72" x="68.8995" y="46.8517" width="628.134" height="48"/>
   <object id="73" x="669.474" y="75.5598" width="48" height="478.852"/>
-  <object id="74" x="40.1914" y="531.445" width="654.545" height="48"/>
+  <object id="74" x="437.191" y="436.445" width="348.545" height="81"/>
   <object id="75" x="44.7847" y="93.933" width="48" height="461.627"/>
   <object id="76" x="192.215" y="241.215" width="45" height="45"/>
   <object id="77" x="240.67" y="344.828" width="45" height="130.22"/>
   <object id="78" x="287.844" y="432.156" width="45" height="45"/>
   <object id="79" x="143.711" y="288.467" width="45" height="241.364"/>
+  <object id="84" x="204.728" y="528" width="654.545" height="48"/>
  </objectgroup>
  <objectgroup id="6" name="WorldGraph">
   <object id="1" name="node-2" class="num-1" x="216" y="120">
@@ -366,10 +367,10 @@
   <object id="43" name="tree" x="335" y="238">
    <point/>
   </object>
-  <object id="44" name="tree" x="288" y="337.333">
+  <object id="44" name="tree" x="288" y="340.333">
    <point/>
   </object>
-  <object id="45" name="tree" x="336.667" y="338">
+  <object id="45" name="tree" x="336.667" y="340">
    <point/>
   </object>
   <object id="46" name="tree" x="385.333" y="337.667">

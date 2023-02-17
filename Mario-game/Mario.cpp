@@ -39,6 +39,17 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		untouchable_start = 0;
 		untouchable = 0;
 	}
+	if (isSkipX) {
+		isSkipX = false;
+		if (nx > 0)
+			x += MARIO_RACCOON_BBOX_WIDTH;
+		else if (nx<0)
+			x -= MARIO_RACCOON_BBOX_WIDTH;
+	}
+	if (isBigBox) {
+		y -= MAX_Y;
+		isBigBox = false;
+	}
 	if ((isDie==true) && (GetTickCount64() - die_start > MARIO_DIE_TIMEOUT))
 	{
 		isDie = false;
@@ -294,11 +305,11 @@ void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
 		if (parakoopa->Getlevel() != PARAKOOPA_LEVEL_NO_WING)
 		{
 			parakoopa->Setlevel(PARAKOOPA_LEVEL_NO_WING);
-			StartUntouchable();
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
 		}
 		else {
 			parakoopa->SetState(PARAKOOPA_STATE_DIE);
-			StartUntouchable();
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
 		}
 	}
 	else // hit by Goomba
@@ -329,19 +340,24 @@ void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithBigBox(LPCOLLISIONEVENT e)
 {
-	
+	if (e->ny > 0) {
+		isBigBox = true;
+	}
 
 }
 
 void CMario::OnCollisionWithKoopaBound(LPCOLLISIONEVENT e)
 {
 	
-
+	if (e->nx != 0) 
+		isSkipX = true;
 }
 
 void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 {
 	CKoopa* koopa = dynamic_cast<CKoopa*>(e->obj);
+
+	LPGAME game = CGame::GetInstance();
 
 	if (e->ny < 0)
 	{
@@ -355,40 +371,43 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 	{
 		if (untouchable == 0)
 		{
-				if (koopa->GetState() != KOOPA_STATE_DIE)
+			if (koopa->GetState() != KOOPA_STATE_DIE && koopa->GetState()!=KOOPA_STATE_SLIDE)
+			{
+				if (level == MARIO_LEVEL_RACCOON)
 				{
-					if (level == MARIO_LEVEL_RACCOON)
+					if (isSpining == true)
 					{
-						if (isSpining == true)
+						if (koopa->GetState() != KOOPA_STATE_DIE)
 						{
-							if (koopa->GetState() != KOOPA_STATE_DIE)
-							{
-								koopa->SetState(KOOPA_STATE_DIE);
-							}
+							koopa->SetState(KOOPA_STATE_DIE);
 						}
-						else
-						{
-							level = MARIO_LEVEL_BIG;
-							StartUntouchable();
-						}
-					}
-					else if (level > MARIO_LEVEL_SMALL)
-					{
-						level = MARIO_LEVEL_SMALL;
-						StartUntouchable();
 					}
 					else
 					{
-						DebugOut(L">>> Mario DIE >>> \n");
-						SetState(MARIO_STATE_DIE);
+						level = MARIO_LEVEL_BIG;
+						StartUntouchable();
 					}
 				}
-			
+				else if (level > MARIO_LEVEL_SMALL)
+				{
+					level = MARIO_LEVEL_SMALL;
+					StartUntouchable();
+				}
 				else
 				{
-				SetState(MARIO_STATE_KICK);
-				koopa->SetState(KOOPA_STATE_SLIDE);
-				isKicking = false;
+					DebugOut(L">>> Mario DIE >>> \n");
+					SetState(MARIO_STATE_DIE);
+				}
+			}
+
+			else
+				if (!game->IsKeyDown(DIK_B)) {
+					SetState(MARIO_STATE_KICK);
+					koopa->SetState(KOOPA_STATE_SLIDE);
+					isKicking = false;
+				}
+				else {
+					koopa->HandledByMario();
 				}
 		}
 
@@ -484,8 +503,7 @@ void CMario::OnCollisionWithCard(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 {
 	CPortal* p = (CPortal*)e->obj;
-	
-		CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId());
+	CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId());
 	
 }
 

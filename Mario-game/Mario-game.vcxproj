@@ -163,6 +163,7 @@
     <ClCompile Include="ParaGoomba.cpp" />
     <ClCompile Include="Parakoopa.cpp" />
     <ClCompile Include="Piranha.cpp" />
+    <ClCompile Include="PortalPipe.cpp" />
     <ClCompile Include="QuestionBrick.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SuperMushroom.cpp" />
@@ -216,6 +217,7 @@
     <ClInclude Include="ParaGoomba.h" />
     <ClInclude Include="Parakoopa.h" />
     <ClInclude Include="Piranha.h" />
+    <ClInclude Include="PortalPipe.h" />
     <ClInclude Include="QuestionBrick.h" />
     <ClInclude Include="SuperMushroom.h" />
     <ClInclude Include="Switch.h" />
