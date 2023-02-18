@@ -39,6 +39,14 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		untouchable_start = 0;
 		untouchable = 0;
 	}
+	if (isOutIn == true) {
+		SetPosition(6911, 1491);
+		isOutIn = false;
+	}
+	if (isOutOut == true) {
+		SetPosition(6917, 1054);
+		isOutOut = false;
+	}
 	if (isSkipX) {
 		isSkipX = false;
 		if (nx > 0)
@@ -74,7 +82,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	else {
 		if (power > MARIO_RUNNING_TIME) {
 			SetState(MARIO_STATE_FLY);
-			coin++;
+			power--;
 		}
 	}
 	CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -136,6 +144,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithSwitch(e);
 	else if (dynamic_cast<CCard*>(e->obj))
 		OnCollisionWithCard(e);
+	else if (dynamic_cast<CPortalPipe*>(e->obj))
+		OnCollisionWithPortalPipe(e);
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -513,6 +523,17 @@ void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 	CPortal* p = (CPortal*)e->obj;
 	CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId());
 	
+}
+
+void CMario::OnCollisionWithPortalPipe(LPCOLLISIONEVENT e)
+{
+	CPortalPipe* pp = dynamic_cast<CPortalPipe*>(e->obj);
+	if (e->ny < 0) {
+		isOutIn = true;
+	}
+	else if (e->ny > 0) {
+		isOutOut = true;
+	}
 }
 
 //

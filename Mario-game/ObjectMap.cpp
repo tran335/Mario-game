@@ -91,26 +91,42 @@ void CObjectMap::ImportData(vector<LPGAMEOBJECT>& coObjects)
 		}
 
 	}
-	//if (name.compare("Portal") == 0) {
-	//	while (element)
-	//	{
-	//		GetInfoElement(element, objectId, x, y, width, height);
-	//		string typePortal = element->Attribute("type");
-	//		if (typePortal.compare("1") == 0) {
-	//			obj = new CPortalPipe(x, y, width, height, PORTAL_TYPE_INPUT);
-	//			obj->SetPosition(x, y);
-	//			coObjects.push_back(obj);
-	//		}
-	//		else if (typePortal.compare("2") == 0) {
-	//			obj = new CPortalPipe(x, y, width, height, PORTAL_TYPE_OUTPUT);
-	//			DebugOut(L"AAA", x, y);
-	//			obj->SetPosition(x, y);
-	//			coObjects.push_back(obj);
-	//		}
-	//		element = element->NextSiblingElement();
-	//	}
+	if (name.compare("Portal") == 0) {
+		while (element)
+		{
+			GetInfoElement(element, objectId, x, y, width, height);
+			string namePortal = element->Attribute("name");
+			if (namePortal.compare("in")) {
+				string typePortal = element->Attribute("type");
+				if (typePortal.compare("1") == 0) {
+					obj = new CPortalPipe(x, y, width, height, PORTAL_NAME_IN, PORTAL_TYPE_INPUT);
+					obj->SetPosition(x, y);
+					coObjects.push_back(obj);
+				}
+				else if (typePortal.compare("2") == 0) {
+					obj = new CPortalPipe(x, y, width, height,PORTAL_NAME_IN, PORTAL_TYPE_OUTPUT);
+					obj->SetPosition(x, y);
+					coObjects.push_back(obj);
+				}
+			}
+			else if (namePortal.compare("out")) {
+				string typePortal = element->Attribute("type");
+				if (typePortal.compare("1") == 0) {
+					obj = new CPortalPipe(x, y, width, height, PORTAL_NAME_OUT, PORTAL_TYPE_INPUT);
+					obj->SetPosition(x, y);
+					coObjects.push_back(obj);
+				}
+				else if (typePortal.compare("2") == 0) {
+					obj = new CPortalPipe(x, y, width, height, PORTAL_NAME_OUT, PORTAL_TYPE_OUTPUT);
+					obj->SetPosition(x, y);
+					coObjects.push_back(obj);
+				}
+			}
+			
+			element = element->NextSiblingElement();
+		}
 
-	//}
+	}
 	if (name.compare("BoundOverWorld") == 0) {
 		while (element)
 		{

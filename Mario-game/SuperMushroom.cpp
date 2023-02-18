@@ -95,7 +95,6 @@ void CSuperMushroom::SetState(int state)
 		vx = -SUPERMUSHROOM_WALKING_SPEED;
 		break;
 	case LEAF_STATE_FLY:
-		DebugOut(L"LEAF STATE FLY");
 		y = start_y - MAX_Y;
 		break;
 	}

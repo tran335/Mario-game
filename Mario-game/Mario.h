@@ -185,6 +185,8 @@ class CMario : public CGameObject
 	BOOLEAN isBigBox;
 	BOOLEAN isSkipX;
 	BOOLEAN isSkipY;
+	BOOLEAN isOutIn;
+	BOOLEAN isOutOut;
 	float maxVx;
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
@@ -218,6 +220,7 @@ class CMario : public CGameObject
 	void OnCollisionWithPiranha(LPCOLLISIONEVENT e);
 	void OnCollisionWithSwitch(LPCOLLISIONEVENT e);
 	void OnCollisionWithCard(LPCOLLISIONEVENT e);
+	void OnCollisionWithPortalPipe(LPCOLLISIONEVENT e);
 
 	int GetAniIdBig();
 	int GetAniIdSmall();
@@ -234,6 +237,8 @@ public:
 		isPrefly = false;
 		isFly = false;
 		isDie = false;
+		isOutIn = false;
+		isOutOut = false;
 		power = 0;
 
 		maxVx = 0.0f;
@@ -271,8 +276,8 @@ public:
 	int GetPower() { return power; }
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 	void startIsSpin() { spin_time = GetTickCount64(); }
-	void startRunning() { running_time = GetTickCount64();  DebugOut(L">>> state running >>> \n");}
-	void startPreFly() { pre_fly_time = GetTickCount64(); DebugOut(L">>> state pre fly >>> \n");}
+	void startRunning() { running_time = GetTickCount64();}
+	void startPreFly() { pre_fly_time = GetTickCount64();}
 	void startDie() { isDie = true; die_start = GetTickCount64(); }
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
