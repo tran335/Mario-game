@@ -78,6 +78,6 @@ public:
 	void FindSlideDirection(DWORD dt);
 	void startWakingTime(){waking_start = GetTickCount64();}
 	void setPositionHandled();
-	void HandledByMario() { isHandled = true; SetState(KOOPA_STATE_DIE); };
-	void HandledByMarioRelease() { isHandled = false; isDrop = true; DebugOut(L"handle release"); };
+	void HandledByMario() { isHandled = true; SetState(KOOPA_STATE_DIE); unfinddirecttion = true; };
+	void HandledByMarioRelease() { isHandled = false; isDrop = true;};
 };

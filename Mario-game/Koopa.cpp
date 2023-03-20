@@ -91,15 +91,14 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vy += ay * dt;
 	vx += ax * dt;
 
-	if (unfinddirecttion) {
+	if (unfinddirecttion==true) {
 		FindSlideDirection(dt);
+		unfinddirecttion = false;
 	}
 	if (isHandled == true) {
 		setPositionHandled();
 	}
 	if (isDrop == true) {
-			DebugOut(L"Drop koopa");
-			vy += ay * dt;
 			ay = KOOPA_GRAVITY;
 			isDrop = false;
 	}
