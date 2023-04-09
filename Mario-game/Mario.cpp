@@ -22,6 +22,7 @@
 #include "PlayScene.h"
 #include "Switch.h"
 #include "Card.h"
+#include "Platform.h"
 
 
 #include "Collision.h"
@@ -53,10 +54,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			x += MARIO_RACCOON_BBOX_WIDTH;
 		else if (nx<0)
 			x -= MARIO_RACCOON_BBOX_WIDTH;
-	}
-	if (isBigBox) {
-		y -= MAX_Y;
-		isBigBox = false;
 	}
 	if ((isDie==true) && (GetTickCount64() - die_start > MARIO_DIE_TIMEOUT))
 	{
@@ -98,17 +95,17 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (e->ny < 0) isOnPlatform = true;
 
-	if (e->ny != 0 && e->obj->IsBlocking())
+	if (e->ny > 0 && e->obj->IsBlocking())
 	{
-        vy = 0;
+	
+	}
+	else
+		if (e->nx != 0 && e->obj->IsBlocking())
+		{
+			vx = 0;
 
-		if (e->ny < 0) isOnPlatform = true;
-	}
-	else 
-	if (e->nx != 0 && e->obj->IsBlocking())
-	{
-		vx = 0;
-	}
+		}
+
 
 	if (dynamic_cast<CGoomba*>(e->obj))
 		OnCollisionWithGoomba(e);
@@ -357,10 +354,7 @@ void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithBigBox(LPCOLLISIONEVENT e)
 {
-	if (e->ny > 0) {
-		isBigBox = true;
-	}
-
+	
 }
 
 void CMario::OnCollisionWithKoopaBound(LPCOLLISIONEVENT e)
@@ -535,6 +529,7 @@ void CMario::OnCollisionWithPortalPipe(LPCOLLISIONEVENT e)
 		isOutOut = true;
 	}
 }
+
 
 //
 // Get animation ID for small Mario
