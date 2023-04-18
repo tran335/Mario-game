@@ -5,6 +5,8 @@ CGoomba::CGoomba(float x, float y):CGameObject(x, y)
 	this->ax = 0;
 	this->ay = GOOMBA_GRAVITY;
 	die_start = -1;
+	start_y = y;
+	start_x = x;
 	SetState(GOOMBA_STATE_WALKING);
 }
 
@@ -45,7 +47,23 @@ void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		vx = -vx;
 	}
+
+	if (dynamic_cast<CCameraBound*>(e->obj))
+		OnCollisionWithCameraBound(e);
+	
 }
+
+void CGoomba::OnCollisionWithCameraBound(LPCOLLISIONEVENT e)
+{
+	CCameraBound* camerabound = dynamic_cast<CCameraBound*>(e->obj);
+	if (e->ny < 0)
+	{
+		OutputDebugString(L"AAAAAAA");
+		isBack = true;
+		reset_time = GetTickCount64();
+	}
+}
+
 
 void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -57,7 +75,16 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		isDeleted = true;
 		return;
 	}
-
+	if (isBack == true) {
+		OutputDebugString(L"bb");
+		if (GetTickCount64() - reset_time > 0) {
+			OutputDebugString(L"cc");
+			SetState(GOOMBA_STATE_WALKING);
+			SetPosition(start_x, start_y);
+			isBack = false;
+			reset_time = 0;
+		}
+	}
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
@@ -66,9 +93,13 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 void CGoomba::Render()
 {
 	int aniId = ID_ANI_GOOMBA_WALKING;
-	if (state == GOOMBA_STATE_DIE) 
+	if (state == GOOMBA_STATE_DIE)
 	{
 		aniId = ID_ANI_GOOMBA_DIE;
+	}
+	else if (state == ID_ANI_GOOMBA_WALKING) {
+		OutputDebugString(L"dd");
+		aniId = ID_ANI_GOOMBA_WALKING;
 	}
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x,y);

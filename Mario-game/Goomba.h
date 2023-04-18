@@ -1,9 +1,10 @@
 #pragma once
 #include "GameObject.h"
+#include "CameraBound.h"
 
 #define GOOMBA_GRAVITY 0.002f
 #define GOOMBA_WALKING_SPEED 0.05f
-
+#define BACK_TIME 3000
 
 #define GOOMBA_BBOX_WIDTH 48
 #define GOOMBA_BBOX_HEIGHT 48
@@ -23,7 +24,12 @@ protected:
 	float ax;				
 	float ay; 
 
+	float start_x;
+	float start_y;
+	float reset_time;
+
 	ULONGLONG die_start;
+	BOOLEAN isBack;
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects);
@@ -34,6 +40,7 @@ protected:
 	virtual void OnNoCollision(DWORD dt);
 
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
+	void OnCollisionWithCameraBound(LPCOLLISIONEVENT e);
 
 public: 	
 	CGoomba(float x, float y);

@@ -182,8 +182,6 @@ class CMario : public CGameObject
 	BOOLEAN isPrefly;
 	BOOLEAN isFly;
 	BOOLEAN isDie;
-	BOOLEAN isSkipX;
-	BOOLEAN isSkipY;
 	BOOLEAN isOutIn;
 	BOOLEAN isOutOut;
 	float maxVx;

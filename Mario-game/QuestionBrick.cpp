@@ -43,7 +43,7 @@ void CQuestionBrick::Render()
 		ani = ID_ANI_QUESTIONBRICK_DISABLE;
 	}
 	animations->Get(ani)->Render(x, y);
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 void CQuestionBrick::GetBoundingBox(float& l, float& t, float& r, float& b)

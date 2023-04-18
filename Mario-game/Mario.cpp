@@ -48,13 +48,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		SetPosition(6917, 1054);
 		isOutOut = false;
 	}
-	if (isSkipX) {
-		isSkipX = false;
-		if (nx > 0)
-			x += MARIO_RACCOON_BBOX_WIDTH;
-		else if (nx<0)
-			x -= MARIO_RACCOON_BBOX_WIDTH;
-	}
+	
 	if ((isDie==true) && (GetTickCount64() - die_start > MARIO_DIE_TIMEOUT))
 	{
 		isDie = false;
@@ -94,18 +88,6 @@ void CMario::OnNoCollision(DWORD dt)
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (e->ny < 0) isOnPlatform = true;
-
-	if (e->ny > 0 && e->obj->IsBlocking())
-	{
-	
-	}
-	else
-		if (e->nx != 0 && e->obj->IsBlocking())
-		{
-			vx = 0;
-
-		}
-
 
 	if (dynamic_cast<CGoomba*>(e->obj))
 		OnCollisionWithGoomba(e);
@@ -199,18 +181,19 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e)
 {
 	CQuestionBrick* questionbrick = dynamic_cast<CQuestionBrick*>(e->obj);
-	
-		if (e->nx > 0)
-		{
-			vx = 0;
-		}
-	if (e->ny > 0)
+
+	if(e->ny>0)
 	{
-		if (questionbrick->GetState() != QUESTIONBRICK_STATE_DISABLE)
-		{
-			questionbrick->SetState(QUESTIONBRICK_STATE_DISABLE);
-		}
+
+			if (questionbrick->GetState() != QUESTIONBRICK_STATE_DISABLE)
+			{
+				questionbrick->SetState(QUESTIONBRICK_STATE_DISABLE);
+
+			}
+			vy = 0;	
 	}
+	
+
 }
 
 void CMario::OnCollisionWithCoinBrick(LPCOLLISIONEVENT e)
@@ -229,28 +212,31 @@ void CMario::OnCollisionWithCoinBrick(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
 {
 	CSuperMushroom* supermushroom = dynamic_cast<CSuperMushroom*>(e->obj);
-	if (e->ny > 0)
-	{
-		if (supermushroom->GetState() != SUPERMUSHROOM_STATE_WALKING && supermushroom->GetState() != LEAF_STATE_FLY)
+	if (e->ny != 0) {
+		vy = 0;
+		if (e->ny > 0)
 		{
-			if (level == MARIO_LEVEL_SMALL)
-				supermushroom->SetState(SUPERMUSHROOM_STATE_WALKING);
-			else
-				supermushroom->SetState(LEAF_STATE_FLY);
-		}
-	}
-	else
-	{
-		if (untouchable == 0)
-		{
-			if (supermushroom->GetState() == LEAF_STATE_FLY) 
-				SetLevel(MARIO_LEVEL_RACCOON);
-			else {
-				SetLevel(MARIO_LEVEL_BIG);
+			if (supermushroom->GetState() != SUPERMUSHROOM_STATE_WALKING && supermushroom->GetState() != LEAF_STATE_FLY)
+			{
+				if (level == MARIO_LEVEL_SMALL)
+					supermushroom->SetState(SUPERMUSHROOM_STATE_WALKING);
+				else
+					supermushroom->SetState(LEAF_STATE_FLY);
 			}
-			
+		}
+		else
+		{
+			if (untouchable == 0)
+			{
+				if (supermushroom->GetState() == LEAF_STATE_FLY)
+					SetLevel(MARIO_LEVEL_RACCOON);
+				else {
+					SetLevel(MARIO_LEVEL_BIG);
+				}
+
 				e->obj->Delete();
 				StartUntouchable();
+			}
 		}
 	}
 }
@@ -354,14 +340,12 @@ void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithBigBox(LPCOLLISIONEVENT e)
 {
-	
+
 }
 
 void CMario::OnCollisionWithKoopaBound(LPCOLLISIONEVENT e)
 {
 	
-	if (e->nx != 0) 
-		isSkipX = true;
 }
 
 void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
@@ -792,7 +776,7 @@ void CMario::Render()
 
 	animations->Get(aniId)->Render(x, y);
 
-	//RenderBoundingBox();
+	RenderBoundingBox();
 	
 	DebugOutTitle(L"Coins: %d", coin);
 }

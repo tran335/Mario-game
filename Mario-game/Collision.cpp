@@ -109,7 +109,8 @@ void CCollision::SweptAABB(
 	else
 	{
 		nx = 0.0f;
-		dy > 0 ? ny = -1.0f : ny = -1.0f;
+		dy > 0 ? ny = -1.0f : ny = 1.0f;
+		
 	}
 
 }
@@ -251,6 +252,7 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 			if (colY->t < colX->t)	// was collision on Y first ?
 			{
 				y += colY->t * dy + colY->ny * BLOCK_PUSH_FACTOR;
+
 				objSrc->SetPosition(x, y);
 
 				objSrc->OnCollisionWith(colY);
@@ -326,7 +328,11 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 			if (colY != NULL)
 			{
 				x += dx;
-				y += colY->t * dy + colY->ny * BLOCK_PUSH_FACTOR;
+				if (dy > 0)
+					y += colY->t * dy + colY->ny * BLOCK_PUSH_FACTOR;
+				else
+					y += dy;
+	
 				objSrc->OnCollisionWith(colY);
 			}
 			else // both colX & colY are NULL 

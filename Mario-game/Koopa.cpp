@@ -41,7 +41,7 @@ void CKoopa::OnNoCollision(DWORD dt)
 
 void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	//if (!e->obj->IsBlocking()) return;
+	if (!e->obj->IsBlocking()) return;
 	if (dynamic_cast<CKoopa*>(e->obj)) return;
 
 		if (e->ny != 0)
@@ -166,7 +166,7 @@ void CKoopa::Render()
 		}
 	}
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 void CKoopa::SetState(int state)
@@ -212,14 +212,14 @@ void CKoopa::FindSlideDirection(DWORD dt)
 }
 void CKoopa::setPositionHandled()
 {
-	float x_mario, y_mario;
-	mario->GetPosition(x_mario, y_mario);
-	//if (mario->GetLevel() == MARIO_LEVEL_SMALL)
-	//{
-		if (nx == -1)
-			SetPosition(x_mario - MARIO_SMALL_HANDLED_WIDTH, y_mario - MARIO_SMALL_HANDLED_HEIGHT);
-		else
-			SetPosition(x_mario + MARIO_SMALL_HANDLED_WIDTH, y_mario - MARIO_SMALL_HANDLED_HEIGHT);
-	//}
+	//float x_mario, y_mario;
+	//mario->GetPosition(x_mario, y_mario);
+	////if (mario->GetLevel() == MARIO_LEVEL_SMALL)
+	////{
+	//	if (nx == -1)
+	//		SetPosition(x_mario - MARIO_SMALL_HANDLED_WIDTH, y_mario - MARIO_SMALL_HANDLED_HEIGHT);
+	//	else
+	//		SetPosition(x_mario + MARIO_SMALL_HANDLED_WIDTH, y_mario - MARIO_SMALL_HANDLED_HEIGHT);
+	////}
 }
 
