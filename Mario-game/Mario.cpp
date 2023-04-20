@@ -87,7 +87,16 @@ void CMario::OnNoCollision(DWORD dt)
 
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (e->ny < 0) isOnPlatform = true;
+	//if (e->ny < 0) isOnPlatform = true;
+
+	if (e->ny < 0) {
+		isOnPlatform = true;
+		vy = 0;
+	}
+	else if (e->nx!=0)
+	{
+		vx = 0;
+	}
 
 	if (dynamic_cast<CGoomba*>(e->obj))
 		OnCollisionWithGoomba(e);

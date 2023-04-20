@@ -3,8 +3,8 @@
 #include "CameraBound.h"
 
 #define GOOMBA_GRAVITY 0.002f
-#define GOOMBA_WALKING_SPEED 0.05f
-#define BACK_TIME 3000
+#define GOOMBA_WALKING_SPEED 0.07f
+#define BACK_TIME 200
 
 #define GOOMBA_BBOX_WIDTH 48
 #define GOOMBA_BBOX_HEIGHT 48

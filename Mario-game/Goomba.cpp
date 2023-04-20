@@ -58,7 +58,6 @@ void CGoomba::OnCollisionWithCameraBound(LPCOLLISIONEVENT e)
 	CCameraBound* camerabound = dynamic_cast<CCameraBound*>(e->obj);
 	if (e->ny < 0)
 	{
-		OutputDebugString(L"AAAAAAA");
 		isBack = true;
 		reset_time = GetTickCount64();
 	}
@@ -75,10 +74,8 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		isDeleted = true;
 		return;
 	}
-	if (isBack == true) {
-		OutputDebugString(L"bb");
-		if (GetTickCount64() - reset_time > 0) {
-			OutputDebugString(L"cc");
+	if (isBack) {
+		if ((GetTickCount64() - reset_time) > BACK_TIME) {
 			SetState(GOOMBA_STATE_WALKING);
 			SetPosition(start_x, start_y);
 			isBack = false;

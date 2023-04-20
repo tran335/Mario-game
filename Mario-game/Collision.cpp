@@ -330,7 +330,7 @@ void CCollision::Process(LPGAMEOBJECT objSrc, DWORD dt, vector<LPGAMEOBJECT>* co
 				x += dx;
 				if (dy > 0)
 					y += colY->t * dy + colY->ny * BLOCK_PUSH_FACTOR;
-				else
+				else 
 					y += dy;
 	
 				objSrc->OnCollisionWith(colY);
