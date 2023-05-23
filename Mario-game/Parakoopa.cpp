@@ -166,7 +166,6 @@ void CParaKoopa::SetState(int state)
 	switch (state)
 	{
 	case PARAKOOPA_STATE_FLY:
-		//vy = -PARAGOOMBA_JUMP_HIGH_SPEED;
 		vx = -PARAGOOMBA_WALKING_SPEED;
 		break;
 	case PARAKOOPA_STATE_DIE:

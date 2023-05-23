@@ -134,6 +134,7 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithCard(e);
 	else if (dynamic_cast<CPortalPipe*>(e->obj))
 		OnCollisionWithPortalPipe(e);
+
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -221,8 +222,7 @@ void CMario::OnCollisionWithCoinBrick(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
 {
 	CSuperMushroom* supermushroom = dynamic_cast<CSuperMushroom*>(e->obj);
-	if (e->ny != 0) {
-		vy = 0;
+
 		if (e->ny > 0)
 		{
 			if (supermushroom->GetState() != SUPERMUSHROOM_STATE_WALKING && supermushroom->GetState() != LEAF_STATE_FLY)
@@ -235,7 +235,7 @@ void CMario::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
 		}
 		else
 		{
-			if (untouchable == 0)
+			if (untouchable == 0 && (supermushroom->GetState() == SUPERMUSHROOM_STATE_WALKING || supermushroom->GetState() == LEAF_STATE_FLY))
 			{
 				if (supermushroom->GetState() == LEAF_STATE_FLY)
 					SetLevel(MARIO_LEVEL_RACCOON);
@@ -246,7 +246,6 @@ void CMario::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
 				e->obj->Delete();
 				StartUntouchable();
 			}
-		}
 	}
 }
 
@@ -354,7 +353,6 @@ void CMario::OnCollisionWithBigBox(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithKoopaBound(LPCOLLISIONEVENT e)
 {
-	
 }
 
 void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
@@ -522,6 +520,7 @@ void CMario::OnCollisionWithPortalPipe(LPCOLLISIONEVENT e)
 		isOutOut = true;
 	}
 }
+
 
 
 //
@@ -785,7 +784,7 @@ void CMario::Render()
 
 	animations->Get(aniId)->Render(x, y);
 
-	RenderBoundingBox();
+	//RenderBoundingBox();
 	
 	DebugOutTitle(L"Coins: %d", coin);
 }

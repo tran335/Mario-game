@@ -4,6 +4,8 @@
 #include "MarioOverworld.h"
 #include "Game.h"
 
+#include "OverworldBound.h"
+
 #include "Collision.h"
 
 void CMarioOverworld::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -20,7 +22,6 @@ void CMarioOverworld::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		untouchable_start = 0;
 		untouchable = 0;
 	}
-	isOnPlatform = false;
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 
 
@@ -35,20 +36,17 @@ void CMarioOverworld::OnNoCollision(DWORD dt)
 
 void CMarioOverworld::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (e->ny < 0) isOnPlatform = true;
 
-	if (e->ny != 0 && e->obj->IsBlocking())
-	{
+	if (e->ny != 0) {
 		vy = 0;
-
-		if (e->ny < 0) isOnPlatform = true;
 	}
-	else
-		if (e->nx != 0 && e->obj->IsBlocking())
-		{
-			vx = 0;
-		}
+	else if (e->nx != 0)
+	{
+		vx = 0;
+	}
 }
+
+
 
 void CMarioOverworld::Render()
 {
@@ -57,7 +55,7 @@ void CMarioOverworld::Render()
 
 	animations->Get(aniId)->Render(x, y);
 
-	//RenderBoundingBox();
+	RenderBoundingBox();
 
 }
 
