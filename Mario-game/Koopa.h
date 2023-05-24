@@ -77,6 +77,7 @@ public:
 	virtual void SetState(int state);
 	void FindSlideDirection(DWORD dt);
 	void startWakingTime(){waking_start = GetTickCount64();}
+	void StartUntouchable() { untouchable = 1; }
 	void setPositionHandled();
 	void HandledByMario() { isHandled = true; SetState(KOOPA_STATE_DIE); unfinddirecttion = true; };
 	void HandledByMarioRelease() { isHandled = false; isDrop = true;};

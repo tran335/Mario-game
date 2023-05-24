@@ -41,8 +41,8 @@ void CKoopa::OnNoCollision(DWORD dt)
 
 void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (!e->obj->IsBlocking()) return;
-	if (dynamic_cast<CKoopa*>(e->obj)) return;
+	//if (!e->obj->IsBlocking()) return;
+	//if (dynamic_cast<CKoopa*>(e->obj)) return;
 
 		if (e->ny != 0)
 		{
@@ -54,22 +54,22 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 		}
 		if (dynamic_cast<CSuperMushroom*>(e->obj))
 			OnCollisionWithSuperMushroom(e);
-		if (dynamic_cast<CQuestionBrick*>(e->obj))
+		else if (dynamic_cast<CQuestionBrick*>(e->obj))
 			OnCollisionWithQuestionBrick(e);
 	
 }
 void CKoopa::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
 {
 	CSuperMushroom* supermushroom = dynamic_cast<CSuperMushroom*>(e->obj);
-	if (untouchable==0)
+	if (untouchable == 0)
 	{
-		if (supermushroom->GetState() != SUPERMUSHROOM_STATE_WALKING && supermushroom->GetState() != LEAF_STATE_FLY)
+		if (supermushroom->GetState() != SUPERMUSHROOM_STATE_WALKING || supermushroom->GetState() != LEAF_STATE_FLY)
 		{
-			if (mario->GetLevel() == MARIO_LEVEL_SMALL)
-
+			if (mario->GetLevel() == MARIO_LEVEL_SMALL) 
 				supermushroom->SetState(SUPERMUSHROOM_STATE_WALKING);
 			else
 				supermushroom->SetState(LEAF_STATE_FLY);
+			StartUntouchable();
 		}
 	} 
 }
