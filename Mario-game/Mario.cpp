@@ -274,6 +274,7 @@ void CMario::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
 	CParaGoomba* paragoomba = dynamic_cast<CParaGoomba*>(e->obj);
 	if (e->ny < 0)
 	{
+		if (paragoomba->GetState() != PARAGOOMBA_STATE_DIE) {
 			if (paragoomba->Getlevel() != PARAGOOMBA_LEVEL_NO_WING)
 			{
 				paragoomba->Setlevel(PARAGOOMBA_LEVEL_NO_WING);
@@ -281,7 +282,10 @@ void CMario::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
 			}
 			else {
 				paragoomba->SetState(PARAGOOMBA_STATE_DIE);
+				vy = -MARIO_JUMP_DEFLECT_SPEED;
 			}
+		}
+		
 	}
 	else 
 	{

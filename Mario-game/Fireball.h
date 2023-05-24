@@ -29,6 +29,7 @@ class CFireball : public CGameObject
 
 
 	void OnCollisionWith(LPCOLLISIONEVENT e);
+	void OnCollisionWithMario(LPCOLLISIONEVENT e);
 
 public:
 	CFireball(float x, float y);

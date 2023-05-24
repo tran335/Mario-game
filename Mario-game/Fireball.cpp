@@ -5,8 +5,32 @@
 
 void CFireball::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (dynamic_cast<CFireball*>(e->obj)) return;
+	//if (dynamic_cast<CFireball*>(e->obj)) return;
+	if (dynamic_cast<CMario*>(e->obj))
+		OnCollisionWithMario(e);
 
+}
+
+void CFireball::OnCollisionWithMario(LPCOLLISIONEVENT e)
+{
+	CMario * mario = dynamic_cast<CMario*>(e->obj);
+	if (untouchable == 0) {
+		if (mario->GetLevel() > MARIO_LEVEL_BIG)
+		{
+			mario->SetLevel(MARIO_LEVEL_BIG);
+			StartUntouchable();
+		}
+		else if (mario->GetLevel() > MARIO_LEVEL_SMALL)
+		{
+			mario->SetLevel(MARIO_LEVEL_SMALL);
+			StartUntouchable();
+		}
+		else
+		{
+			DebugOut(L">>> Mario DIE >>> \n");
+			SetState(MARIO_STATE_DIE);
+		}
+	}
 }
 
 CFireball::CFireball(float x, float y)
