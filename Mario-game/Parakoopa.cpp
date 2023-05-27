@@ -10,6 +10,7 @@ CParaKoopa::CParaKoopa(float x, float y) :CGameObject(x, y)
 	start_x = x;
 	die_start = -1;
 	waking_start = -1;
+	reset_time = -1;
 	level = PARAKOOPA_LEVEL_WING;
 	mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 }
@@ -43,7 +44,7 @@ void CParaKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (!e->obj->IsBlocking()) return;
 	if (dynamic_cast<CKoopa*>(e->obj)) return;
 
-	if (e->ny != 0)
+	if (e->ny < 0)
 	{
 		vy = 0;
 	}
@@ -72,10 +73,9 @@ void CParaKoopa::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
 void CParaKoopa::OnCollisionWithCameraBound(LPCOLLISIONEVENT e)
 {
 	CCameraBound* camerabound = dynamic_cast<CCameraBound*>(e->obj);
-	if (e->ny < 0) 
+	if ((e->ny < 0) && isBack == false) 
 	{
-		isBack = true;
-		reset_time = GetTickCount64();
+		startBack();
 	}
 }
 
@@ -112,18 +112,13 @@ void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			startWakingTime();
 		}
 	}
-	if (isBack) {
-		y += PARAGOOMBA_BBOX_HEIGHT;
-		if (GetTickCount64() - reset_time > BACK_TIME) {
-			SetState(PARAKOOPA_STATE_FLY);
-			level = PARAKOOPA_LEVEL_WING;
+	if (isBack==true && (GetTickCount64() - reset_time > BACK_TIME) && state != PARAKOOPA_STATE_SLIDE) {
 			SetPosition(start_x, start_y);
 			isBack = false;
 			reset_time = 0;
-		}
 	}
 
-
+	
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }

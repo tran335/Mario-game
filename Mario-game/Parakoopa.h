@@ -9,7 +9,7 @@
 #define PARAKOOPA_WALKING_SPEED 0.01f
 #define PARAKOOPA_JUMP_Y 0.5f
 #define PARAKOOPA_SLIDE_SPEED 1.0f
-#define BACK_TIME 6000
+#define BACK_TIME 3000
 
 #define PARAKOOPA_BBOX_WIDTH 51
 #define PARAKOOPA_BBOX_HEIGHT 79
@@ -45,12 +45,12 @@ protected:
 	int type;
 	float start_x;
 	float start_y;
-	float reset_time;
+	ULONGLONG reset_time;
 	CMario* mario;
 	ULONGLONG die_start;
 	ULONGLONG waking_start;
 
-	BOOLEAN isBack;
+	bool isBack = false;
 	bool isRight = true;
 	int untouchable = 0;
 
@@ -75,5 +75,6 @@ public:
 	void FindSlideDirection();
 	void startWakingTime() { waking_start = GetTickCount64(); }
 	int Getlevel() { return this->level; }
-	void Setlevel(int level) { this->level = level; };
+	void Setlevel(int level) { this->level = level; }
+	void startBack() { isBack = true; 	reset_time = GetTickCount64(); }
 };

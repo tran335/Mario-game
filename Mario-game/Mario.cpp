@@ -293,7 +293,12 @@ void CMario::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
 		{
 			if (paragoomba->GetState() != PARAGOOMBA_STATE_DIE)
 			{
-				if (level > MARIO_LEVEL_SMALL)
+				if (level > MARIO_LEVEL_BIG)
+				{
+					level = MARIO_LEVEL_BIG;
+					StartUntouchable();
+				}
+				else if (level > MARIO_LEVEL_SMALL)
 				{
 					level = MARIO_LEVEL_SMALL;
 					StartUntouchable();

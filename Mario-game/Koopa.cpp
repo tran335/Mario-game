@@ -41,8 +41,6 @@ void CKoopa::OnNoCollision(DWORD dt)
 
 void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	//if (!e->obj->IsBlocking()) return;
-	//if (dynamic_cast<CKoopa*>(e->obj)) return;
 
 		if (e->ny != 0)
 		{
