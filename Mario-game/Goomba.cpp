@@ -56,7 +56,7 @@ void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 void CGoomba::OnCollisionWithCameraBound(LPCOLLISIONEVENT e)
 {
 	CCameraBound* camerabound = dynamic_cast<CCameraBound*>(e->obj);
-	if (e->ny < 0)
+	if (e->ny < 0 && isBack==false)
 	{
 		isBack = true;
 		reset_time = GetTickCount64();

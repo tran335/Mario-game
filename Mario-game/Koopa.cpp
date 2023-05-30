@@ -89,16 +89,8 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vy += ay * dt;
 	vx += ax * dt;
 
-	if (unfinddirecttion==true) {
-		FindSlideDirection(dt);
-		unfinddirecttion = false;
-	}
 	if (isHandled == true) {
 		setPositionHandled();
-	}
-	if (isDrop == true) {
-			ay = KOOPA_GRAVITY;
-			isDrop = false;
 	}
 	if ((state == KOOPA_STATE_DIE) && (GetTickCount64() - die_start > KOOPA_DIE_TIMEOUT && isHandled==false))
 	{
@@ -198,26 +190,29 @@ void CKoopa::SetState(int state)
 	}
 }
 
-void CKoopa::FindSlideDirection(DWORD dt)
-{
-	float x_mario, y_mario;
-	mario->GetPosition(x_mario, y_mario);
-
-	if (x_mario < x)
-		nx = -1;
-	else if (x_mario > x) 
-		nx = 1;
-}
 void CKoopa::setPositionHandled()
 {
-	//float x_mario, y_mario;
-	//mario->GetPosition(x_mario, y_mario);
-	////if (mario->GetLevel() == MARIO_LEVEL_SMALL)
-	////{
-	//	if (nx == -1)
-	//		SetPosition(x_mario - MARIO_SMALL_HANDLED_WIDTH, y_mario - MARIO_SMALL_HANDLED_HEIGHT);
-	//	else
-	//		SetPosition(x_mario + MARIO_SMALL_HANDLED_WIDTH, y_mario - MARIO_SMALL_HANDLED_HEIGHT);
-	////}
+	float x_mario, y_mario, vx_mario, vy_mario;
+	mario->GetPosition(x_mario, y_mario); 
+	mario->GetSpeed(vx_mario, vy_mario);
+
+	if (mario->GetLevel() == MARIO_LEVEL_SMALL) {
+		if (vx_mario < 0)
+			SetPosition(x_mario - MARIO_SMALL_HANDLED_WIDTH, y_mario - MARIO_SMALL_HANDLED_HEIGHT);
+		else if (vx_mario > 0)
+			SetPosition(x_mario + MARIO_SMALL_HANDLED_WIDTH, y_mario - MARIO_SMALL_HANDLED_HEIGHT);
+	}
+	else if (mario->GetLevel() == MARIO_LEVEL_BIG) {
+		if (vx_mario < 0)
+			SetPosition(x_mario - MARIO_BIG_HANDLED_WIDTH, y_mario + MARIO_BIG_HANDLED_HEIGHT);
+		else if (vx_mario > 0)
+			SetPosition(x_mario + MARIO_BIG_HANDLED_WIDTH, y_mario + MARIO_BIG_HANDLED_HEIGHT);
+	}
+	else {
+		if (vx_mario < 0)
+			SetPosition(x_mario - MARIO_RACCOON_HANDLED_WIDTH, y_mario + MARIO_RACCOON_HANDLED_HEIGHT);
+		else if (vx_mario > 0)
+			SetPosition(x_mario + MARIO_RACCOON_HANDLED_WIDTH, y_mario + MARIO_RACCOON_HANDLED_HEIGHT);
+	}
 }
 

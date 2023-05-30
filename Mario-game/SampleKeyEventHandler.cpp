@@ -66,9 +66,6 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 	case DIK_A:
 		mario->SetState(MARIO_STATE_SPIN_RELEASE);
 		break;
-	case DIK_B:
-		koopa->HandledByMarioRelease();
-		break;
 	}
 }
 

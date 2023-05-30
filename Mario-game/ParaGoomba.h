@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "debug.h"
+#include "CameraBound.h"
 
 #define PARAGOOMBA_GRAVITY 0.002f
 #define PARAGOOMBA_WALKING_SPEED 0.1f
@@ -33,6 +34,7 @@
 #define PARAGOOMBA_JUMP_HIGH_SPEED 0.5f
 #define PARAGOOMBA_JUMP_LOW_SPEED 0.3f
 
+#define BACK_TIME 2000
 class CParaGoomba : public CGameObject
 {
 protected:
@@ -41,8 +43,12 @@ protected:
 
 	float die_start;
 	BOOLEAN isOnPlatform;
+	BOOLEAN isBack = false;
 	int jumpTime;
 	float walkingTime;
+	float reset_time;
+	float start_x;
+	float start_y;
 
 	int level;
 
@@ -55,6 +61,7 @@ protected:
 	virtual void OnNoCollision(DWORD dt);
 
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
+	void OnCollisionWithCameraBound(LPCOLLISIONEVENT e);
 
 public:
 	CParaGoomba(float x, float y);

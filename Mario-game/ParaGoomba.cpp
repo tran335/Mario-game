@@ -9,6 +9,8 @@ CParaGoomba::CParaGoomba(float x, float y) :CGameObject(x, y)
 	jumpTime = PARAGOOMBA_FLY_TIMES;
 	isOnPlatform = false;
 	level = PARAGOOMBA_LEVEL_WING;
+	start_y = y;
+	start_x = x;
 }
 
 void CParaGoomba::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -51,7 +53,19 @@ void CParaGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		vx = -vx;
 	}
+	if (dynamic_cast<CCameraBound*>(e->obj))
+		OnCollisionWithCameraBound(e);
 
+}
+
+void CParaGoomba::OnCollisionWithCameraBound(LPCOLLISIONEVENT e)
+{
+	CCameraBound* camerabound = dynamic_cast<CCameraBound*>(e->obj);
+	if (e->ny < 0 && isBack == false)
+	{
+		isBack = true;
+		reset_time = GetTickCount64();
+	}
 }
 
 void CParaGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -73,7 +87,13 @@ void CParaGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			return;
 		}
 	
-	
+		if (isBack) {
+			if ((GetTickCount64() - reset_time) > BACK_TIME) {
+				SetPosition(start_x, start_y);
+				isBack = false;
+				reset_time = 0;
+			}
+		}
 	
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);

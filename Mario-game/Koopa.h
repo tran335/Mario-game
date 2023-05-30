@@ -34,8 +34,14 @@
 #define ID_ANI_GREEN_KOOPA_WAKING 809
 #define ID_ANI_GREEN_KOOPA_SLIDE 810
 
-#define MARIO_SMALL_HANDLED_WIDTH 24
-#define MARIO_SMALL_HANDLED_HEIGHT 4
+#define MARIO_SMALL_HANDLED_WIDTH 23
+#define MARIO_SMALL_HANDLED_HEIGHT 2
+
+#define MARIO_BIG_HANDLED_WIDTH 20
+#define MARIO_BIG_HANDLED_HEIGHT 10
+
+#define MARIO_RACCOON_HANDLED_WIDTH 35
+#define MARIO_RACCOON_HANDLED_HEIGHT 10
 
 
 
@@ -56,7 +62,6 @@ protected:
 	BOOLEAN unfinddirecttion;
 	BOOLEAN isHandled;
 	bool isRight=true;
-	bool isDrop = false;
 	int untouchable = 0;
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
@@ -75,10 +80,9 @@ protected:
 public:
 	CKoopa(float x, float y, int type);
 	virtual void SetState(int state);
-	void FindSlideDirection(DWORD dt);
 	void startWakingTime(){waking_start = GetTickCount64();}
 	void StartUntouchable() { untouchable = 1; }
 	void setPositionHandled();
-	void HandledByMario() { isHandled = true; SetState(KOOPA_STATE_DIE); unfinddirecttion = true; };
-	void HandledByMarioRelease() { isHandled = false; isDrop = true;};
+	void HandledByMario() { isHandled = true; SetState(KOOPA_STATE_DIE); unfinddirecttion = true; }
+	void HandledByMarioRelease() { isHandled = false;}
 };
