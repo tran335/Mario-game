@@ -411,16 +411,16 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 				}
 			}
 
-			else
-				if (game->IsKeyDown(DIK_A)&&(game->IsKeyDown(DIK_RIGHT)|| game->IsKeyDown(DIK_LEFT))) {
-					koopa->HandledByMario();
-				}
-				else {
-					SetState(MARIO_STATE_KICK);
-					koopa->SetState(KOOPA_STATE_SLIDE);
-					isKicking = false;
-					koopa->HandledByMarioRelease();
-				}
+			else {
+					if (game->IsKeyDown(DIK_A) && (game->IsKeyDown(DIK_RIGHT) || game->IsKeyDown(DIK_LEFT))) {
+						koopa->HandledByMario();
+					}
+					else {
+						SetState(MARIO_STATE_KICK);
+						koopa->SetState(KOOPA_STATE_SLIDE);
+						isKicking = false;
+					}
+			}
 		}
 
 	}

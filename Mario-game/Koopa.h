@@ -59,7 +59,6 @@ protected:
 	CMario* mario;
 	ULONGLONG die_start;
 	ULONGLONG waking_start;
-	BOOLEAN unfinddirecttion;
 	BOOLEAN isHandled;
 	bool isRight=true;
 	int untouchable = 0;
@@ -83,6 +82,7 @@ public:
 	void startWakingTime(){waking_start = GetTickCount64();}
 	void StartUntouchable() { untouchable = 1; }
 	void setPositionHandled();
-	void HandledByMario() { isHandled = true; SetState(KOOPA_STATE_DIE); unfinddirecttion = true; }
-	void HandledByMarioRelease() { isHandled = false;}
+	void HandledByMario() { isHandled = true; DebugOut(L"Funtion isHandle = true");}
+	void HandledByMarioRelease() { isHandled = false; DebugOut(L"Funtion isHandle = false"); }
+	void setPositionRelease();
 };
