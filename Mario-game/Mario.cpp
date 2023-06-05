@@ -191,19 +191,17 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e)
 {
 	CQuestionBrick* questionbrick = dynamic_cast<CQuestionBrick*>(e->obj);
-
 	if(e->ny>0)
 	{
 
 			if (questionbrick->GetState() != QUESTIONBRICK_STATE_DISABLE)
 			{
 				questionbrick->SetState(QUESTIONBRICK_STATE_DISABLE);
-
+				isHitting = true;
+				
 			}
 			vy = 0;	
 	}
-	
-
 }
 
 void CMario::OnCollisionWithCoinBrick(LPCOLLISIONEVENT e)
@@ -212,9 +210,10 @@ void CMario::OnCollisionWithCoinBrick(LPCOLLISIONEVENT e)
 
 		if (e->ny > 0)
 		{
-				if (coinbrick->GetState() != COINBRICK_STATE_THROW_UP)
+				if (coinbrick->GetState() != COINBRICK_STATE_THROW_UP && isHitting==true)
 				{
 					coinbrick->SetState(COINBRICK_STATE_THROW_UP);
+					isHitting = false;
 				}
 		}
 }
@@ -225,12 +224,13 @@ void CMario::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
 
 		if (e->ny > 0)
 		{
-			if (supermushroom->GetState() != SUPERMUSHROOM_STATE_WALKING && supermushroom->GetState() != LEAF_STATE_FLY)
+			if (supermushroom->GetState() != SUPERMUSHROOM_STATE_WALKING && supermushroom->GetState() != LEAF_STATE_FLY && isHitting==true)
 			{
 				if (level == MARIO_LEVEL_SMALL)
 					supermushroom->SetState(SUPERMUSHROOM_STATE_WALKING);
 				else
 					supermushroom->SetState(LEAF_STATE_FLY);
+				isHitting = false;
 			}
 		}
 		else

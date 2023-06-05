@@ -184,6 +184,7 @@ class CMario : public CGameObject
 	BOOLEAN isDie;
 	BOOLEAN isOutIn;
 	BOOLEAN isOutOut;
+	BOOLEAN isHitting;
 	float maxVx;
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
@@ -236,6 +237,7 @@ public:
 		isDie = false;
 		isOutIn = false;
 		isOutOut = false;
+		isHitting = false;
 		power = 0;
 
 		maxVx = 0.0f;
