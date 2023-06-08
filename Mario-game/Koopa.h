@@ -82,7 +82,7 @@ public:
 	void startWakingTime(){waking_start = GetTickCount64();}
 	void StartUntouchable() { untouchable = 1; }
 	void setPositionHandled();
-	void HandledByMario() { isHandled = true; DebugOut(L"Funtion isHandle = true");}
-	void HandledByMarioRelease() { isHandled = false; DebugOut(L"Funtion isHandle = false"); }
-	void setPositionRelease();
+	void HandledByMario() { isHandled = true;}
+	void HandledByMarioRelease() { isHandled = false;}
+	bool getIsHandle() { return isHandled; };
 };
