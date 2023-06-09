@@ -32,6 +32,11 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	LPGAME game = CGame::GetInstance();
 	vy += ay * dt;
 	vx += ax * dt;
+	if (isPickup == true) {
+		if (!game->IsKeyDown(DIK_A)) {
+			isPickup = false;
+		}
+	}
 
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
 

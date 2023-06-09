@@ -84,5 +84,4 @@ public:
 	void setPositionHandled();
 	void HandledByMario() { isHandled = true;}
 	void HandledByMarioRelease() { isHandled = false;}
-	bool getIsHandle() { return isHandled; };
 };
