@@ -5,7 +5,7 @@
 
 
 
-#define KOOPA_GRAVITY 0.0005f
+#define KOOPA_GRAVITY 0.002f
 #define KOOPA_WALKING_SPEED 0.05f
 #define KOOPA_SLIDE_SPEED 1.5f
 
@@ -75,6 +75,12 @@ protected:
 
 	void OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e);
 	void OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e);
+	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
+	void OnCollisionWithParaGoomba(LPCOLLISIONEVENT e);
+	void OnCollisionWithKoopaBound(LPCOLLISIONEVENT e);
+	void OnCollisionWithPlatform(LPCOLLISIONEVENT e);
+
+
 
 public:
 	CKoopa(float x, float y, int type);
@@ -84,4 +90,5 @@ public:
 	void setPositionHandled();
 	void HandledByMario() { isHandled = true;}
 	void HandledByMarioRelease() { isHandled = false;}
+	void setPositionSlide();
 };

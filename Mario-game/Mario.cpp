@@ -425,6 +425,7 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 						SetState(MARIO_STATE_KICK);
 						koopa->SetState(KOOPA_STATE_SLIDE);
 						isKicking = false;
+						StartUntouchable();
 					}
 			}
 		}

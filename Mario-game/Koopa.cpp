@@ -47,14 +47,22 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 		{
 			vy = 0;
 		}
-		else if (e->nx != 0)
-		{
-			vx = -vx;
-		}
+		//else if (e->nx != 0)
+		//{
+		//	vx = -vx;
+		//}
 		if (dynamic_cast<CSuperMushroom*>(e->obj))
 			OnCollisionWithSuperMushroom(e);
 		else if (dynamic_cast<CQuestionBrick*>(e->obj))
 			OnCollisionWithQuestionBrick(e);
+		else if (dynamic_cast<CGoomba*>(e->obj))
+			OnCollisionWithGoomba(e);
+		else if (dynamic_cast<CParaGoomba*>(e->obj))
+			OnCollisionWithParaGoomba(e);
+		else if (dynamic_cast<CKoopaBound*>(e->obj))
+			OnCollisionWithKoopaBound(e);
+		else if (dynamic_cast<CPlatform*>(e->obj))
+			OnCollisionWithPlatform(e);
 	
 }
 void CKoopa::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
@@ -76,12 +84,49 @@ void CKoopa::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
 void CKoopa::OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e)
 {
 	CQuestionBrick* questionbrick = dynamic_cast<CQuestionBrick*>(e->obj);
+	vx = -vx;
 	if (untouchable == 0)
 	{
 		if (questionbrick->GetState() != QUESTIONBRICK_STATE_DISABLE)
 		{
 			questionbrick->SetState(QUESTIONBRICK_STATE_DISABLE);
 		}
+		
+	}
+}
+
+void CKoopa::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
+{
+	CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
+	if (e->nx!=0) {
+		goomba->SetState(GOOMBA_STATE_DIE);
+	}
+	StartUntouchable();
+}
+
+void CKoopa::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
+{
+	CParaGoomba* paragoomba = dynamic_cast<CParaGoomba*>(e->obj);
+	if (e->nx != 0) {
+		paragoomba->SetState(PARAGOOMBA_STATE_DIE);
+	}
+	StartUntouchable();
+
+}
+
+
+void CKoopa::OnCollisionWithKoopaBound(LPCOLLISIONEVENT e)
+{
+	if (e->nx != 0)
+		{
+			vx = -vx;
+		}
+}
+
+void CKoopa::OnCollisionWithPlatform(LPCOLLISIONEVENT e)
+{
+	if (e->nx != 0) {
+		vx = -vx;
 	}
 }
 
@@ -166,7 +211,7 @@ void CKoopa::Render()
 		}
 	}
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 void CKoopa::SetState(int state)
@@ -188,14 +233,15 @@ void CKoopa::SetState(int state)
 		vx = KOOPA_WALKING_SPEED;
 		break;
 	case KOOPA_STATE_SLIDE:
-			y += (KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_DIE)/2;
+			//y += (KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_DIE)/2;
 			ay = KOOPA_GRAVITY;
-			if (nx == -1) {
+			/*if (nx == -1) {
 				vx = -KOOPA_SLIDE_SPEED;
 			}
 			else if (nx == 1) {
 				vx = KOOPA_SLIDE_SPEED;
-			}
+			}*/
+			setPositionSlide();
 		break;
 	}
 }
@@ -226,5 +272,15 @@ void CKoopa::setPositionHandled()
 		else if (vx_mario > 0)
 			SetPosition(x_mario + MARIO_RACCOON_HANDLED_WIDTH, y_mario + MARIO_RACCOON_HANDLED_HEIGHT);
 	}
+}
+
+void CKoopa::setPositionSlide()
+{
+	float x_mario, y_mario, vx_mario, vy_mario;
+	mario->GetPosition(x_mario, y_mario);
+	if (x < x_mario) 
+		vx = -KOOPA_SLIDE_SPEED;
+	else
+		vx = KOOPA_SLIDE_SPEED;
 }
 

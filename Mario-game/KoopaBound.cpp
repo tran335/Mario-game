@@ -9,13 +9,18 @@ CKoopaBound::CKoopaBound(float width, float height)
 
 void CKoopaBound::Render()
 {
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 void CKoopaBound::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
-	l = x - KOOPABOUND_BBOX_WIDTH/2;
-	t = y - KOOPABOUND_BBOX_HEIGHT/2;
-	r = l + width;
-	b = t + height;
+	//l = x - KOOPABOUND_BBOX_WIDTH/2;
+	//t = y - KOOPABOUND_BBOX_HEIGHT/2;
+	//r = l + width;
+	//b = t + height;
+
+	l = x;
+	t = y;
+	r = l;
+	b = t;
 }
