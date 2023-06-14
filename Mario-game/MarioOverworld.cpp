@@ -5,6 +5,7 @@
 #include "Game.h"
 
 #include "OverworldBound.h"
+#include "Tree.h"
 
 #include "Collision.h"
 
@@ -44,7 +45,22 @@ void CMarioOverworld::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		vx = 0;
 	}
+	if (dynamic_cast<COverworldBound*>(e->obj))
+		OnCollisionWithOverWorldBound(e);
+	//else if (dynamic_cast<CTree*>(e->obj))
+	//	OnCollisionWithTree(e);
 }
+
+void CMarioOverworld::OnCollisionWithOverWorldBound(LPCOLLISIONEVENT e)
+{
+	COverworldBound* overworldBound = dynamic_cast<COverworldBound*>(e->obj);
+	if (e->ny != 0) {
+		vy = 0;
+		ay = 0;
+	}
+}
+
+
 
 
 
@@ -83,7 +99,7 @@ void CMarioOverworld::SetState(int state)
 		ny = -1;
 		break;
 	case MARIO_STATE_WALKING_DOWN:
-		vy = MARIO_WALKING_SPEED;
+		//vy = MARIO_WALKING_SPEED;
 		ay = MARIO_ACCEL_WALK_X;
 		maxVx = 0.0f;
 		ny = 1;

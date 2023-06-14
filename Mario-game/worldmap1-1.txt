@@ -1,6 +1,5 @@
 # list of object assets to load in this scene
 [ASSETS]
-mario.txt
 map\worldmap1-1\objectmap1-1\coin.txt
 map\worldmap1-1\objectmap1-1\cloud.txt
 map\worldmap1-1\objectmap1-1\brick.txt
@@ -10,6 +9,7 @@ map\worldmap1-1\objectmap1-1\questionbrick.txt
 map\worldmap1-1\objectmap1-1\coinbrick.txt
 map\worldmap1-1\objectmap1-1\koopa.txt
 map\worldmap1-1\objectmap1-1\parakoopa.txt
+mario.txt
 map\worldmap1-1\objectmap1-1\venusfiretrap.txt
 map\worldmap1-1\objectmap1-1\mushroom.txt
 map\worldmap1-1\objectmap1-1\fireball.txt

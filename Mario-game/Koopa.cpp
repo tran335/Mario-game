@@ -63,6 +63,10 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 			OnCollisionWithKoopaBound(e);
 		else if (dynamic_cast<CPlatform*>(e->obj))
 			OnCollisionWithPlatform(e);
+		//else if (dynamic_cast<CKoopa*>(e->obj))
+		//	OnCollisionWithKoopa(e);
+		//else if (dynamic_cast<CParaKoopa*>(e->obj))
+		//	OnCollisionWithParaKoopa(e);
 	
 }
 void CKoopa::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
@@ -108,6 +112,7 @@ void CKoopa::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
 {
 	CParaGoomba* paragoomba = dynamic_cast<CParaGoomba*>(e->obj);
 	if (e->nx != 0) {
+		paragoomba->Setlevel(PARAGOOMBA_LEVEL_NO_WING);
 		paragoomba->SetState(PARAGOOMBA_STATE_DIE);
 	}
 	StartUntouchable();
@@ -129,6 +134,16 @@ void CKoopa::OnCollisionWithPlatform(LPCOLLISIONEVENT e)
 		vx = -vx;
 	}
 }
+
+//void CKoopa::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
+//{
+//
+//}
+//
+//void CKoopa::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
+//{
+//
+//}
 
 void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
@@ -211,7 +226,7 @@ void CKoopa::Render()
 		}
 	}
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CKoopa::SetState(int state)

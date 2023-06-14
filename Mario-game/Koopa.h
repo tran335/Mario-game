@@ -79,6 +79,8 @@ protected:
 	void OnCollisionWithParaGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithKoopaBound(LPCOLLISIONEVENT e);
 	void OnCollisionWithPlatform(LPCOLLISIONEVENT e);
+	//void OnCollisionWithKoopa(LPCOLLISIONEVENT e);
+	//void OnCollisionWithParaKoopa(LPCOLLISIONEVENT e);
 
 
 
