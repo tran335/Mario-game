@@ -19,6 +19,7 @@
 #define ID_ANI_VENUS_SHOOT_DOWN_RIGHT 607
 #define ID_ANI_VENUS_SHOOT_UP_RIGHT 608
 
+
 #define RED_VENUS 1
 #define GREEN_VENUS 2
 
@@ -53,6 +54,7 @@ class CVenusFireTrap : public CGameObject
 	CFireball* fireball;
 	bool createFireball = false;
 	CMario* mario = NULL;
+	bool isStop = false;
 
 public:
 	CVenusFireTrap(float x, float y, int type);

@@ -11,12 +11,18 @@ CVenusFireTrap::CVenusFireTrap(float x, float y, int type)
 	 mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 }
 
+
 void CVenusFireTrap::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	y += vy;
 	float x_mario, y_mario;
 	mario->GetPosition(x_mario, y_mario);
-
+	if (((x - x_mario < VENUS_HEIGHT)&&(((x + VENUS_HEIGHT) - x_mario) > 0))||((y-y_mario>VENUS_HEIGHT)&& (((x + VENUS_HEIGHT) - x_mario) > 0) && (x-x_mario<0))) {
+		isStop = true;
+	}
+	else {
+		isStop = false;
+	}
 	if (isShooting == false) {
 		if (y_mario > y)
 			isUp = false;
@@ -33,7 +39,6 @@ void CVenusFireTrap::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			vy = 0.0f;
 			StartShootTime();
 			fireball = new CFireball(x, y);
-	
 		}
 	}
 	else if (GetTickCount64() - shootingStartTime > VENUS_SHOOTING_TIME) {
@@ -44,6 +49,10 @@ void CVenusFireTrap::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		vy = VENUS_SPEED;
 	}
 	if (y > start_y + VENUS_HEIGHT) {
+		if (isStop == true) {
+			vy = 0;
+		}
+		else
 		vy = -VENUS_SPEED;
 	}
 	if (createFireball == true) {
