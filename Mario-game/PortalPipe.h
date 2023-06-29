@@ -25,7 +25,6 @@ public:
 	CPortalPipe(float l, float t, float r, float b, int name, int type);
 	virtual void Render();
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
-	int getPositisionOutput();
 	int GetType() { return type; }
 	int GetName() { return name; }
 };

@@ -18,22 +18,22 @@ void CCoinBrick::OnCollisionWith(LPCOLLISIONEVENT e)
 }
 void CCoinBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-
 	if (GetState() == COINBRICK_STATE_THROW_UP)
 	{
 		if (jumpTime == 0) {
 			BrickStartToThrow();
 		}
 		else if (GetTickCount64() - jumpTime > JUMP_TIME && jumpTime>0) {
-			if (y < start_y) // take brick to start_y after deflect cause disable
+			if (y < start_y) 
 			{
-				vy = COINBRICK_JUMP_SPEED_Y;
-				y +=vy;
+				vy = CONINBRICK_RETURN_START_POS_VY;
+				y = vy * dt;
 			}
 			else
 			{
 				y = start_y;
 				vy = 0;
+				jumpTime = 0;
 			}
 		}
 

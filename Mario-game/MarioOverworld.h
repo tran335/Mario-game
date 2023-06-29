@@ -28,7 +28,7 @@
 
 
 #define MARIO_SMALL_BBOX_WIDTH  40
-#define MARIO_SMALL_BBOX_HEIGHT 48
+#define MARIO_SMALL_BBOX_HEIGHT 47
 
 class CMarioOverworld : public CMario
 {

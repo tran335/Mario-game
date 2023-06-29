@@ -330,8 +330,10 @@ void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
 		}
 		else {
-			parakoopa->SetState(PARAKOOPA_STATE_DIE);
-			vy = -MARIO_JUMP_DEFLECT_SPEED;
+			if (parakoopa->GetState() != PARAKOOPA_STATE_DIE) {
+				parakoopa->SetState(PARAKOOPA_STATE_DIE);
+				vy = -MARIO_JUMP_DEFLECT_SPEED;
+			}
 		}
 	}
 	else // hit by Goomba
@@ -856,7 +858,7 @@ int CMario::GetAniIdBig()
 			}
 			else
 			{
-				if (nx >= 0)
+				if (nx >= 0) 
 					aniId = ID_ANI_MARIO_JUMP_WALK_RIGHT;
 				else
 					aniId = ID_ANI_MARIO_JUMP_WALK_LEFT;

@@ -80,7 +80,7 @@
 </data>
  </layer>
  <objectgroup id="7" name="BoundOverWorld">
-  <object id="72" x="68.8995" y="46.8517" width="628.134" height="48"/>
+  <object id="72" x="68.8995" y="48" width="628.134" height="49"/>
   <object id="73" x="669.474" y="75.5598" width="48" height="478.852"/>
   <object id="74" x="437.191" y="436.445" width="348.545" height="81"/>
   <object id="75" x="44.7847" y="93.933" width="48" height="461.627"/>
