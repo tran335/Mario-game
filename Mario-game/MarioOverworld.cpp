@@ -6,6 +6,7 @@
 
 #include "OverworldBound.h"
 #include "Tree.h"
+#include "Portal.h"
 
 #include "Collision.h"
 
@@ -15,7 +16,13 @@ void CMarioOverworld::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vx += ax * dt;
 
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
+	if (abs(vy) > abs(maxVy)) vy = maxVy;
 
+	LPGAME game = CGame::GetInstance();
+	if (isWitchscene == true && game->IsKeyDown(DIK_S)) {
+		CGame::GetInstance()->InitiateSwitchScene(3);
+		isWitchscene = false;
+	}
 
 	// reset untouchable timer if untouchable time has passed
 	if (GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME)
@@ -47,6 +54,8 @@ void CMarioOverworld::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 	if (dynamic_cast<COverworldBound*>(e->obj))
 		OnCollisionWithOverWorldBound(e);
+	else if (dynamic_cast<CPortal*>(e->obj))
+		OnCollisionWithPortal(e);
 	//else if (dynamic_cast<CTree*>(e->obj))
 	//	OnCollisionWithTree(e);
 }
@@ -58,6 +67,13 @@ void CMarioOverworld::OnCollisionWithOverWorldBound(LPCOLLISIONEVENT e)
 		vy = 0;
 		ay = 0;
 	}
+}
+
+void CMarioOverworld::OnCollisionWithPortal(LPCOLLISIONEVENT e)
+{
+	CPortal* portal = dynamic_cast<CPortal*>(e->obj);
+		isWitchscene = true;
+	
 }
 
 
@@ -83,30 +99,25 @@ void CMarioOverworld::SetState(int state)
 	switch (state)
 	{
 	case MARIO_STATE_WALKING_RIGHT:
+		ax = MARIO_GRAVITY;
 		maxVx = MARIO_WALKING_SPEED;
-		ax = MARIO_ACCEL_WALK_X;
-		nx = 1;
 		break;
 	case MARIO_STATE_WALKING_LEFT:
+		ax = -MARIO_GRAVITY;
 		maxVx = -MARIO_WALKING_SPEED;
-		ax = -MARIO_ACCEL_WALK_X;
-		nx = -1;
 		break;
 	case MARIO_STATE_WALKING_UP:
-		vy = -MARIO_WALKING_SPEED;
-		ay = -MARIO_ACCEL_WALK_X;
-		maxVx = 0.0f;
-		ny = -1;
+		ay = -MARIO_GRAVITY;
+		maxVy = -MARIO_WALKING_SPEED;
 		break;
 	case MARIO_STATE_WALKING_DOWN:
-		//vy = MARIO_WALKING_SPEED;
-		ay = MARIO_ACCEL_WALK_X;
-		maxVx = 0.0f;
-		ny = 1;
+		ay = MARIO_GRAVITY;
+		maxVy = MARIO_WALKING_SPEED;
 		break;
 	case MARIO_STATE_IDLE:
 		ax = 0.0f;
 		vx = 0.0f;
+		vy = 0.0f;
 		break;
 	}
 

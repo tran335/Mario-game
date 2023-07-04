@@ -4,18 +4,16 @@
 
 
 
-CPortal::CPortal(float l, float t, float r, float b, int scene_id )
+CPortal::CPortal(float x, float y, int scene_id )
 {
 	this->scene_id = scene_id;
-	x = l; 
-	y = t;
-	width = r - l;
-	height = b - t;
+	this->x = x;
+	this->y = y;
 }
 
 void CPortal::RenderBoundingBox()
 {
-	D3DXVECTOR3 p(x, y, 0);
+	/*D3DXVECTOR3 p(x, y, 0);
 	RECT rect;
 
 	LPTEXTURE bbox = CTextures::GetInstance()->Get(ID_TEX_BBOX);
@@ -31,7 +29,7 @@ void CPortal::RenderBoundingBox()
 	float cx, cy;
 	CGame::GetInstance()->GetCamPos(cx, cy);
 
-	CGame::GetInstance()->Draw(x - cx, y - cy, bbox, nullptr, BBOX_ALPHA, rect.right - 1, rect.bottom - 1);
+	CGame::GetInstance()->Draw(x - cx, y - cy, bbox, nullptr, BBOX_ALPHA, rect.right - 1, rect.bottom - 1);*/
 }
 
 
@@ -43,8 +41,8 @@ void CPortal::Render()
 
 void CPortal::GetBoundingBox(float &l, float &t, float &r, float &b)
 {
-	l = x - width/2;
-	t = y - height/2;
-	r = x + width/2;
-	b = y + height/2;
+	l = x - PORTAL_WIDTH/2;
+	t = y - PORTAL_HEIGHT/2;
+	r = x + PORTAL_WIDTH/2;
+	b = y + PORTAL_HEIGHT/2;
 }

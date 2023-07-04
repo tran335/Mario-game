@@ -7,7 +7,7 @@
 #include "debug.h"
 #include "Mario.h"
 
-#define MARIO_WALKING_SPEED		1.0f
+#define MARIO_WALKING_SPEED		0.5f
 
 #define MARIO_GRAVITY			0.002f
 
@@ -37,9 +37,11 @@ class CMarioOverworld : public CMario
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
 
+
 	int untouchable;
 	ULONGLONG untouchable_start;
 	BOOLEAN isOnPlatform;
+	BOOLEAN isWitchscene;
 	DWORD dt;
 
 public:
@@ -48,10 +50,11 @@ public:
 		maxVx = 0.0f;
 		maxVy = 0.0f;
 		ax = 0.0f;
-		ay = MARIO_GRAVITY;
+		ay = 0.0f;
 		untouchable = 0;
 		untouchable_start = -1;
 		isOnPlatform = false;
+		isWitchscene = false;
 
 	}
 
@@ -70,7 +73,8 @@ public:
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 	void OnCollisionWithOverWorldBound(LPCOLLISIONEVENT e);
-	void OnCollisionWithTree(LPCOLLISIONEVENT e);
+	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
+	/*void OnCollisionWithTree(LPCOLLISIONEVENT e);*/
 
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 

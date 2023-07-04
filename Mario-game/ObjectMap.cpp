@@ -91,6 +91,17 @@ void CObjectMap::ImportData(vector<LPGAMEOBJECT>& coObjects)
 		}
 
 	}
+	if (name.compare("WorldGraph") == 0) {
+		while (element)
+		{
+			GetInfoElement(element, objectId, x, y, width, height);
+			obj = new CPortal(x,y, 3);
+			obj->SetPosition(x, y);
+			coObjects.push_back(obj);
+			element = element->NextSiblingElement();
+		}
+
+	}
 	if (name.compare("Portal") == 0) {
 		while (element)
 		{
