@@ -33,6 +33,15 @@
 #define ID_ANI_PARAKOOPA_WAKING 7106
 #define ID_ANI_PARAKOOPA_SLIDE 7105
 
+#define MARIO_SMALL_HANDLED_WIDTH 23
+#define MARIO_SMALL_HANDLED_HEIGHT 2
+
+#define MARIO_BIG_HANDLED_WIDTH 20
+#define MARIO_BIG_HANDLED_HEIGHT 10
+
+#define MARIO_RACCOON_HANDLED_WIDTH 35
+#define MARIO_RACCOON_HANDLED_HEIGHT 10
+
 #define PARAKOOPA_LEVEL_WING 1
 #define PARAKOOPA_LEVEL_NO_WING 2
 
@@ -49,6 +58,7 @@ protected:
 	CMario* mario;
 	ULONGLONG die_start;
 	ULONGLONG waking_start;
+	BOOLEAN isHandled;
 
 	bool isBack = false;
 	bool isRight = true;
@@ -76,5 +86,8 @@ public:
 	void startWakingTime() { waking_start = GetTickCount64(); }
 	int Getlevel() { return this->level; }
 	void Setlevel(int level) { this->level = level; }
+	void setPositionHandled();
+	void HandledByMario() { isHandled = true; }
+	void HandledByMarioRelease() { isHandled = false; }
 	void startBack() { isBack = true; 	reset_time = GetTickCount64(); }
 };

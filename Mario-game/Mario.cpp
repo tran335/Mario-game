@@ -320,7 +320,7 @@ void CMario::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
 {
 	CParaKoopa* parakoopa = dynamic_cast<CParaKoopa*>(e->obj);
-
+	LPGAME game = CGame::GetInstance();
 	// jump on top >> kill Goomba and deflect a bit 
 	if (e->ny < 0)
 	{
@@ -338,7 +338,7 @@ void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
 	}
 	else // hit by Goomba
 	{
-		if (untouchable == 0)
+		/*if (untouchable == 0)
 		{
 			if (parakoopa->GetState() != PARAKOOPA_STATE_DIE)
 			{
@@ -357,6 +357,50 @@ void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
 				SetState(MARIO_STATE_KICK);
 				parakoopa->SetState(PARAKOOPA_STATE_SLIDE);
 				isKicking = false;
+			}
+		}*/
+		if (untouchable == 0)
+		{
+			if (parakoopa->GetState() != PARAKOOPA_STATE_DIE && parakoopa->GetState() != PARAKOOPA_STATE_SLIDE)
+			{
+				if (level == MARIO_LEVEL_RACCOON)
+				{
+					if (isSpining == true)
+					{
+						if (parakoopa->GetState() != PARAKOOPA_STATE_DIE)
+						{
+							parakoopa->SetState(PARAKOOPA_STATE_DIE);
+						}
+					}
+					else
+					{
+						level = MARIO_LEVEL_BIG;
+						StartUntouchable();
+					}
+				}
+				else if (level > MARIO_LEVEL_SMALL)
+				{
+					level = MARIO_LEVEL_SMALL;
+					StartUntouchable();
+				}
+				else
+				{
+					DebugOut(L">>> Mario DIE >>> \n");
+					SetState(MARIO_STATE_DIE);
+				}
+			}
+
+			else {
+				if (game->IsKeyDown(DIK_A) && (game->IsKeyDown(DIK_RIGHT) || game->IsKeyDown(DIK_LEFT))) {
+					parakoopa->HandledByMario();
+					isPickup = true;
+				}
+				else {
+					SetState(MARIO_STATE_KICK);
+					parakoopa->SetState(PARAKOOPA_STATE_SLIDE);
+					isKicking = false;
+					StartUntouchable();
+				}
 			}
 		}
 	}

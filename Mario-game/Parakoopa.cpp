@@ -14,7 +14,7 @@ CParaKoopa::CParaKoopa(float x, float y) :CGameObject(x, y)
 	level = PARAKOOPA_LEVEL_WING;
 	mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 }
-
+LPGAME game1 = CGame::GetInstance();
 void CParaKoopa::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	if (state == PARAKOOPA_STATE_DIE || state == PARAKOOPA_STATE_SLIDE)
@@ -83,6 +83,16 @@ void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
+
+	if (isHandled == true) {
+		if (game1->IsKeyDown(DIK_A)) {
+			setPositionHandled();
+		}
+		else {
+			HandledByMarioRelease();
+			SetState(PARAKOOPA_STATE_SLIDE);
+		}
+	}
 
 	float x_mario, y_mario;
 	mario->GetPosition(x_mario, y_mario);
@@ -181,6 +191,32 @@ void CParaKoopa::SetState(int state)
 		ay = PARAKOOPA_GRAVITY;
 		vx = PARAKOOPA_SLIDE_SPEED;
 		break;
+	}
+}
+
+void CParaKoopa::setPositionHandled()
+{
+	float x_mario, y_mario, vx_mario, vy_mario;
+	mario->GetPosition(x_mario, y_mario);
+	mario->GetSpeed(vx_mario, vy_mario);
+
+	if (mario->GetLevel() == MARIO_LEVEL_SMALL) {
+		if (vx_mario < 0)
+			SetPosition(x_mario - MARIO_SMALL_HANDLED_WIDTH, y_mario - MARIO_SMALL_HANDLED_HEIGHT);
+		else if (vx_mario > 0)
+			SetPosition(x_mario + MARIO_SMALL_HANDLED_WIDTH, y_mario - MARIO_SMALL_HANDLED_HEIGHT);
+	}
+	else if (mario->GetLevel() == MARIO_LEVEL_BIG) {
+		if (vx_mario < 0)
+			SetPosition(x_mario - MARIO_BIG_HANDLED_WIDTH, y_mario + MARIO_BIG_HANDLED_HEIGHT);
+		else if (vx_mario > 0)
+			SetPosition(x_mario + MARIO_BIG_HANDLED_WIDTH, y_mario + MARIO_BIG_HANDLED_HEIGHT);
+	}
+	else {
+		if (vx_mario < 0)
+			SetPosition(x_mario - MARIO_RACCOON_HANDLED_WIDTH, y_mario + MARIO_RACCOON_HANDLED_HEIGHT);
+		else if (vx_mario > 0)
+			SetPosition(x_mario + MARIO_RACCOON_HANDLED_WIDTH, y_mario + MARIO_RACCOON_HANDLED_HEIGHT);
 	}
 }
 
