@@ -80,7 +80,7 @@ void CKoopa::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
 				supermushroom->SetState(SUPERMUSHROOM_STATE_WALKING);
 			else
 				supermushroom->SetState(LEAF_STATE_FLY);
-			StartUntouchable();
+			/*StartUntouchable();*/
 		}
 	} 
 }

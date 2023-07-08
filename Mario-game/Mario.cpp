@@ -227,9 +227,9 @@ void CMario::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
 {
 	CSuperMushroom* supermushroom = dynamic_cast<CSuperMushroom*>(e->obj);
 
-		if (e->ny > 0)
+		if (e->ny > 0 && supermushroom->GetState() != SUPERMUSHROOM_STATE_WALKING && supermushroom->GetState() != LEAF_STATE_FLY)
 		{
-			if (supermushroom->GetState() != SUPERMUSHROOM_STATE_WALKING && supermushroom->GetState() != LEAF_STATE_FLY && isHitting==true)
+			if (isHitting==true)
 			{
 				if (level == MARIO_LEVEL_SMALL)
 					supermushroom->SetState(SUPERMUSHROOM_STATE_WALKING);
@@ -249,7 +249,7 @@ void CMario::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
 				}
 
 				e->obj->Delete();
-				StartUntouchable();
+				/*StartUntouchable();*/
 			}
 	}
 }

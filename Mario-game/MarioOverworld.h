@@ -9,7 +9,7 @@
 
 #define MARIO_WALKING_SPEED		0.5f
 
-#define MARIO_GRAVITY			0.002f
+#define MARIO_GRAVITY			0.0002f
 
 #define MARIO_STATE_IDLE			0
 #define MARIO_STATE_WALKING_RIGHT	100
@@ -51,6 +51,8 @@ public:
 		maxVy = 0.0f;
 		ax = 0.0f;
 		ay = 0.0f;
+		vx = 0.0f;
+		vy = 0.0f;
 		untouchable = 0;
 		untouchable_start = -1;
 		isOnPlatform = false;
@@ -73,8 +75,8 @@ public:
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 	void OnCollisionWithOverWorldBound(LPCOLLISIONEVENT e);
-	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
-	/*void OnCollisionWithTree(LPCOLLISIONEVENT e);*/
+	//void OnCollisionWithPortal(LPCOLLISIONEVENT e);
+	//void OnCollisionWithTree(LPCOLLISIONEVENT e);
 
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 

@@ -15,8 +15,8 @@ void CMarioOverworld::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vy += ay * dt;
 	vx += ax * dt;
 
-	if (abs(vx) > abs(maxVx)) vx = maxVx;
-	if (abs(vy) > abs(maxVy)) vy = maxVy;
+	//if (abs(vx) > abs(maxVx)) vx = maxVx;
+	//if (abs(vy) > abs(maxVy)) vy = maxVy;
 
 	LPGAME game = CGame::GetInstance();
 	if (isWitchscene == true && game->IsKeyDown(DIK_S)) {
@@ -40,11 +40,11 @@ void CMarioOverworld::OnNoCollision(DWORD dt)
 {
 	x += vx * dt;
 	y += vy * dt;
+
 }
 
 void CMarioOverworld::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-
 	if (e->ny != 0) {
 		vy = 0;
 	}
@@ -54,8 +54,8 @@ void CMarioOverworld::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 	if (dynamic_cast<COverworldBound*>(e->obj))
 		OnCollisionWithOverWorldBound(e);
-	else if (dynamic_cast<CPortal*>(e->obj))
-		OnCollisionWithPortal(e);
+	//else if (dynamic_cast<CPortal*>(e->obj))
+	//	OnCollisionWithPortal(e);
 	//else if (dynamic_cast<CTree*>(e->obj))
 	//	OnCollisionWithTree(e);
 }
@@ -66,18 +66,9 @@ void CMarioOverworld::OnCollisionWithOverWorldBound(LPCOLLISIONEVENT e)
 	if (e->ny != 0) {
 		vy = 0;
 		ay = 0;
+		
 	}
 }
-
-void CMarioOverworld::OnCollisionWithPortal(LPCOLLISIONEVENT e)
-{
-	CPortal* portal = dynamic_cast<CPortal*>(e->obj);
-		isWitchscene = true;
-	
-}
-
-
-
 
 
 void CMarioOverworld::Render()
@@ -87,7 +78,7 @@ void CMarioOverworld::Render()
 
 	animations->Get(aniId)->Render(x, y);
 
-	RenderBoundingBox();
+	//RenderBoundingBox();
 
 }
 
@@ -99,20 +90,24 @@ void CMarioOverworld::SetState(int state)
 	switch (state)
 	{
 	case MARIO_STATE_WALKING_RIGHT:
-		ax = MARIO_GRAVITY;
-		maxVx = MARIO_WALKING_SPEED;
+		x = x + 96;
+		vx = 0;
+		vy = 0;
 		break;
 	case MARIO_STATE_WALKING_LEFT:
-		ax = -MARIO_GRAVITY;
-		maxVx = -MARIO_WALKING_SPEED;
+		x = x - 96;
+		vx = 0;
+		vy = 0;
 		break;
 	case MARIO_STATE_WALKING_UP:
-		ay = -MARIO_GRAVITY;
-		maxVy = -MARIO_WALKING_SPEED;
+		y = y - 96;
+		vx = 0;
+		vy = 0;
 		break;
 	case MARIO_STATE_WALKING_DOWN:
-		ay = MARIO_GRAVITY;
-		maxVy = MARIO_WALKING_SPEED;
+		y = y + 96;
+		vx = 0;
+		vy = 0;
 		break;
 	case MARIO_STATE_IDLE:
 		ax = 0.0f;
