@@ -6,7 +6,6 @@ CCoinBrick::CCoinBrick()
 {
 	this->x = x;
 	this->y = y;
-	start_y = y;
 }
 
 
@@ -20,21 +19,24 @@ void CCoinBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (GetState() == COINBRICK_STATE_THROW_UP)
 	{
+		y += vy * dt;
 		if (jumpTime == 0) {
 			BrickStartToThrow();
 		}
 		else if (GetTickCount64() - jumpTime > JUMP_TIME && jumpTime>0) {
-			if (y < start_y) 
-			{
-				vy = CONINBRICK_RETURN_START_POS_VY;
-				y = vy * dt;
-			}
-			else
-			{
-				y = start_y;
-				vy = 0;
-				jumpTime = 0;
-			}
+				if (GetTickCount64() - dropTime > DROP_TIME && dropTime > 0) {
+					Delete();
+					jumpTime = 0;
+					dropTime = 0;
+					
+				}
+				else {
+					vy = CONINBRICK_RETURN_START_POS_VY;
+					if (dropTime == 0) {
+						BrickStartToDrop();
+					}
+				}
+				
 		}
 
 	}
@@ -66,7 +68,7 @@ void CCoinBrick::SetState(int state)
 	case COINBRICK_STATE_THROW_UP:
 		vx = 0;
 		vy = -COINBRICK_JUMP_SPEED_Y;
-		y +=vy;
+		/*y +=vy;*/
 		break;
 	}
 }

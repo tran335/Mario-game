@@ -43,6 +43,6 @@ void CPortal::GetBoundingBox(float &l, float &t, float &r, float &b)
 {
 	l = x - PORTAL_WIDTH/2;
 	t = y - PORTAL_HEIGHT/2;
-	r = x + PORTAL_WIDTH/2;
-	b = y + PORTAL_HEIGHT/2;
+	r = x + PORTAL_WIDTH;
+	b = y + PORTAL_HEIGHT;
 }
