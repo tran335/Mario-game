@@ -217,6 +217,7 @@ class CMario : public CGameObject
 	BOOLEAN isOutOut;
 	BOOLEAN isHitting;
 	BOOLEAN isPickup;
+	BOOLEAN isCollision;
 	float maxVx;
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
@@ -272,6 +273,7 @@ public:
 		isHitting = false;
 		isPickup = false;
 		power = 0;
+		isCollision = 1;
 
 		maxVx = 0.0f;
 		ax = 0.0f;

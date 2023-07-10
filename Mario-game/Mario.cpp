@@ -81,6 +81,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			power--;
 		}
 	}
+	
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
@@ -166,9 +167,10 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 					{
 						if (isSpining==true) 
 						{
-							if (goomba->GetState() != GOOMBA_STATE_DIE)
+							if (goomba->GetState() != GOOMBA_STATE_KICK_BY_RACCOON)
 							{
-								goomba->SetState(GOOMBA_STATE_DIE);
+								goomba->SetState(GOOMBA_STATE_KICK_BY_RACCOON);
+								isSpining = false;
 							}
 						}
 						else
@@ -249,7 +251,7 @@ void CMario::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
 				}
 
 				e->obj->Delete();
-				/*StartUntouchable();*/
+				
 			}
 	}
 }
@@ -413,6 +415,7 @@ void CMario::OnCollisionWithBigBox(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithKoopaBound(LPCOLLISIONEVENT e)
 {
+	CKoopaBound* koopabound = dynamic_cast<CKoopaBound*>(e->obj);
 }
 
 void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
@@ -433,13 +436,13 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 	{
 		if (untouchable == 0)
 		{
-			if (koopa->GetState() != KOOPA_STATE_DIE && koopa->GetState()!=KOOPA_STATE_SLIDE)
+			if (koopa->GetState() != KOOPA_STATE_DIE)
 			{
 				if (level == MARIO_LEVEL_RACCOON)
 				{
 					if (isSpining == true)
 					{
-						if (koopa->GetState() != KOOPA_STATE_DIE)
+						if (koopa->GetState() != KOOPA_STATE_DIE && koopa->GetState() != KOOPA_STATE_SLIDE)
 						{
 							koopa->SetState(KOOPA_STATE_DIE);
 						}
@@ -582,6 +585,7 @@ void CMario::OnCollisionWithPortalPipe(LPCOLLISIONEVENT e)
 		isOutOut = true;
 	}
 }
+
 
 
 

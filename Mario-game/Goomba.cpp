@@ -1,4 +1,5 @@
 #include "Goomba.h"
+#include "PlayScene.h"
 
 CGoomba::CGoomba(float x, float y):CGameObject(x, y)
 {
@@ -7,7 +8,9 @@ CGoomba::CGoomba(float x, float y):CGameObject(x, y)
 	die_start = -1;
 	start_y = y;
 	start_x = x;
+	isfinddropdirection = 0;
 	SetState(GOOMBA_STATE_WALKING);
+	mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 }
 
 void CGoomba::GetBoundingBox(float &left, float &top, float &right, float &bottom)
@@ -63,11 +66,38 @@ void CGoomba::OnCollisionWithCameraBound(LPCOLLISIONEVENT e)
 	}
 }
 
+void CGoomba::startfinddropdirecttion()
+{
+	float x_mario, y_mario;
+	mario->GetPosition(x_mario, y_mario);
+
+	if (x_mario < x) {
+		nx = -1;
+	}
+	else if (x_mario > x) {
+		nx = 1;
+	}
+	isfinddropdirection = 1;
+}
+
 
 void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
+	
+	if (state == GOOMBA_STATE_KICK_BY_RACCOON && state == GOOMBA_STATE_KICK_BY_KOOPA) {
+		if (isfinddropdirection) {
+			startfinddropdirecttion();
+		}
+		else {
+			if (nx == -1)
+				vx = -GOOMBA_WALKING_SPEED;
+			else
+				vx = GOOMBA_WALKING_SPEED;
+			isfinddropdirection = 0;
+		}
+	}
 
 	if ( (state==GOOMBA_STATE_DIE) && (GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT) )
 	{
@@ -98,6 +128,9 @@ void CGoomba::Render()
 		OutputDebugString(L"dd");
 		aniId = ID_ANI_GOOMBA_WALKING;
 	}
+	else if (state == GOOMBA_STATE_KICK_BY_RACCOON || state == GOOMBA_STATE_KICK_BY_KOOPA) {
+		aniId = ID_ANI_GOOMBA_DROP;
+	}
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x,y);
 	//RenderBoundingBox();
@@ -118,5 +151,12 @@ void CGoomba::SetState(int state)
 		case GOOMBA_STATE_WALKING: 
 			vx = -GOOMBA_WALKING_SPEED;
 			break;
+		case GOOMBA_STATE_KICK_BY_RACCOON:
+			vy = -GOOMBA_KICK_BY_RACCOON_SPEED;
+			break;
+		case GOOMBA_STATE_KICK_BY_KOOPA:
+			vy = -GOOMBA_KICK_BY_KOOPA_SPEED;
+			break;
+
 	}
 }

@@ -13,6 +13,7 @@ void CFireball::OnCollisionWith(LPCOLLISIONEVENT e)
 
 void CFireball::OnCollisionWithMario(LPCOLLISIONEVENT e)
 {
+	DebugOut(L"COLLISION FIREBAL");
 	CMario * mario = dynamic_cast<CMario*>(e->obj);
 	if (untouchable == 0) {
 		if (mario->GetLevel() > MARIO_LEVEL_BIG)
