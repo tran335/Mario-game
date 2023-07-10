@@ -113,7 +113,7 @@ void CKoopa::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
 	CParaGoomba* paragoomba = dynamic_cast<CParaGoomba*>(e->obj);
 	if (e->nx != 0) {
 		paragoomba->Setlevel(PARAGOOMBA_LEVEL_NO_WING);
-		paragoomba->SetState(PARAGOOMBA_STATE_DIE);
+		paragoomba->SetState(PARAGOOMBA_STATE_KICK_BY_KOOPA);
 	}
 	StartUntouchable();
 

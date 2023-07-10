@@ -8,6 +8,7 @@ CParaGoomba::CParaGoomba(float x, float y) :CGameObject(x, y)
 	die_start = -1;
 	jumpTime = PARAGOOMBA_FLY_TIMES;
 	isOnPlatform = false;
+	isfinddropdirection = 0;
 	level = PARAGOOMBA_LEVEL_WING;
 	start_y = y;
 	start_x = x;
@@ -68,6 +69,20 @@ void CParaGoomba::OnCollisionWithCameraBound(LPCOLLISIONEVENT e)
 	}
 }
 
+void CParaGoomba::startfinddropdirecttion()
+{
+	float x_mario, y_mario;
+	mario->GetPosition(x_mario, y_mario);
+
+	if (x_mario < x) {
+		nx = -1;
+	}
+	else if (x_mario > x) {
+		nx = 1;
+	}
+	isfinddropdirection = 1;
+}
+
 void CParaGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
@@ -85,6 +100,18 @@ void CParaGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			isDeleted = true;
 			return;
+		}
+		if (state == PARAGOOMBA_STATE_KICK_BY_RACCOON || state == PARAGOOMBA_STATE_KICK_BY_KOOPA) {
+			if (isfinddropdirection) {
+				startfinddropdirecttion();
+			}
+			else {
+				if (nx == -1)
+					vx = -PARAGOOMBA_WALKING_SPEED;
+				else
+					vx = PARAGOOMBA_WALKING_SPEED;
+				isfinddropdirection = 0;
+			}
 		}
 	
 		if (isBack) {
@@ -104,6 +131,7 @@ void CParaGoomba::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
 	int aniId = -1;	
+
  if (level == PARAGOOMBA_LEVEL_WING) {
 		if (isOnPlatform == true) {
 			aniId = ID_ANI_PARAGOOMBA_WING;
@@ -114,9 +142,13 @@ void CParaGoomba::Render()
  else if (level == PARAGOOMBA_LEVEL_NO_WING) {
 	 if (state == PARAGOOMBA_STATE_DIE)
 		 aniId = ID_ANI_PARAGOOMBA_DIE;
+	 else if (state == PARAGOOMBA_STATE_KICK_BY_KOOPA || state == PARAGOOMBA_STATE_KICK_BY_RACCOON)
+		 aniId = ID_ANI_PARAGOOMBA_DROP;
 	 else
 		 aniId = ID_ANI_PARAGOOMBA_NORMAL;
  }
+ else if (state == PARAGOOMBA_STATE_KICK_BY_KOOPA || state == PARAGOOMBA_STATE_KICK_BY_RACCOON)
+	 aniId = ID_ANI_PARAGOOMBA_DROP;
 		
 
 	animations->Get(aniId)->Render(x, y);
@@ -149,5 +181,12 @@ void CParaGoomba::SetState(int state)
 		{
 			vy = -PARAGOOMBA_JUMP_LOW_SPEED;
 		}
+		break;
+	case PARAGOOMBA_STATE_KICK_BY_RACCOON:
+		vy = -PARAGOOMBA_KICK_BY_RACCOON_SPEED;
+		break;
+	case PARAGOOMBA_STATE_KICK_BY_KOOPA:
+		vy = -PARAGOOMBA_KICK_BY_KOOPA_SPEED;
+		break;
 	}
 }

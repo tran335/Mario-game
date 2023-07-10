@@ -2,9 +2,12 @@
 #include "GameObject.h"
 #include "debug.h"
 #include "CameraBound.h"
+#include "Mario.h"
 
 #define PARAGOOMBA_GRAVITY 0.002f
 #define PARAGOOMBA_WALKING_SPEED 0.1f
+#define PARAGOOMBA_KICK_BY_RACCOON_SPEED 0.8f
+#define PARAGOOMBA_KICK_BY_KOOPA_SPEED 0.6f
 
 
 #define PARAGOOMBA_BBOX_WIDTH 48
@@ -17,6 +20,8 @@
 #define PARAGOOMBA_STATE_DIE 200
 #define PARAGOOMBA_STATE_NORMAL 300
 #define PARAGOOMBA_STATE_FLY 400
+#define PARAGOOMBA_STATE_KICK_BY_RACCOON 500
+#define PARAGOOMBA_STATE_KICK_BY_KOOPA 600
 
 #define PARAGOOMBA_LEVEL_WING 1
 #define PARAGOOMBA_LEVEL_NO_WING 2
@@ -42,14 +47,17 @@ protected:
 	float ax;
 	float ay;
 
+	CMario* mario = NULL;
 	float die_start;
 	BOOLEAN isOnPlatform;
 	BOOLEAN isBack = false;
+	BOOLEAN isfinddropdirection;
 	int jumpTime;
 	float walkingTime;
 	float reset_time;
 	float start_x;
 	float start_y;
+
 
 	int level;
 
@@ -57,7 +65,7 @@ protected:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 
-	virtual int IsCollidable() { return 1; };
+	virtual int IsCollidable() { return (state != PARAGOOMBA_STATE_KICK_BY_RACCOON && state != PARAGOOMBA_STATE_KICK_BY_KOOPA); };
 	virtual int IsBlocking() { return 0; }
 	virtual void OnNoCollision(DWORD dt);
 
@@ -70,5 +78,6 @@ public:
 	void StartWalkingTime() { walkingTime = GetTickCount64(); };
 	int Getlevel() { return this->level; }
 	void Setlevel(int level) {  this->level=level ; };
+	void startfinddropdirecttion();
 };
 
