@@ -74,13 +74,12 @@ void CKoopa::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
 	CSuperMushroom* supermushroom = dynamic_cast<CSuperMushroom*>(e->obj);
 	if (untouchable == 0)
 	{
-		if (supermushroom->GetState() != SUPERMUSHROOM_STATE_WALKING || supermushroom->GetState() != LEAF_STATE_FLY)
+		if (supermushroom->GetState() != SUPERMUSHROOM_STATE_WALKING && supermushroom->GetState() != LEAF_STATE_FLY)
 		{
 			if (mario->GetLevel() == MARIO_LEVEL_SMALL) 
 				supermushroom->SetState(SUPERMUSHROOM_STATE_WALKING);
 			else
 				supermushroom->SetState(LEAF_STATE_FLY);
-			/*StartUntouchable();*/
 		}
 	} 
 }

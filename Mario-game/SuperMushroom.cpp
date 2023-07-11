@@ -1,5 +1,7 @@
 #include "SuperMushroom.h"
 #include "PlayScene.h"
+#include "Platform.h"
+#include "QuestionBrick.h"
 
 CSuperMushroom::CSuperMushroom(float x, float y) :CGameObject(x, y)
 {
@@ -37,6 +39,26 @@ void CSuperMushroom::OnCollisionWith(LPCOLLISIONEVENT e)
 		{
 			vx = -vx;
 		}
+		if (dynamic_cast<CQuestionBrick*>(e->obj))
+			OnCollisionWithQuestionBrick(e);
+		else if (dynamic_cast<CMario*>(e->obj))
+			OnCollisionWithQuestionBrick(e);
+}
+void CSuperMushroom::OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e)
+{
+	CQuestionBrick* questionbrick = dynamic_cast<CQuestionBrick*>(e->obj);
+	if (e->ny < 0 && state == LEAF_STATE_FLY) {
+		isCollision = false;
+	}
+	else 
+		isCollision = true;
+}
+void CSuperMushroom::OnCollisionWithMario(LPCOLLISIONEVENT e)
+{
+	CMario* mario = dynamic_cast<CMario*>(e->obj);
+	if (e->ny < 0) {
+		isCollision = true;
+	}
 }
 void CSuperMushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
@@ -49,20 +71,34 @@ void CSuperMushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 	else if (state == LEAF_STATE_FLY) {
-			x += vx * dt;
-			y += vy * dt;
 			vy = ay * dt;
-			if (isDirect == false && GetTickCount64() - direct_time > DIRECT_TIME) {
-				vx = LEAF_GRAVITY;
-				isDirect = true;
-				startDirect();
+			if (isRight == true) {
+				if (GetTickCount64() - direct_time > DIRECT_TIME && direct_time > 0) {
+					direct_time = 0;
+					isRight = false;
+					isDirect = false;
+				}
+				else {
+					vx = ax * dt;
+					if (isDirect == false) {
+						startDirect();
+					}
+				}
 			}
-			else if (isDirect == true && (GetTickCount64() - direct_time > DIRECT_TIME)) {
-				vx = -LEAF_GRAVITY;
-				isDirect = false;
-				direct_time = 0;
-				startDirect();
+			else {
+				if (GetTickCount64() - direct_time > DIRECT_TIME && direct_time > 0) {
+					isRight = true;
+					isDirect = false;
+					direct_time = 0;
+				}
+				else {
+					vx = -ax * dt;
+					if (isDirect == false) {
+						startDirect();
+					}
+				}
 			}
+	
 	}
 
 	CGameObject::Update(dt, coObjects);
@@ -96,6 +132,8 @@ void CSuperMushroom::SetState(int state)
 		break;
 	case LEAF_STATE_FLY:
 		y = start_y - MAX_Y;
+		ay = LEAF_GRAVITY_AY;
+		ax = LEAF_GRAVITY_AX;
 		break;
 	}
 }
