@@ -115,7 +115,10 @@ void CSuperMushroom::Render()
 	}
 	else 
 	{
-		aniId = ID_ANI_LEAF;
+		if (isRight != true)
+			aniId = ID_ANI_LEAF;
+		else
+			aniId = ID_ANI_LEAF_RIGHT;
 	}
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	//RenderBoundingBox();

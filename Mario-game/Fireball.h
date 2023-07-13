@@ -20,6 +20,7 @@ class CFireball : public CGameObject
 	float ay;
 	ULONGLONG unfindslidedirecttion_time;
 	BOOLEAN unfindslidedirecttion;
+	BOOLEAN isCollision;
 
 	ULONGLONG untouchable = 0;
 	ULONGLONG untouchable_start = -1;
@@ -27,7 +28,7 @@ class CFireball : public CGameObject
 	virtual int IsCollidable() { return 1; };
 	virtual int IsBlocking() { return 0; }
 
-
+	virtual void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);
 	void OnCollisionWithMario(LPCOLLISIONEVENT e);
 

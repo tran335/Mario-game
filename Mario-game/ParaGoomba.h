@@ -52,6 +52,7 @@ protected:
 	BOOLEAN isOnPlatform;
 	BOOLEAN isBack = false;
 	BOOLEAN isfinddropdirection;
+
 	int jumpTime;
 	float walkingTime;
 	float reset_time;

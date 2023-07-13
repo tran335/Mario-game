@@ -3,17 +3,44 @@
 
 
 
+void CFireball::OnNoCollision(DWORD dt)
+{
+	if (nx < 0) {
+		x -= FIRE_BALL_SPEED;
+		if (ny < 0)
+			y += vy * dt;
+		else
+			y -= vy * dt;
+	}
+	if (nx > 0) {
+		x += FIRE_BALL_SPEED;
+		if (ny < 0)
+			y -= vy * dt;
+		else
+			y += vy * dt;
+	}
+}
+
 void CFireball::OnCollisionWith(LPCOLLISIONEVENT e)
 {
+	/*if (!e->obj->IsBlocking()) return;*/
+
+	if (e->ny != 0)
+	{
+		vy = 0;
+	}
+	else if (e->nx != 0)
+	{
+		vx = -vx;
+	}
 	//if (dynamic_cast<CFireball*>(e->obj)) return;
-	if (dynamic_cast<CMario*>(e->obj))
-		OnCollisionWithMario(e);
+	//if (dynamic_cast<CMario*>(e->obj))
+	//	OnCollisionWithMario(e);
 
 }
 
 void CFireball::OnCollisionWithMario(LPCOLLISIONEVENT e)
 {
-	DebugOut(L"COLLISION FIREBAL");
 	CMario * mario = dynamic_cast<CMario*>(e->obj);
 	if (untouchable == 0) {
 		if (mario->GetLevel() > MARIO_LEVEL_BIG)
@@ -31,6 +58,7 @@ void CFireball::OnCollisionWithMario(LPCOLLISIONEVENT e)
 			DebugOut(L">>> Mario DIE >>> \n");
 			SetState(MARIO_STATE_DIE);
 		}
+		isCollision = true;
 	}
 }
 
@@ -59,20 +87,6 @@ void CFireball::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vy += ay * dt;
 	if (unfindslidedirecttion) {
 		startfindslidedirecttion(dt);
-	}
-	if (nx < 0) {
-		x -= FIRE_BALL_SPEED;
-		if(ny<0)
-			y += vy*dt;
-		else
-			y -= vy * dt;
-	}
-	if (nx > 0) {
-		x += FIRE_BALL_SPEED;
-		if (ny < 0)
-			y -= vy * dt;
-		else
-			y += vy * dt;
 	}
 
 	CGameObject::Update(dt, coObjects);

@@ -24,3 +24,5 @@ height	240
 70	textures\overworld.png
 80	textures\intro.png
 90	textures\enemy - 3.png
+100	textures\misc_new -right.png
+110	textures\hud.png	

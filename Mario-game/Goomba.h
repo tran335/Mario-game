@@ -38,12 +38,13 @@ protected:
 	ULONGLONG die_start;
 	BOOLEAN isBack = false;
 	BOOLEAN isfinddropdirection;
+	BOOLEAN isCollision;
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects);
 	virtual void Render();
 
-	virtual int IsCollidable() { return (state != GOOMBA_STATE_KICK_BY_RACCOON && state != GOOMBA_STATE_KICK_BY_KOOPA); };
+	virtual int IsCollidable() { return (state != GOOMBA_STATE_KICK_BY_RACCOON && state != GOOMBA_STATE_KICK_BY_KOOPA && isCollision != false); };
 	virtual int IsBlocking() { return 0; }
 	virtual void OnNoCollision(DWORD dt);
 

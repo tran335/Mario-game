@@ -10,6 +10,7 @@
 #include "QuestionBrick.h"
 #include "Koopa.h"
 #include "MarioOverworld.h"
+#include "HUD.h"
 
 
 #define INTRO_SCENE 1
@@ -24,6 +25,7 @@ protected:
 	LPGAMEOBJECT player;					
 
 	vector<LPGAMEOBJECT> objects;
+	HUD* hud = NULL;
 
 	void _ParseSection_SPRITES(string line);
 	void _ParseSection_ANIMATIONS(string line);

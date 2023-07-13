@@ -46,7 +46,7 @@ void CParaKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 
 	if (e->ny < 0)
 	{
-		vy = 0;
+		vy = -PARAKOOPA_JUMP_Y;
 	}
 	else if (e->nx != 0)
 	{

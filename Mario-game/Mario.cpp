@@ -354,27 +354,6 @@ void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
 	}
 	else // hit by Goomba
 	{
-		/*if (untouchable == 0)
-		{
-			if (parakoopa->GetState() != PARAKOOPA_STATE_DIE)
-			{
-				if (level > MARIO_LEVEL_SMALL)
-				{
-					level = MARIO_LEVEL_SMALL;
-					StartUntouchable();
-				}
-				else
-				{
-					SetState(MARIO_STATE_DIE);
-				}
-			}
-			else
-			{
-				SetState(MARIO_STATE_KICK);
-				parakoopa->SetState(PARAKOOPA_STATE_SLIDE);
-				isKicking = false;
-			}
-		}*/
 		if (untouchable == 0)
 		{
 			if (parakoopa->GetState() != PARAKOOPA_STATE_DIE && parakoopa->GetState() != PARAKOOPA_STATE_SLIDE)

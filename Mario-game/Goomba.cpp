@@ -63,6 +63,7 @@ void CGoomba::OnCollisionWithCameraBound(LPCOLLISIONEVENT e)
 	{
 		isBack = true;
 		reset_time = GetTickCount64();
+		isCollision = false;
 	}
 }
 
@@ -125,7 +126,6 @@ void CGoomba::Render()
 		aniId = ID_ANI_GOOMBA_DIE;
 	}
 	else if (state == ID_ANI_GOOMBA_WALKING) {
-		OutputDebugString(L"dd");
 		aniId = ID_ANI_GOOMBA_WALKING;
 	}
 	else if (state == GOOMBA_STATE_KICK_BY_RACCOON || state == GOOMBA_STATE_KICK_BY_KOOPA) {
@@ -150,6 +150,7 @@ void CGoomba::SetState(int state)
 			break;
 		case GOOMBA_STATE_WALKING: 
 			vx = -GOOMBA_WALKING_SPEED;
+			isCollision = true;
 			break;
 		case GOOMBA_STATE_KICK_BY_RACCOON:
 			vy = -GOOMBA_KICK_BY_RACCOON_SPEED;

@@ -151,6 +151,7 @@
     <ClCompile Include="PortalPipe.cpp">
       <Filter>Misc</Filter>
     </ClCompile>
+    <ClCompile Include="HUD.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TileMap.h">
@@ -306,6 +307,7 @@
     <ClInclude Include="PortalPipe.h">
       <Filter>Misc</Filter>
     </ClInclude>
+    <ClInclude Include="HUD.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Map">

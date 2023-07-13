@@ -1,10 +1,7 @@
 # id	left	top	right	bottom	texture_id
 [SPRITES]
-#LEAF					
-52001	539	368	588	411	40
-52002	699	368	747	411	100
+111111	38	386	729	465	110
 
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
-520	52001	100
-530	52002	100
+111112	111111	100

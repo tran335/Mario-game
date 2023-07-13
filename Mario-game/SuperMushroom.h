@@ -3,7 +3,7 @@
 #include "Mario.h"
 
 #define SUPERMUSHROOM_GRAVITY 0.001f
-#define LEAF_GRAVITY_AX 0.005f
+#define LEAF_GRAVITY_AX 0.004f
 #define LEAF_GRAVITY_AY 0.002f
 #define SUPERMUSHROOM_WALKING_SPEED 0.05f
 
@@ -11,7 +11,7 @@
 #define SUPERMUSHROOM_BBOX_WIDTH 48
 #define SUPERMUSHROOM_BBOX_HEIGHT 48
 
-#define MAX_Y 200
+#define MAX_Y 150
 
 #define DIRECT_TIME 1000
 
@@ -24,6 +24,7 @@
 
 #define ID_ANI_SUPERMUSHROOM_WALKING 510
 #define ID_ANI_LEAF 520
+#define ID_ANI_LEAF_RIGHT 530
 //#define ID_ANI_SUPERMUSHROOM_DIE 5001
 
 class CSuperMushroom : public CGameObject
