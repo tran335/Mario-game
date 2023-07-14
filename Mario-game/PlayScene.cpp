@@ -265,7 +265,7 @@ void CPlayScene::Update(DWORD dt)
 		cx -= game->GetBackBufferWidth() / 2;
 
 
-		if (cy <= game->GetBackBufferHeight() - start_cy) {
+		if (cy <= game->GetBackBufferHeight()*2 - start_cy) {
 			cy -= game->GetBackBufferHeight()/2;
 			
 		}
@@ -274,7 +274,7 @@ void CPlayScene::Update(DWORD dt)
 				cy += game->GetBackBufferHeight() - start_cy/1.5;
 			}
 			else
-				cy = game->GetBackBufferHeight();
+				cy = game->GetBackBufferHeight()+50;
 		}
 
 		/*if (cy > game->GetBackBufferHeight()*2- start_cy) {
@@ -304,9 +304,6 @@ void CPlayScene::Render()
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();
 	CTileMap::GetInstance()->RenderForeground();
-	if (id == WORLD_MAP_1_1_SCENE) {
-		hud->Render();
-	}
 }
 
 /*

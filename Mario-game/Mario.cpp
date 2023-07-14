@@ -531,7 +531,6 @@ void CMario::OnCollisionWithFireBall(LPCOLLISIONEVENT e)
 
 	if (untouchable == 0)
 	{
-		e->obj->Delete();
 		if (level > MARIO_LEVEL_BIG)
 		{
 			level = MARIO_LEVEL_BIG;

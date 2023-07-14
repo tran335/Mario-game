@@ -23,7 +23,7 @@ void CFireball::OnNoCollision(DWORD dt)
 
 void CFireball::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	/*if (!e->obj->IsBlocking()) return;*/
+	if (!e->obj->IsBlocking()) return;
 
 	if (e->ny != 0)
 	{
@@ -34,8 +34,8 @@ void CFireball::OnCollisionWith(LPCOLLISIONEVENT e)
 		vx = -vx;
 	}
 	//if (dynamic_cast<CFireball*>(e->obj)) return;
-	//if (dynamic_cast<CMario*>(e->obj))
-	//	OnCollisionWithMario(e);
+	/*if (dynamic_cast<CMario*>(e->obj))
+		OnCollisionWithMario(e);*/
 
 }
 

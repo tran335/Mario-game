@@ -25,6 +25,7 @@
 #include "Switch.h"
 #include "Card.h"
 #include "PortalPipe.h"
+#include "HUD.h"
 
 class CObjectMap
 {

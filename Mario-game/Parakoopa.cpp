@@ -1,6 +1,8 @@
 #include "Parakoopa.h"
 #include "PlayScene.h"
 #include "SuperMushroom.h"
+#include "Platform.h"
+#include "BigBox.h"
 CParaKoopa::CParaKoopa(float x, float y) :CGameObject(x, y)
 {
 	this->ax = 0;
@@ -42,11 +44,11 @@ void CParaKoopa::OnNoCollision(DWORD dt)
 void CParaKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	//if (!e->obj->IsBlocking()) return;
-	if (dynamic_cast<CKoopa*>(e->obj)) return;
+	if (dynamic_cast<CParaKoopa*>(e->obj)) return;
 
 	if (e->ny < 0)
 	{
-		vy = -PARAKOOPA_JUMP_Y;
+		vy = 0;
 	}
 	else if (e->nx != 0)
 	{
@@ -56,6 +58,10 @@ void CParaKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithSuperMushroom(e);
 	if (dynamic_cast<CCameraBound*>(e->obj))
 		OnCollisionWithCameraBound(e);
+	else if (dynamic_cast<CPlatform*>(e->obj))
+		OnCollisionWithPlatform(e);
+	else if (dynamic_cast<CBigBox*>(e->obj))
+		OnCollisionWithBigBox(e);
 
 }
 void CParaKoopa::OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e)
@@ -76,6 +82,24 @@ void CParaKoopa::OnCollisionWithCameraBound(LPCOLLISIONEVENT e)
 	if ((e->ny < 0) && isBack == false) 
 	{
 		startBack();
+	}
+}
+
+void CParaKoopa::OnCollisionWithPlatform(LPCOLLISIONEVENT e)
+{
+	CPlatform* camerabound = dynamic_cast<CPlatform*>(e->obj);
+	if (e->ny < 0)
+	{
+		vy = -PARAKOOPA_JUMP_Y;
+	}
+}
+
+void CParaKoopa::OnCollisionWithBigBox(LPCOLLISIONEVENT e)
+{
+	CBigBox* bigbox = dynamic_cast<CBigBox*>(e->obj);
+	if (e->ny < 0)
+	{
+		vy = -PARAKOOPA_JUMP_Y;
 	}
 }
 

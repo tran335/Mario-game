@@ -583,4 +583,7 @@
  <objectgroup id="24" name="Card">
   <object id="271" x="8039.33" y="1030" width="50" height="50"/>
  </objectgroup>
+<objectgroup id="40" name="HUD">
+  <object id="400" x="368" y="1310" width="50" height="50"/>
+ </objectgroup>
 </map>

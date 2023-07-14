@@ -78,6 +78,9 @@ protected:
 
 	void OnCollisionWithSuperMushroom(LPCOLLISIONEVENT e);
 	void OnCollisionWithCameraBound(LPCOLLISIONEVENT e);
+	void OnCollisionWithPlatform(LPCOLLISIONEVENT e);
+	void OnCollisionWithBigBox(LPCOLLISIONEVENT e);
+
 
 public:
 	CParaKoopa(float x, float y);
