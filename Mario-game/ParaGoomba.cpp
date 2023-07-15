@@ -112,6 +112,7 @@ void CParaGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					vx = PARAGOOMBA_WALKING_SPEED;
 				isfinddropdirection = 0;
 			}
+			isCollision = false;
 		}
 	
 		if (isBack) {

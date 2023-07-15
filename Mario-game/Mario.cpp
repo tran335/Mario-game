@@ -71,14 +71,14 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			power++;
 
 			if (power > MARIO_RUNNING_TIME) {
-				DebugOut(L"aaaaa");
+				//DebugOut(L"aaaaa");
 				SetState(MARIO_STATE_PRE_FLY);
 			}
 		}
 	}
 	else {
 		if (power > MARIO_PRE_FLY_TIME) {
-			DebugOut(L"bbbb");
+			//DebugOut(L"bbbb");
 			SetState(MARIO_STATE_FLY);
 			power--;
 		}
@@ -314,6 +314,7 @@ void CMario::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
 						{
 							paragoomba->SetState(PARAGOOMBA_STATE_KICK_BY_RACCOON);
 							isSpining = false;
+							StartUntouchable();
 						}
 					}
 					else
@@ -757,7 +758,7 @@ int CMario::GetAniIdRaccoon()
 				{
 					if (isPrefly)
 					{
-						DebugOut(L"con pre fly ne");
+						//DebugOut(L"con pre fly ne");
 						/*if (isFly)
 						{
 							DebugOut(L"qua FLY roi ne");
