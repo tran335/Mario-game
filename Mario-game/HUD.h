@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "Mario.h"
+#include "Sprite.h"
 
 
 #define ID_HUD 111112

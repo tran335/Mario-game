@@ -71,12 +71,14 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			power++;
 
 			if (power > MARIO_RUNNING_TIME) {
+				DebugOut(L"aaaaa");
 				SetState(MARIO_STATE_PRE_FLY);
 			}
 		}
 	}
 	else {
-		if (power > MARIO_RUNNING_TIME) {
+		if (power > MARIO_PRE_FLY_TIME) {
+			DebugOut(L"bbbb");
 			SetState(MARIO_STATE_FLY);
 			power--;
 		}
@@ -94,6 +96,7 @@ void CMario::OnNoCollision(DWORD dt)
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	//if (e->ny < 0) isOnPlatform = true;
+
 
 	if (e->ny < 0) {
 		isOnPlatform = true;
@@ -118,8 +121,6 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithCameraBound(e);
 	else if (dynamic_cast<CQuestionBrick*>(e->obj))
 		OnCollisionWithQuestionBrick(e);
-	else if (dynamic_cast<CKoopaBound*>(e->obj))
-		OnCollisionWithKoopaBound(e);
 	else if (dynamic_cast<CKoopa*>(e->obj))
 		OnCollisionWithKoopa(e);
 	else if (dynamic_cast<CCoinBrick*>(e->obj))
@@ -140,6 +141,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithCard(e);
 	else if (dynamic_cast<CPortalPipe*>(e->obj))
 		OnCollisionWithPortalPipe(e);
+	else if (dynamic_cast<CKoopaBound*>(e->obj))
+		OnCollisionWithKoopaBound(e);
 
 }
 
@@ -254,6 +257,7 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 						{
 							goomba->SetState(GOOMBA_STATE_KICK_BY_RACCOON);
 							isSpining = false;
+							StartUntouchable();
 						}
 					}
 					else
@@ -408,7 +412,7 @@ void CMario::OnCollisionWithBigBox(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithKoopaBound(LPCOLLISIONEVENT e)
 {
-	CKoopaBound* koopabound = dynamic_cast<CKoopaBound*>(e->obj);
+	
 }
 
 void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
@@ -504,13 +508,22 @@ void CMario::OnCollisionWithPiranha(LPCOLLISIONEVENT e)
 {
 	CPiranha* venus = dynamic_cast<CPiranha*>(e->obj);
 
+	
 	if (untouchable == 0)
 	{
 
-		if (level > MARIO_LEVEL_BIG)
+
+		if (level == MARIO_LEVEL_RACCOON)
 		{
-			level = MARIO_LEVEL_BIG;
-			StartUntouchable();
+			if (isSpining == true)
+			{
+				e->obj->Delete();
+			}
+			else
+			{
+				level = MARIO_LEVEL_BIG;
+				StartUntouchable();
+			}
 		}
 		else if (level > MARIO_LEVEL_SMALL)
 		{
@@ -744,8 +757,10 @@ int CMario::GetAniIdRaccoon()
 				{
 					if (isPrefly)
 					{
-						if (isFly)
+						DebugOut(L"con pre fly ne");
+						/*if (isFly)
 						{
+							DebugOut(L"qua FLY roi ne");
 							if (nx >= 0)
 							{
 								aniId = ID_ANI_MARIO_RACCOON_FLY_RIGHT;
@@ -754,17 +769,28 @@ int CMario::GetAniIdRaccoon()
 								aniId = ID_ANI_MARIO_RACCOON_FLY_LEFT;
 						}
 						else
-						{
+						{*/
 							if (nx >= 0)
 							{
 								aniId = ID_ANI_MARIO_RACCOON_PRE_FLY_RIGHT;
 							}
 							else
 								aniId = ID_ANI_MARIO_RACCOON_PRE_FLY_LEFT;
+						/*}*/
+					}
+					else if (isFly)
+					{
+						DebugOut(L"qua FLY roi ne");
+						if (nx >= 0)
+						{
+							aniId = ID_ANI_MARIO_RACCOON_FLY_RIGHT;
 						}
+						else
+							aniId = ID_ANI_MARIO_RACCOON_FLY_LEFT;
 					}
 					else
 					{
+						DebugOut(L"qua running roi ne");
 						if (nx >= 0)
 						{
 							aniId = ID_ANI_MARIO_RACCOON_RUNNING_RIGHT;
@@ -1014,6 +1040,8 @@ void CMario::SetState(int state)
 		if (isSitting) break;
 		startRunning();
 		isRunning = true;
+		isPrefly = false;
+		isFly = false;
 		maxVx = MARIO_RUNNING_SPEED;
 		ax = MARIO_ACCEL_RUN_X;
 		nx = 1;
@@ -1022,24 +1050,31 @@ void CMario::SetState(int state)
 		if (isSitting) break;
 		startRunning();
 		isRunning = true;
+		isPrefly = false;
+		isFly = false;
 		maxVx = -MARIO_RUNNING_SPEED;
 		ax = -MARIO_ACCEL_RUN_X;
 		nx = -1;
 		break;
 	case MARIO_STATE_WALKING_RIGHT:
 		if (isSitting) break;
+		isPrefly = false;
+		isFly = false;
 		maxVx = MARIO_WALKING_SPEED;
 		ax = MARIO_ACCEL_WALK_X;
 		nx = 1;
 		break;
 	case MARIO_STATE_WALKING_LEFT:
 		if (isSitting) break;
+		isPrefly = false;
+		isFly = false;
 		maxVx = -MARIO_WALKING_SPEED;
 		ax = -MARIO_ACCEL_WALK_X;
 		nx = -1;
 		break;
 	case MARIO_STATE_JUMP:
 		if (isSitting) break;
+
 		if (isOnPlatform)
 		{
 			if (abs(this->vx) == MARIO_RUNNING_SPEED)
@@ -1092,18 +1127,26 @@ void CMario::SetState(int state)
 	case MARIO_STATE_SPIN:
 		isSpin = true;
 		isSpining = true;
+		isRunning = false;
+		isPrefly = false;
+		isFly = false;
 		startIsSpin();
 		break;
 	case MARIO_STATE_SPIN_RELEASE:
 		isSpin = false;
+		isPrefly = false;
+		isRunning = false;
+		isFly = false;
 		break;
 	case MARIO_STATE_PRE_FLY:
 		running_time = 0;
 		startPreFly();
 		isPrefly = true;
+		isFly = false;
 		break;
 	case MARIO_STATE_FLY:
 		isFly = true;
+		isPrefly = false;
 		vy = -MARIO_JUMP_RUN_SPEED_Y;
 		break;
 	}

@@ -93,9 +93,9 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		}
 		else {
 			if (nx == -1)
-				vx = -GOOMBA_WALKING_SPEED;
+				vx = -GOOMBA_WALKING_VX;
 			else
-				vx = GOOMBA_WALKING_SPEED;
+				vx = GOOMBA_WALKING_VX;
 			isfinddropdirection = 0;
 		}
 	}
@@ -154,6 +154,12 @@ void CGoomba::SetState(int state)
 			break;
 		case GOOMBA_STATE_KICK_BY_RACCOON:
 			vy = -GOOMBA_KICK_BY_RACCOON_SPEED;
+			if (isfinddropdirection == 1) {
+				if (nx == -1)
+					vx = -GOOMBA_WALKING_VX;
+				else
+					vx = GOOMBA_WALKING_VX;
+			}
 			break;
 		case GOOMBA_STATE_KICK_BY_KOOPA:
 			vy = -GOOMBA_KICK_BY_KOOPA_SPEED;

@@ -1,5 +1,7 @@
 #include "Fireball.h"
 #include "PlayScene.h"
+#include "BigBox.h"
+#include "Platform.h"
 
 
 
@@ -24,6 +26,7 @@ void CFireball::OnNoCollision(DWORD dt)
 void CFireball::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (!e->obj->IsBlocking()) return;
+	if (dynamic_cast<CBigBox*>(e->obj)) return;
 
 	if (e->ny != 0)
 	{
@@ -33,6 +36,8 @@ void CFireball::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		vx = -vx;
 	}
+	if (dynamic_cast<CPlatform*>(e->obj))
+		OnCollisionWithPlatform(e);
 	//if (dynamic_cast<CFireball*>(e->obj)) return;
 	/*if (dynamic_cast<CMario*>(e->obj))
 		OnCollisionWithMario(e);*/
@@ -60,6 +65,11 @@ void CFireball::OnCollisionWithMario(LPCOLLISIONEVENT e)
 		}
 		isCollision = true;
 	}
+}
+
+void CFireball::OnCollisionWithPlatform(LPCOLLISIONEVENT e)
+{
+	isCollision = false;
 }
 
 CFireball::CFireball(float x, float y)

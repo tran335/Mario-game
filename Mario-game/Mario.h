@@ -143,11 +143,11 @@
 #define ID_ANI_MARIO_RACCOON_JUMP_WALK_RIGHT 1163
 #define ID_ANI_MARIO_RACCOON_JUMP_WALK_LEFT 163
 
-#define ID_ANI_MARIO_RACCOON_PRE_FLY_RIGHT 1166
-#define ID_ANI_MARIO_RACCOON_PRE_FLY_LEFT 166
+#define ID_ANI_MARIO_RACCOON_PRE_FLY_RIGHT 1167
+#define ID_ANI_MARIO_RACCOON_PRE_FLY_LEFT 167
 
-#define ID_ANI_MARIO_RACCOON_FLY_RIGHT 1167
-#define ID_ANI_MARIO_RACCOON_FLY_LEFT 167
+#define ID_ANI_MARIO_RACCOON_FLY_RIGHT 1166
+#define ID_ANI_MARIO_RACCOON_FLY_LEFT 166
 
 #define ID_ANI_MARIO_RACCOON_KICK_RIGHT 1170
 #define ID_ANI_MARIO_RACCOON_KICK_LEFT 170
@@ -199,8 +199,7 @@
 #define MARIO_UNTOUCHABLE_TIME 2500
 #define MARIO_SPIN_TIME 1000
 #define MARIO_RUNNING_TIME 10
-#define MARIO_RUNNING_TIME 15
-#define MARIO_PRE_FLY_TIME 1000
+#define MARIO_PRE_FLY_TIME 20
 #define  MARIO_DIE_TIMEOUT 2000
 
 class CMario : public CGameObject
@@ -241,7 +240,6 @@ class CMario : public CGameObject
 	void OnCollisionWithBigBox(LPCOLLISIONEVENT e);
 	void OnCollisionWithCameraBound(LPCOLLISIONEVENT e);
 	void OnCollisionWithQuestionBrick(LPCOLLISIONEVENT e);
-	void OnCollisionWithKoopaBound(LPCOLLISIONEVENT e);
 	void OnCollisionWithKoopa(LPCOLLISIONEVENT e);
 	void OnCollisionWithParaKoopa(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoinBrick(LPCOLLISIONEVENT e);
@@ -252,6 +250,7 @@ class CMario : public CGameObject
 	void OnCollisionWithSwitch(LPCOLLISIONEVENT e);
 	void OnCollisionWithCard(LPCOLLISIONEVENT e);
 	void OnCollisionWithPortalPipe(LPCOLLISIONEVENT e);
+	void OnCollisionWithKoopaBound(LPCOLLISIONEVENT e);
 
 	int GetAniIdBig();
 	int GetAniIdSmall();
@@ -298,10 +297,10 @@ public:
 
 	int IsCollidable()
 	{ 
-		return (state != MARIO_STATE_DIE); 
+		return (state != MARIO_STATE_DIE);
 	}
 
-	int IsBlocking() { return (state != MARIO_STATE_DIE && untouchable==0); }
+	int IsBlocking() { return (state != MARIO_STATE_DIE && untouchable == 0); }
 
 	void OnNoCollision(DWORD dt);
 	void OnCollisionWith(LPCOLLISIONEVENT e);

@@ -79,7 +79,7 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 		if (game->IsKeyDown(DIK_A))
 		{
 			if (game->IsKeyDown(DIK_S) && mario->GetLevel() == MARIO_LEVEL_RACCOON) {
-				mario->SetState(MARIO_STATE_FLY);
+				mario->SetState(MARIO_STATE_PRE_FLY);
 			}
 				else
 					mario->SetState(MARIO_STATE_RUNNING_RIGHT);
@@ -94,7 +94,7 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 	if (game->IsKeyDown(DIK_A))
 	{
 		if (game->IsKeyDown(DIK_S) && mario->GetLevel() == MARIO_LEVEL_RACCOON) {
-			mario->SetState(MARIO_STATE_FLY);
+			mario->SetState(MARIO_STATE_PRE_FLY);
 		}
 		else
 			mario->SetState(MARIO_STATE_RUNNING_LEFT);

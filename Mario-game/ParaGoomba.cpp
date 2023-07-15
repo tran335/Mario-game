@@ -184,6 +184,12 @@ void CParaGoomba::SetState(int state)
 		break;
 	case PARAGOOMBA_STATE_KICK_BY_RACCOON:
 		vy = -PARAGOOMBA_KICK_BY_RACCOON_SPEED;
+		if (isfinddropdirection == 1) {
+			if (nx == -1)
+				vx = -PARAGOOMBA_WALKING_SPEED;
+			else
+				vx = PARAGOOMBA_WALKING_SPEED;
+		}
 		break;
 	case PARAGOOMBA_STATE_KICK_BY_KOOPA:
 		vy = -PARAGOOMBA_KICK_BY_KOOPA_SPEED;
