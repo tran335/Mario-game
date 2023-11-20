@@ -77,6 +77,7 @@ void CObjectMap::ImportData(vector<LPGAMEOBJECT>& coObjects)
 			obj->SetPosition(x, y);
 			coObjects.push_back(obj);
 			element = element->NextSiblingElement();
+
 		}
 
 	}
